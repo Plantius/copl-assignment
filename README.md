@@ -1,3 +1,3 @@
 # copl-assignment
 
-A parser build using C++ for $\lambda$-calculus.
+A parser written in C++ for the untyped $\lambda$-calculus.
