@@ -6,13 +6,15 @@ A parser written in C++ for the untyped $\lambda$-calculus.
 
 
 ### Installing
-Execute the following code in a Unix commandline:
+Execute the following code in a Unix command terminal in a location of your choice:
 ```
 make
 ```
 
-### Executing program
+The included makefile will build the project into a binary file.
 
+### Executing program
+The binary file is located in the $/\textit{bin}$ folder, and can be executed with the following code snippet:
 ```
 ./bin/lambda
 ```
