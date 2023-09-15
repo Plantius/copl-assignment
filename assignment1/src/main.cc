@@ -12,9 +12,9 @@ using namespace std;
 
 int main(){
     for (string input; getline(cin, input);){
-        if(valid_input(input)){
-            string_tokenizer(input);
-            print_cout(input);
+        if(validInput(input)){
+            stringTokenizer(input);
+            printCout(input);
         }
     }
     

@@ -10,7 +10,7 @@
 #include "../include/standard.h"
 using namespace std;
 
-bool valid_input(const string input){
+bool validInput(const string input){
     int i = 0;
 
     while(input[i] != '\0'){
@@ -22,6 +22,6 @@ bool valid_input(const string input){
     return true;
 }// valid_input
 
-void print_cout(const string input){
+void printCout(const string input){
     cout << input << endl;
 }// print_cout
