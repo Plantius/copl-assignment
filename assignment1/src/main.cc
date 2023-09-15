@@ -11,10 +11,9 @@ using namespace std;
 
 int main(){
     string input;
-    cin >> input;
+    getline(cin, input);
     
     if(valid_input(input)){
-        cout << input << endl;
         print_cout(input);
         return 0;
     }
