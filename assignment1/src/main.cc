@@ -10,13 +10,11 @@
 using namespace std;
 
 int main(){
-    string input;
-    getline(cin, input);
-    
-    if(valid_input(input)){
-        print_cout(input);
-        return 0;
+    for (string input; getline(cin, input);){
+        if(valid_input(input)){
+            print_cout(input);
+        }
     }
-
-    return 1;
+    
+    return 0;
 }
