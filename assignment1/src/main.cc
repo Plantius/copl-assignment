@@ -1,9 +1,22 @@
+/**
+* Implementation of the main function
+* Niels Versteeg (s3322637)
+* Lana van Sprang (s3272192)
+* main.cc
+* 15-09-2023
+**/
+
 #include "../include/standard.h"
 using namespace std;
 
 int main(){
-    const char* input = "aa";
-    print_cout(input);
+    string input = "";
 
-    return 0;
+    cin >> input;
+    if(valid_input(input)){
+        print_cout(input);
+        return 0;
+    }
+
+    return 1;
 }
