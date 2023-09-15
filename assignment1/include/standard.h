@@ -10,8 +10,11 @@
 #define STANDARD_H
 #include <iostream>
 
+// Reads a constant string and checks if it is valid, e.i. if
+// it only contains ASCII-characters
 bool valid_input(const std::string input);
 
+// Reads a constant string and prints it to stdout
 void print_cout(const std::string input);
 
 #endif
