@@ -24,4 +24,7 @@ The binary file is located in the $/\textit{bin}$ folder, and can be executed wi
 Niels Versteeg (s3322637)
 Lana van Sprang (s3272192)
 
-## Version History
+## TODO
+*Parser
+**Adding tokenization
+**Adding support for parentheses

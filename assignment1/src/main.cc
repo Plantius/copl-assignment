@@ -7,11 +7,13 @@
 **/ 
 
 #include "../include/standard.h"
+#include "../include/parser.h"
 using namespace std;
 
 int main(){
     for (string input; getline(cin, input);){
         if(valid_input(input)){
+            string_tokenizer(input);
             print_cout(input);
         }
     }
