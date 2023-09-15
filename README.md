@@ -14,7 +14,7 @@ make
 The included makefile will build the project into a binary file.
 
 ### Executing program
-The binary file is located in the $/\textit{bin}$ folder, and can be executed with the following code snippet:
+The binary file is located in the */bin* folder, and can be executed with the following code snippet:
 ```
 ./bin/lambda
 ```
@@ -25,6 +25,6 @@ Niels Versteeg (s3322637)
 Lana van Sprang (s3272192)
 
 ## TODO
-*Parser
-**Adding tokenization
-**Adding support for parentheses
+* Parser
+    * Adding tokenization
+    * Adding support for parentheses    
