@@ -28,4 +28,5 @@ Lana van Sprang (s3272192)
 * <del> Constructing LL grammar
 * Parser
     * Adding tokenization
+        * Adding syntax checker
     * Adding support for parentheses    
