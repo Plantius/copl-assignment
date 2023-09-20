@@ -20,7 +20,7 @@ class token{
         int id;
         char tokenChar;
 
-};
+};// token
 
 class tokenList{
     public:
@@ -35,7 +35,7 @@ class tokenList{
     private:
         token* begin;
     
-};
+};// tokenList
 
 
 #endif

@@ -11,12 +11,13 @@ token::token(){
 }// default constructor
 
 
-
 // Default constructor
 tokenList::tokenList(){
     begin = nullptr;
 }// default constructor
 
+
+// Deletes the tokenList
 tokenList::~tokenList(){
     token* temp = begin;
     token* destructor = begin;
@@ -32,6 +33,8 @@ tokenList::~tokenList(){
     }
 }// destructor
 
+
+// Checks if the tokenList is empty
 bool tokenList::isEmpty(){
     if (begin != nullptr){
         return false;
@@ -40,6 +43,7 @@ bool tokenList::isEmpty(){
 }// isEmpty
 
 
+// Adds a token-object at the back of the tokenList
 bool tokenList::addToken(const int id, const char tokenChar){
     if(isEmpty()){
         token* newToken = new token;
