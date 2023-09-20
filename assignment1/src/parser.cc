@@ -52,11 +52,9 @@ void tokenSwitch(const char inputChar, tokenList* tList){
             cerr << "Failed to add token to the list" << endl;
         }
     }
-    
-
 }// tokenSwitch
 
-
+// Tokenizes the given string, and adds them to the given token list
 void stringTokenizer(const string input, tokenList* tList){
     int i = 0;
 
