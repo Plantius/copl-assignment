@@ -85,17 +85,20 @@ bool tokenValid(tokenList* tList){
             int tempTerug = tList->getToken(i-1) -> id;
             if (tempTerug == lpar){
                 cerr << "No variable or expression in parantheses." << endl;
+            int tempBack = tList -> getToken(i-1) -> id;
+            if (tempBack == lpar){
+                cout << "No variable or expression in parantheses." << endl;
                 return false;
             }
         }
 
          // Also the lambda expressions are checked (very efficient use of a for loop)
         if (tempToken == lambda){
-            int tempVerder = tList->getToken(i+1) -> id;
-            int tempNogVerder = tList->getToken(i+2) -> id; 
-            int tempToekomst = tList->getToken(i+3) -> id; // In the case the lambda expression uses a dot
-            if ((tempVerder != var) || (tempNogVerder == rpar)){
-                cerr << "Lambda expression incorect." << endl;
+            int tempNext = tList -> getToken(i+1) -> id;
+            int tempDoubleNext = tList -> getToken(i+2) -> id; 
+            int tempMoreNext = tList -> getToken(i+3) -> id; // In the case the lambda expression uses a dot
+            if ((tempNext != var) || (tempDoubleNext == rpar)){ // klopt nog niet want er moeten nog veel spaties tussen kunnen
+                cout << "Lambda expression incorect." << endl;
                 return false; 
 
             }
