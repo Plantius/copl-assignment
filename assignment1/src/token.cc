@@ -79,5 +79,5 @@ void tokenList::printList(){
     while(temp != nullptr){
         cout << temp->id << ":" << temp->tokenChar << " ";
         temp = temp->next;
-    }
-}
+    }cout << endl;
+}// printList
