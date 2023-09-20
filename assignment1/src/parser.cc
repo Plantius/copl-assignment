@@ -41,7 +41,7 @@ void tokenSwitch(const char inputChar, tokenList* tList){
                 cerr << "Failed to add token to the list" << endl;
             }
             break;
-        default:
+        default: 
 
             break;
     }
@@ -53,16 +53,28 @@ void tokenSwitch(const char inputChar, tokenList* tList){
             cerr << "Failed to add token to the list" << endl;
         }
     }
-    
-
 }// tokenSwitch
 
 
 bool tokenValid(tokenList* tList){
+
+    // RIGHT OF SYMBOL:
+    // LPAR: only VAR, LPAR, SPACE
+    // RPAR: only VAR, LPAR, RPAR, SPACE
+
+    // LEFT OF SYMBOL
+    // LPAR: only VAR, LPAR, RPAR, SPACE
+    // RPAR: only VAR, SPACE, RPAR
+
+    // cannot start with RPAR
+    
+    
+
     
 }
 
 
+// Tokenizes the given string, and adds them to the given token list
 void stringTokenizer(const string input, tokenList* tList){
     int i = 0;
 

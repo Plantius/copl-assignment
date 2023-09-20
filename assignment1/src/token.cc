@@ -17,7 +17,7 @@ tokenList::tokenList(){
 }// default constructor
 
 
-// Deletes the tokenList
+// Deletes the list of tokens
 tokenList::~tokenList(){
     token* temp = begin;
     token* destructor = begin;
@@ -79,5 +79,5 @@ void tokenList::printList(){
     while(temp != nullptr){
         cout << temp->id << ":" << temp->tokenChar << " ";
         temp = temp->next;
-    }
-}
+    }cout << endl;
+}// printList
