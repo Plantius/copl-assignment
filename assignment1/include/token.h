@@ -10,13 +10,16 @@
 #define TOKEN_H
 #include <iostream>
 
+const enum tokenId {lpar, rpar, lambda, var, space, dot};
+
 class token{
     public:
-        token* front;
         token();
-        token* back;
+        token* next;
+        token* prev;
 
     private:
+        int id;
         char tokenChar;
 
 };
@@ -24,16 +27,14 @@ class token{
 class tokenList{
     public:
         tokenList();
-
-        token* makeList();
+        
         bool addToken();
-
         bool isEmpty();
 
     private:
+        token* begin;
     
 };
 
-void stringTokenizer(const std::string input);
 
 #endif

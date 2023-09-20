@@ -11,8 +11,9 @@
 #include "../include/token.h"
 using namespace std;
 
-int main(){
+enum test { lpar, rpar, lambda, var};
 
+int main(){
     string input = ""; 
     getInput(input);
 
@@ -20,7 +21,6 @@ int main(){
         stringTokenizer(input);
         printCout(input);
     }
-    
     
     return 0;
 }// main

@@ -14,7 +14,7 @@ using namespace std;
 // until a newline or a carriage-return and newline character is met
 void getInput(string & input){
     char c = '$';
-    while (c != '\n' && c != '\r\n'){
+    while (c != '\n' && c != '\r'){
         c = getchar();
         input += c;
     }
