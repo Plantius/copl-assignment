@@ -67,13 +67,7 @@ void tokenSwitch(const char inputChar, tokenList* tList){
 
 
 bool tokenValid(tokenList* tList){
-    // RIGHT OF SYMBOL:
-    // LPAR: only VAR, LPAR, SPACE
-    // RPAR: only VAR, LPAR, RPAR, SPACE
-
-    // LEFT OF SYMBOL
-    // LPAR: only VAR, LPAR, RPAR, SPACE
-    // RPAR: only VAR, SPACE, RPAR
+    
 
     // First we're going to count the amount of parantheses
     int leftParCounter = 0;
@@ -85,8 +79,28 @@ bool tokenValid(tokenList* tList){
         if (tempToken == lpar){
             leftParCounter ++;
         }
+
+         // We're also checking whether the parantheses contain an expression or variable
+        // If there is a left paranthesis before the right one, then the parantheses are empty
         if ( tempToken == rpar){
             rightParCounter ++;
+            int tempTerug = tList -> getToken(i-1);
+            if (tempTerug == lpar){
+                cout << "No variable or expression in parantheses." << endl;
+                return false;
+            }
+        }
+
+         // Also the lambda expressions are checked (very efficient use of a for loop)
+        if (tempToken == lambda){
+            int tempVerder = tList -> getToken(j+1);
+            int tempNogVerder = tList -> getToken(j+2); 
+            int tempToekomst = tList -> getToken(j+3); // In the case the lambda expression uses a dot
+            if ((tempVerder != var) || (tempNogVerder == rpar)){
+                cout << "Lambda expression incorect." << endl;
+                return false; 
+
+            }
         }
     }
 
@@ -94,22 +108,10 @@ bool tokenValid(tokenList* tList){
         cout << "The token is invalid: not enough beginning/closing parantheses." << endl;
         return false;
     }
-
-    // Now we're checking whether the parantheses contain an expression or variable
-    for (int j = 0; j < size; j++){
-        int tempToken = tList -> getToken(j); // check ik later wel ff
-        if (tempToken == rpar){
-            int temp2 = tList -> getToken(j-1);
-            if (temp2 == lpar){
-                cout << "No variable or expression in parantheses." << endl;
-                return false;
-            }
-        }
-    }
     
 
     return true;    
-}
+} //tokenValid
 
 
 // Tokenizes the given string, and adds them to the given token list
