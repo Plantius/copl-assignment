@@ -1,3 +1,4 @@
+#include "../include/standard.h"
 #include "../include/parser.h"
 using namespace std;
 

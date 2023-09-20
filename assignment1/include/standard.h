@@ -10,6 +10,8 @@
 #define STANDARD_H
 #include <iostream>
 
+const enum tokenId {lpar, rpar, lambda, var, space, dot};
+
 // Reads input from stdin
 void getInput(std::string & input);
 

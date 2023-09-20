@@ -1,3 +1,4 @@
+#include "../include/standard.h"
 #include "../include/token.h"
 using namespace std;
 
@@ -24,6 +25,14 @@ bool tokenList::isEmpty(){
 }// isEmpty
 
 
-bool tokenList::addToken(){
+bool tokenList::addToken(const int id, const char tokenChar){
+    if(isEmpty()){
+        token* newToken = new token;
+        newToken->id = id;
+        newToken->tokenChar = tokenChar;
+        begin = newToken;
+    }else {
+        
+    }
 
 }// addToken

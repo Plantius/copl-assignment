@@ -10,15 +10,13 @@
 #define TOKEN_H
 #include <iostream>
 
-const enum tokenId {lpar, rpar, lambda, var, space, dot};
 
 class token{
     public:
         token();
         token* next;
         token* prev;
-
-    private:
+        
         int id;
         char tokenChar;
 
@@ -29,7 +27,7 @@ class tokenList{
         tokenList();
         ~tokenList();
 
-        bool addToken();
+        bool addToken(const int id, const char tokenChar);
         bool isEmpty();
 
     private:
