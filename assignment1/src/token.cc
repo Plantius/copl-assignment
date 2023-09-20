@@ -57,9 +57,12 @@ int tokenList::getLength(){
 
 // Returns the token-object at the given list index
 token* tokenList::getToken(const int index){
+    token* temp = begin;
+
     for(int i = 0; i < getLength(); i++){
-        
+        temp = temp->next;
     }
+    return temp;
 }// getToken
 
 
