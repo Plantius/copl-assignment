@@ -16,7 +16,7 @@ class token{
         token();
         token* next;
         token* prev;
-        
+
         int id;
         char tokenChar;
 
@@ -29,6 +29,8 @@ class tokenList{
 
         bool addToken(const int id, const char tokenChar);
         bool isEmpty();
+
+        void printList();
 
     private:
         token* begin;

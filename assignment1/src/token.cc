@@ -46,8 +46,22 @@ bool tokenList::addToken(const int id, const char tokenChar){
         newToken->id = id;
         newToken->tokenChar = tokenChar;
         begin = newToken;
-    }else {
 
+        return true;
+    }else {
+        token* temp = begin;
+        token* newToken = new token;
+        newToken->id = id;
+        newToken->tokenChar = tokenChar;
+        
+        if (temp->next != nullptr){
+            temp = temp->next;
+        }
+        temp->next = newToken;
+        newToken->prev = temp;
+
+        return true;
     }
 
+    return false;
 }// addToken
