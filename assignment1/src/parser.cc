@@ -33,7 +33,9 @@ void tokenSwitch(const string inputChar, tokenList* tList){
             break;
        }
 
-        //if(inputChar[i])
+        if((inputChar[i] >= 65 && inputChar[i] <= 90) || (inputChar[i] >=97 && inputChar[i] <= 122)){
+            
+        }
     }
 
 }// tokenSwitch
