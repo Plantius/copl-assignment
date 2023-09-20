@@ -54,7 +54,7 @@ bool tokenList::addToken(const int id, const char tokenChar){
         newToken->id = id;
         newToken->tokenChar = tokenChar;
         
-        if (temp->next != nullptr){
+        while (temp->next != nullptr){
             temp = temp->next;
         }
         temp->next = newToken;
