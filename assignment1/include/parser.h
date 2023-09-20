@@ -14,6 +14,9 @@
 // Adds a token to the list according to inputChar
 void tokenSwitch(const char inputChar, tokenList* tList);
 
+
+bool tokenValid (tokenList* tList);
+
 // Tokenizes the given string 
 void stringTokenizer(const std::string input, tokenList* tList);
 

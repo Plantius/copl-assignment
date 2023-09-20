@@ -1,5 +1,5 @@
 /**
-* Declaration of the string parser
+* Declaration of the token class
 * Niels Versteeg (s3322637)
 * Lana van Sprang (s3272192)
 * parser.h
