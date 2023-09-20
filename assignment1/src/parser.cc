@@ -1,7 +1,15 @@
 #include "../include/parser.h"
 using namespace std;
 
-void tokenSwitch(const char inputChar){
+void tokenSwitch(const string inputChar){
+    int i = 0;
+    while(inputChar[i] != '\0'){
+       switch(inputChar[i]):
+        case '(':
+            addToken();
+        case ')':
+            addToken();
+    }
 
 }// tokenSwitch
 
