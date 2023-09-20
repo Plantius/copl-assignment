@@ -94,7 +94,6 @@ bool tokenList::addToken(const int id, const char tokenChar){
 }// addToken
 
 
-
 // Prints the contents of tokenList to stdout
 void tokenList::printList(){
     token* temp = begin;

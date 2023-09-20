@@ -34,7 +34,6 @@ class tokenList{
         
         bool compNext(const int id);
         bool skipNext(token* walker);
-        token* valueNext(const int id);
 
         void printList();
 
