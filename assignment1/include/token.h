@@ -34,4 +34,6 @@ class tokenList{
     
 };
 
+void stringTokenizer(const std::string input);
+
 #endif

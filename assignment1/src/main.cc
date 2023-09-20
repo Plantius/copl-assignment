@@ -8,6 +8,7 @@
 
 #include "../include/standard.h"
 #include "../include/parser.h"
+#include "../include/token.h"
 using namespace std;
 
 int main(){
