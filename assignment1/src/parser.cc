@@ -75,7 +75,7 @@ bool tokenValid(tokenList* tList){
 
     int size = tList->getLength();
     for (int i = 0; i < size; i++){
-        int tempToken = tList->getToken(i)->id; // check ik later wel ff
+        int tempToken = tList->getToken(i)->id;
         if (tempToken == lpar){
             leftParCounter ++;
         }
@@ -84,7 +84,7 @@ bool tokenValid(tokenList* tList){
         // If there is a left paranthesis before the right one, then the parantheses are empty
         if ( tempToken == rpar){
             rightParCounter ++;
-            int tempTerug = tList -> getToken(i-1);
+            int tempTerug = tList -> getToken(i-1) -> id;
             if (tempTerug == lpar){
                 cout << "No variable or expression in parantheses." << endl;
                 return false;
@@ -93,9 +93,9 @@ bool tokenValid(tokenList* tList){
 
          // Also the lambda expressions are checked (very efficient use of a for loop)
         if (tempToken == lambda){
-            int tempVerder = tList -> getToken(j+1);
-            int tempNogVerder = tList -> getToken(j+2); 
-            int tempToekomst = tList -> getToken(j+3); // In the case the lambda expression uses a dot
+            int tempVerder = tList -> getToken(i+1) -> id;
+            int tempNogVerder = tList -> getToken(i+2) -> id; 
+            int tempToekomst = tList -> getToken(i+3) -> id; // In the case the lambda expression uses a dot
             if ((tempVerder != var) || (tempNogVerder == rpar)){
                 cout << "Lambda expression incorect." << endl;
                 return false; 
@@ -107,18 +107,6 @@ bool tokenValid(tokenList* tList){
     if (leftParCounter!=rightParCounter){
         cout << "The token is invalid: not enough beginning/closing parantheses." << endl;
         return false;
-    }
-
-    // Now we're checking whether the parantheses contain an expression or variable
-    for (int j = 0; j < size; j++){
-        int tempToken = tList->getToken(j)->id; // check ik later wel ff
-        if (tempToken == rpar){
-            int temp2 = tList->getToken(j-1)->id;
-            if (temp2 == lpar){
-                cout << "No variable or expression in parantheses." << endl;
-                return false;
-            }
-        }
     }
     
 
