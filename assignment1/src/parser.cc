@@ -81,6 +81,10 @@ bool tokenValid(tokenList* tList){
          // We're also checking whether the parantheses contain an expression or variable
         // If there is a left paranthesis before the right one, then the parantheses are empty
         if (tempToken == rpar){
+            if (i == 0){
+                cerr << "Invalid parantheses." << endl;
+                return false;
+            }
             rightParCounter ++;
             // int tempTerug = tList->getToken(i-1) -> id;
             // if (tempTerug == lpar){
