@@ -123,6 +123,6 @@ void stringTokenizer(const string input, tokenList* tList){
         tokenSwitch(input[i], tList);
         i++;
     }
-
+    cout << tokenValid(tList) << endl;
 
 }// stringTokenizer
