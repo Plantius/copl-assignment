@@ -49,7 +49,10 @@ void tokenSwitch(const string inputChar, tokenList* tList){
        }
 
         if((int(inputChar[i]) >= 65 && int(inputChar[i]) <= 90) || (int(inputChar[i]) >=97 && int(inputChar[i]) <= 122) || (int(inputChar[i]) >=48 && int(inputChar[i]) <= 57)){
-
+            id = var;
+            if(!tList -> addToken(id, inputChar[i])){
+                cerr << "Failed to add token to the list" << endl;
+            }
         }
     }
 
