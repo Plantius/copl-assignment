@@ -1,6 +1,10 @@
 #include "../include/parser.h"
 using namespace std;
 
+void tokenSwitch(const char inputChar){
+
+}// tokenSwitch
+
 
 
 void stringTokenizer(const string input){

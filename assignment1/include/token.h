@@ -27,7 +27,8 @@ class token{
 class tokenList{
     public:
         tokenList();
-        
+        ~tokenList();
+
         bool addToken();
         bool isEmpty();
 
