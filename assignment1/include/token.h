@@ -16,11 +16,11 @@ class token{
         token();
         token* next;
         token* prev;
-        
+
         int id;
         char tokenChar;
 
-};
+};// token
 
 class tokenList{
     public:
@@ -30,10 +30,12 @@ class tokenList{
         bool addToken(const int id, const char tokenChar);
         bool isEmpty();
 
+        void printList();
+
     private:
         token* begin;
     
-};
+};// tokenList
 
 
 #endif

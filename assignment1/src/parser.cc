@@ -16,19 +16,34 @@ void tokenSwitch(const string inputChar, tokenList* tList){
        switch(inputChar[i]){
         case '(':
             id = lpar; 
-            tList -> addToken(id, '(');
+            if(!tList -> addToken(id, '(')){
+                cerr << "Failed to add token to the list" << endl;
+            }
+            break;
         case ')':
             id = rpar;
-            tList -> addToken(id, ')');
+            if(!tList -> addToken(id, ')')){
+                cerr << "Failed to add token to the list" << endl;
+            }
+            break;
         case '\\':
             id = lambda;
-            tList -> addToken(id,'\\');
+            if(!tList -> addToken(id,'\\')){
+                cerr << "Failed to add token to the list" << endl;
+            }
+            break;
         case ' ':
             id = space;
-            tList -> addToken(id, ' ');
+            if(!tList -> addToken(id, ' ')){
+                cerr << "Failed to add token to the list" << endl;
+            }
+            break;
         case '.': 
             id = dot;
-            tList -> addToken(id, '.');
+            if(!tList -> addToken(id, '.')){
+                cerr << "Failed to add token to the list" << endl;
+            }
+            break;
         default:
             break;
        }
@@ -39,7 +54,6 @@ void tokenSwitch(const string inputChar, tokenList* tList){
     }
 
 }// tokenSwitch
-
 
 
 void stringTokenizer(const string input){

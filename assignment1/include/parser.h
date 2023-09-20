@@ -11,8 +11,10 @@
 #include <iostream>
 #include "../include/token.h"
 
+// Adds a token to the list according to inputChar
 void tokenSwitch(const std::string inputChar, tokenList* tList);
 
+// Tokenizes the given string 
 void stringTokenizer(const std::string input);
 
 #endif

@@ -14,13 +14,26 @@ using namespace std;
 enum test { lpar, rpar, lambda, var};
 
 int main(){
-    string input = ""; 
-    getInput(input);
+    tokenList* t = new tokenList;
+    t->addToken(0, '#');
+    t->addToken(0, '#');
+    t->addToken(0, '#');
+    t->addToken(0, '#');
+    t->addToken(0, '#');
+    t->addToken(0, '#');
+    t->addToken(0, '#');
+    t->addToken(0, '#');
 
-    if(validInput(input)){
-        stringTokenizer(input);
-        printCout(input);
-    }
+    t->printList();
+    delete t;
+
+    // string input = ""; 
+    // getInput(input);
+
+    // if(validInput(input)){
+    //     stringTokenizer(input);
+    //     printCout(input);
+    // }
     
     return 0;
 }// main
