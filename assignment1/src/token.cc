@@ -10,6 +10,9 @@ token::token(){
     tokenChar = '$';
 }// default constructor
 
+token::~token(){
+    
+}
 
 // Default constructor
 tokenList::tokenList(){
@@ -32,7 +35,7 @@ bool tokenList::addToken(const int id, const char tokenChar){
         newToken->tokenChar = tokenChar;
         begin = newToken;
     }else {
-        
+
     }
 
 }// addToken

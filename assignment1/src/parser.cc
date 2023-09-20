@@ -5,7 +5,7 @@ using namespace std;
 void tokenSwitch(const string inputChar){
     int i = 0;
     while(inputChar[i] != '\0'){
-       switch(inputChar[i]):
+       switch(inputChar[i]){
         case '(':
             addToken();
         case ')':
