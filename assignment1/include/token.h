@@ -28,6 +28,8 @@ class tokenList{
         ~tokenList();
 
         bool addToken(const int id, const char tokenChar);
+        token* getToken(const int index);
+        int getLength();
         bool isEmpty();
         
         bool compNext(const int id);

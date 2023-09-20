@@ -43,6 +43,26 @@ bool tokenList::isEmpty(){
 }// isEmpty
 
 
+// Returns the length of the list
+int tokenList::getLength(){
+    token* temp = begin;
+    int length = 0;
+
+    while (temp != nullptr){
+        temp = temp->next;
+        length++;
+    }
+    return length;
+}// getLength
+
+// Returns the token-object at the given list index
+token* tokenList::getToken(const int index){
+    for(int i = 0; i < getLength(); i++){
+        
+    }
+}// getToken
+
+
 // Adds a token-object at the back of the tokenList
 bool tokenList::addToken(const int id, const char tokenChar){
     if(isEmpty()){

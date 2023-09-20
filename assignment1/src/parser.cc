@@ -6,6 +6,16 @@ using namespace std;
 
 enum tokenId {lpar, rpar, lambda, var, space, dot};
 
+// Checks the given tokenList for syntax errors
+bool syntaxCheck(tokenList* tList){
+    int i = 0;
+
+    while (tList->getToken(i)){
+        
+    }
+}// syntaxCheck
+
+
 void tokenSwitch(const char inputChar, tokenList* tList){
     tokenId id;
 
@@ -82,5 +92,6 @@ void stringTokenizer(const string input, tokenList* tList){
         tokenSwitch(input[i], tList);
         i++;
     }
+
 
 }// stringTokenizer
