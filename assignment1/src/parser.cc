@@ -10,7 +10,9 @@ enum tokenId {lpar, rpar, lambda, var, space, dot};
 bool syntaxCheck(tokenList* tList){
     int i = 0;
 
-    while (tList->getToken(i))
+    while (tList->getToken(i)){
+        
+    }
 }// syntaxCheck
 
 
