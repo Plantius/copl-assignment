@@ -67,8 +67,6 @@ void tokenSwitch(const char inputChar, tokenList* tList){
 
 
 bool tokenValid(tokenList* tList){
-    
-
     // First we're going to count the amount of parantheses
     int leftParCounter = 0;
     int rightParCounter = 0;
@@ -84,20 +82,20 @@ bool tokenValid(tokenList* tList){
         // If there is a left paranthesis before the right one, then the parantheses are empty
         if ( tempToken == rpar){
             rightParCounter ++;
-            int tempTerug = tList -> getToken(i-1) -> id;
+            int tempTerug = tList->getToken(i-1) -> id;
             if (tempTerug == lpar){
-                cout << "No variable or expression in parantheses." << endl;
+                cerr << "No variable or expression in parantheses." << endl;
                 return false;
             }
         }
 
          // Also the lambda expressions are checked (very efficient use of a for loop)
         if (tempToken == lambda){
-            int tempVerder = tList -> getToken(i+1) -> id;
-            int tempNogVerder = tList -> getToken(i+2) -> id; 
-            int tempToekomst = tList -> getToken(i+3) -> id; // In the case the lambda expression uses a dot
+            int tempVerder = tList->getToken(i+1) -> id;
+            int tempNogVerder = tList->getToken(i+2) -> id; 
+            int tempToekomst = tList->getToken(i+3) -> id; // In the case the lambda expression uses a dot
             if ((tempVerder != var) || (tempNogVerder == rpar)){
-                cout << "Lambda expression incorect." << endl;
+                cerr << "Lambda expression incorect." << endl;
                 return false; 
 
             }
@@ -105,11 +103,10 @@ bool tokenValid(tokenList* tList){
     }
 
     if (leftParCounter!=rightParCounter){
-        cout << "The token is invalid: not enough beginning/closing parantheses." << endl;
+        cerr << "The token is invalid: not enough beginning/closing parantheses." << endl;
         return false;
     }
     
-
     return true;    
 } //tokenValid
 

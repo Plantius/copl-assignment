@@ -55,17 +55,16 @@ token* tokenList::getToken(const int index){
     token* temp = nullptr;
     
     if (index < int(length/2)){
-        temp = end;
-        for(int i = getLength(); i > index+1; i--){
-            temp = temp->prev;
-        }
-    }else {
         temp = begin;
-        for(int i = 0; i < getLength(); i++){
+        for(int i = 0; i < index; i++){
             temp = temp->next;
         }
+    }else {
+        temp = end;
+        for(int i = getLength()-1; i > index; i--){
+            temp = temp->prev;
+        }
     }
-    
     return temp;
 }// getToken
 
