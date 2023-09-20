@@ -24,6 +24,7 @@ int main(){
         // printCout(input);
         tList->printList();
     }
+    
     delete tList;
     return 0;
 }// main
