@@ -51,6 +51,8 @@ int tokenList::getLength(){
 }// getLength
 
 // Returns the token-object at the given list index
+// If the index is greater then half of the list length, the
+// walk is started from the end of the list, instead of the beginning
 token* tokenList::getToken(const int index){
     token* temp = nullptr;
     
