@@ -39,6 +39,8 @@ class tokenList{
 
     private:
         token* begin;
+        token* end;
+        int length;
     
 };// tokenList
 

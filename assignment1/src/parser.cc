@@ -79,7 +79,7 @@ bool tokenValid(tokenList* tList){
     int leftParCounter = 0;
     int rightParCounter = 0;
 
-    int size = tList -> getLength();
+    int size = tList->getLength();
     for (int i = 0; i < size; i++){
         int tempToken = tList->getToken(i)->id; // check ik later wel ff
         if (tempToken == lpar){
