@@ -12,9 +12,9 @@ void tokenSwitch(const string inputChar, tokenList* tList){
        switch(inputChar[i]){
         case '(':
             id = lpar; 
-            addToken(id, '(');
+            tList->addToken(id, '(');
         case ')':
-            addToken();
+            tList->addToken();
        }
     }
 
