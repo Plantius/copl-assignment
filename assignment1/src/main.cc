@@ -23,6 +23,8 @@ int main(){
     t->addToken(0, '#');
     t->addToken(0, '#');
     t->addToken(0, '#');
+
+    t->printList();
     delete t;
 
     // string input = ""; 

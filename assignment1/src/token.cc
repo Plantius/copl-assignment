@@ -69,3 +69,13 @@ bool tokenList::addToken(const int id, const char tokenChar){
 
     return false;
 }// addToken
+
+
+void tokenList::printList(){
+    token* temp = begin;
+    
+    while(temp != nullptr){
+        cout << temp->id << ":" << temp->tokenChar << endl;
+        temp = temp->next;
+    }
+}
