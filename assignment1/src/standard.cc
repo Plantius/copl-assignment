@@ -10,6 +10,13 @@
 #include "../include/standard.h"
 using namespace std;
 
+// Reads input from stdin and concatenates it to a string
+// until a newline or a carriage-return and newline character is met
+string getInput(){
+
+}// getInput
+
+// Checks if the given string contains only ASCII-characters
 bool validInput(const string input){
     int i = 0;
 
@@ -22,6 +29,7 @@ bool validInput(const string input){
     return true;
 }// valid_input
 
+// Prints the given string to stdout
 void printCout(const string input){
     cout << input << endl;
 }// print_cout

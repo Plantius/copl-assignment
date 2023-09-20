@@ -5,12 +5,10 @@ void stringTokenizer(const string input){
         
     int i = 0;
 
-    while(input[i] != '\0'){
-        if (input[i] != ' '){
-            if(!listEmpty()){
-                addToken();
-            }
-        }
-        i++;
-    }
+    // while(input[i] != '\0'){
+    //     if (input[i] != ' '){
+            
+    //     }
+    //     i++;
+    // }
 }// string_tokenizer

@@ -11,6 +11,9 @@
 using namespace std;
 
 int main(){
+
+    string input = getInput();
+
     for (string input; getline(cin, input);){
         if(validInput(input)){
             stringTokenizer(input);
