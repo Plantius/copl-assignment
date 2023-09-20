@@ -17,7 +17,7 @@ tokenList::tokenList(){
 }// default constructor
 
 
-// Deletes the tokenList
+// Deletes the list of tokens
 tokenList::~tokenList(){
     token* temp = begin;
     token* destructor = begin;

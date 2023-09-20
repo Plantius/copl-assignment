@@ -41,7 +41,7 @@ void tokenSwitch(const char inputChar, tokenList* tList){
                 cerr << "Failed to add token to the list" << endl;
             }
             break;
-        default:
+        default: 
 
             break;
     }
