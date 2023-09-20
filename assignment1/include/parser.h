@@ -11,7 +11,7 @@
 #include <iostream>
 #include "../include/token.h"
 
-void tokenSwitch(const string inputChar, tokenList* tList);
+void tokenSwitch(const std::string inputChar, tokenList* tList);
 
 void stringTokenizer(const std::string input);
 

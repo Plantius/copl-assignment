@@ -4,6 +4,8 @@
 
 using namespace std;
 
+enum tokenId {lpar, rpar, lambda, var, space, dot};
+
 void tokenSwitch(const string inputChar, tokenList* tList){
     int i = 0;
     tokenId id;

@@ -10,15 +10,27 @@ token::token(){
     tokenChar = '$';
 }// default constructor
 
-token::~token(){
-    
-}
+
 
 // Default constructor
 tokenList::tokenList(){
     begin = nullptr;
 }// default constructor
 
+tokenList::~tokenList(){
+    token* temp = begin;
+    token* destructor = begin;
+
+    if (temp != nullptr){
+        while (temp->next != nullptr){
+            temp = temp->next;
+            delete destructor;
+            destructor = temp;
+        }
+        delete temp;
+        begin = nullptr;
+    }
+}// destructor
 
 bool tokenList::isEmpty(){
     if (begin != nullptr){
