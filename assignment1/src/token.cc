@@ -14,6 +14,8 @@ token::token(){
 // Default constructor
 tokenList::tokenList(){
     begin = nullptr;
+    end = nullptr;
+    length = 0;
 }// default constructor
 
 
@@ -45,23 +47,25 @@ bool tokenList::isEmpty(){
 
 // Returns the length of the list
 int tokenList::getLength(){
-    token* temp = begin;
-    int length = 0;
-
-    while (temp != nullptr){
-        temp = temp->next;
-        length++;
-    }
     return length;
 }// getLength
 
 // Returns the token-object at the given list index
 token* tokenList::getToken(const int index){
-    token* temp = begin;
-
-    for(int i = 0; i < getLength(); i++){
-        temp = temp->next;
+    token* temp = nullptr;
+    
+    if (index < int(length/2)){
+        temp = end;
+        for(int i = getLength(); i > index+1; i--){
+            temp = temp->prev;
+        }
+    }else {
+        temp = begin;
+        for(int i = 0; i < getLength(); i++){
+            temp = temp->next;
+        }
     }
+    
     return temp;
 }// getToken
 
@@ -73,6 +77,8 @@ bool tokenList::addToken(const int id, const char tokenChar){
         newToken->id = id;
         newToken->tokenChar = tokenChar;
         begin = newToken;
+        end = newToken;
+        length++;
 
         return true;
     }else {
@@ -86,13 +92,14 @@ bool tokenList::addToken(const int id, const char tokenChar){
         }
         temp->next = newToken;
         newToken->prev = temp;
+        end = newToken;
+        length++;
 
         return true;
     }
 
     return false;
 }// addToken
-
 
 
 // Prints the contents of tokenList to stdout

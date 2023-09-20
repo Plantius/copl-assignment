@@ -15,7 +15,7 @@ enum test { lpar, rpar, lambda, var};
 
 int main(){
     tokenList * tList = new tokenList;
-
+    
     string input = ""; 
     getInput(input);
     

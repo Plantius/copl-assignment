@@ -73,9 +73,9 @@ bool tokenValid(tokenList* tList){
     int leftParCounter = 0;
     int rightParCounter = 0;
 
-    int size = tList -> getLength();
+    int size = tList->getLength();
     for (int i = 0; i < size; i++){
-        int tempToken = tList -> getToken(i); // check ik later wel ff
+        int tempToken = tList->getToken(i)->id; // check ik later wel ff
         if (tempToken == lpar){
             leftParCounter ++;
         }
@@ -107,6 +107,18 @@ bool tokenValid(tokenList* tList){
     if (leftParCounter!=rightParCounter){
         cout << "The token is invalid: not enough beginning/closing parantheses." << endl;
         return false;
+    }
+
+    // Now we're checking whether the parantheses contain an expression or variable
+    for (int j = 0; j < size; j++){
+        int tempToken = tList->getToken(j)->id; // check ik later wel ff
+        if (tempToken == rpar){
+            int temp2 = tList->getToken(j-1)->id;
+            if (temp2 == lpar){
+                cout << "No variable or expression in parantheses." << endl;
+                return false;
+            }
+        }
     }
     
 
