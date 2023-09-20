@@ -10,7 +10,7 @@
 #define PARSER_H
 #include <iostream>
 
-void tokenSwitch(const string inputChar);
+void tokenSwitch(const string inputChar, tokenList* tList);
 
 void stringTokenizer(const std::string input);
 
