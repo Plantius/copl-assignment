@@ -9,13 +9,29 @@ void tokenSwitch(const string inputChar, tokenList* tList){
     tokenId id;
 
     while(inputChar[i] != '\0'){
+
+        // for all the special characters
        switch(inputChar[i]){
         case '(':
             id = lpar; 
-            addToken(id, '(');
+            tList -> addToken(id, '(');
         case ')':
-            addToken();
+            id = rpar;
+            tList -> addToken(id, ')');
+        case '\\':
+            id = lambda;
+            tList -> addToken(id,'\\');
+        case ' ':
+            id = space;
+            tList -> addToken(id, ' ');
+        case '.': 
+            id = dot;
+            tList -> addToken(id, '.');
+        default:
+            break;
        }
+
+        //if(inputChar[i])
     }
 
 }// tokenSwitch
@@ -28,7 +44,7 @@ void stringTokenizer(const string input){
 
     while(input[i] != '\0'){
         if (input[i] != ' '){
-            
+            ``````````````````````````````````````````````````````````````````````````
         }
         i++;
     }
