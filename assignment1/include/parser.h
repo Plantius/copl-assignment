@@ -12,9 +12,9 @@
 #include "../include/token.h"
 
 // Adds a token to the list according to inputChar
-void tokenSwitch(const std::string inputChar, tokenList* tList);
+void tokenSwitch(const char inputChar, tokenList* tList);
 
 // Tokenizes the given string 
-void stringTokenizer(const std::string input);
+void stringTokenizer(const std::string input, tokenList* tList);
 
 #endif
