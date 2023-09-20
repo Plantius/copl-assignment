@@ -12,8 +12,12 @@ using namespace std;
 
 // Reads input from stdin and concatenates it to a string
 // until a newline or a carriage-return and newline character is met
-string getInput(){
-
+void getInput(string & input){
+    char c = '$';
+    while (c != '\n' && c != '\r\n'){
+        c = getchar();
+        input += c;
+    }
 }// getInput
 
 // Checks if the given string contains only ASCII-characters

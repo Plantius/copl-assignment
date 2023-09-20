@@ -12,14 +12,14 @@ using namespace std;
 
 int main(){
 
-    string input = getInput();
+    string input = ""; 
+    getInput(input);
 
-    for (string input; getline(cin, input);){
-        if(validInput(input)){
-            stringTokenizer(input);
-            printCout(input);
-        }
+    if(validInput(input)){
+        stringTokenizer(input);
+        printCout(input);
     }
+    
     
     return 0;
 }// main

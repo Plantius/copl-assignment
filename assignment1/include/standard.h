@@ -11,7 +11,7 @@
 #include <iostream>
 
 // Reads input from stdin
-std::string getInput();
+void getInput(std::string & input);
 
 // Reads a constant string and checks if it is valid, e.i. if
 // it only contains ASCII-characters
