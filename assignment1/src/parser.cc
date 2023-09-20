@@ -56,7 +56,6 @@ void tokenSwitch(const string inputChar, tokenList* tList){
 }// tokenSwitch
 
 
-
 void stringTokenizer(const string input){
     tokenList* tList = new tokenList;        
     int i = 0;
