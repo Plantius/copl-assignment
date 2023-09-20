@@ -25,6 +25,7 @@ Niels Versteeg (s3322637)
 Lana van Sprang (s3272192)
 
 ## TODO
+* Constructing LL grammar
 * Parser
     * Adding tokenization
     * Adding support for parentheses    
