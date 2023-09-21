@@ -5,7 +5,7 @@ using namespace std;
 
 enum tokenId {lpar, rpar, lambda, var, space, dot};
 
-
+// Checks what id the given inputChar has in tokenId
 void tokenSwitch(const char inputChar, int & id){
     // for all the special characters
     switch(inputChar){
@@ -35,13 +35,8 @@ void tokenSwitch(const char inputChar, int & id){
 }// tokenSwitch
 
 
-// Checks the given tokenList for syntax errors
+// Checks the syntax of the given token list
 bool syntaxCheck(tokenList* tList){
-   
-}// syntaxCheck
-
-
-bool tokenValid(tokenList* tList){
     // First we're going to count the amount of parantheses
     int leftParCounter = 0;
     int rightParCounter = 0;
@@ -125,4 +120,6 @@ void stringTokenizer(const string input, tokenList* tList){
             }
         }
     }
+
+    cout << syntaxCheck(tList) << endl;
 }// stringTokenizer
