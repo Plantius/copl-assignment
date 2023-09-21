@@ -10,7 +10,6 @@
 #define TOKEN_H
 #include <iostream>
 
-
 class token{
     public:
         token();
@@ -22,6 +21,7 @@ class token{
 
 };// token
 
+
 class tokenList{
     public:
         tokenList();
@@ -31,6 +31,7 @@ class tokenList{
         token* getToken(const int index);
         int getLength();
         bool isEmpty();
+        void clear();
         
         bool compNext(const int id);
         bool skipNext(token* walker);

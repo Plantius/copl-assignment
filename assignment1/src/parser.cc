@@ -90,7 +90,7 @@ bool syntaxCheck(tokenList* tList){
 
 
 // Tokenizes the given string, and adds them to the given token list
-void stringTokenizer(const string input, tokenList* tList){
+bool stringTokenizer(const string input, tokenList* tList){
     int id;
     string temp = "", singleChar = "";
     int size = input.length();
@@ -101,7 +101,10 @@ void stringTokenizer(const string input, tokenList* tList){
         tokenSwitch(input[i], id);
         // Checks if the input is a var, which can be of indefinete size
         if (id == var){ 
-            if (i < size-1){
+            if (temp.empty() && (int(input[i]) >=48 && int(input[i]) <= 57)){
+                cerr << "Variable name starts with a number." << endl;
+                return false;
+            }if (i < size-1){
                 int tempId = 0;
                 tokenSwitch(input[i+1], tempId);
                 if (tempId == var){
@@ -109,17 +112,16 @@ void stringTokenizer(const string input, tokenList* tList){
                 }else {
                     temp += input[i];
                     if(!tList -> addToken(id, temp)){
-                        cerr << "Failed to add token to the list" << endl;
+                        cerr << "Failed to add token to the list." << endl;
                     }
                     temp.clear();
                 }
             }
         }else {
             if(!(tList->addToken(id, singleChar))){
-                cerr << "Failed to add token to the list" << endl;
+                cerr << "Failed to add token to the list." << endl;
             }
         }
     }
-
-    cout << syntaxCheck(tList) << endl;
+    return syntaxCheck(tList);
 }// stringTokenizer

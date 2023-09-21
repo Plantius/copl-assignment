@@ -21,6 +21,10 @@ tokenList::tokenList(){
 
 // Deletes the list of tokens
 tokenList::~tokenList(){
+    clear();
+}// destructor
+
+void tokenList::clear(){
     token* temp = begin;
     token* destructor = begin;
 
@@ -33,7 +37,7 @@ tokenList::~tokenList(){
         delete temp;
         begin = nullptr;
     }
-}// destructor
+}
 
 
 // Checks if the tokenList is empty
