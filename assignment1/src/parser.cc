@@ -3,7 +3,7 @@
 #include "../include/token.h"
 using namespace std;
 
-enum tokenId {lpar, rpar, lambda, var, space, dot};
+enum tokenId {lpar, rpar, lambda, var, space, dot, invalid};
 
 // Checks what id the given inputChar has in tokenId
 void tokenSwitch(const char inputChar, int & id){
@@ -25,6 +25,7 @@ void tokenSwitch(const char inputChar, int & id){
             id = dot;
             break;
         default: 
+            id = invalid;
             break;
     }
     if ((int(inputChar) >= 65 && int(inputChar) <= 90) || 
@@ -52,7 +53,7 @@ bool syntaxCheck(tokenList* tList){
         // If there is a left paranthesis before the right one, then the parantheses are empty
         if (tempToken == rpar){
             if (i == 0){
-                cerr << "Invalid parantheses." << endl;
+                cerr << "The token is invalid: closing parantheses at start." << endl;
                 return false;
             }
             rightParCounter ++;
@@ -62,7 +63,7 @@ bool syntaxCheck(tokenList* tList){
             // }
             int tempBack = tList->getToken(i-1) -> id;
             if (tempBack == lpar){
-                cerr << "No variable or expression in parantheses." << endl;
+                cerr << "The token is invalid: no variable or expression in parantheses." << endl;
                 return false;
             }
         }
@@ -73,7 +74,7 @@ bool syntaxCheck(tokenList* tList){
             int tempDoubleNext = tList->getToken(i+2) -> id; 
             int tempMoreNext = tList->getToken(i+3) -> id; // In the case the lambda expression uses a dot
             if ((tempNext != var) || (tempDoubleNext == rpar)){ // klopt nog niet want er moeten nog veel spaties tussen kunnen
-                cerr << "Lambda expression incorect." << endl;
+                cerr << "The token is invalid: incomplete lambda-expression." << endl;
                 return false; 
 
             }
@@ -102,7 +103,7 @@ bool stringTokenizer(const string input, tokenList* tList){
         // Checks if the input is a var, which can be of indefinete size
         if (id == var){ 
             if (temp.empty() && (int(input[i]) >=48 && int(input[i]) <= 57)){
-                cerr << "Variable name starts with a number." << endl;
+                cerr << "The token is invalid: variable name starts with a number." << endl;
                 return false;
             }if (i < size-1){
                 int tempId = 0;
