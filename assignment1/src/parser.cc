@@ -99,10 +99,10 @@ void stringTokenizer(const string input, tokenList* tList){
     int id;
     string temp = "", singleChar = "";
     int size = input.length();
-    cout << size << endl;
+    
     for(int i = 0; i < size-1; i++){
         singleChar = input[i];
-        cout << int(input[i]) << endl;
+        
         tokenSwitch(input[i], id);
         // Checks if the input is a var, which can be of indefinete size
         if (id == var){ 
