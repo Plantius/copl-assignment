@@ -18,7 +18,7 @@ int main(){
     tokenList* tList = new tokenList;
 
     string input = ""; 
-    getInput(input);
+    getInput(input); 
     
     if(validInput(input)){
         t1 = clock();
