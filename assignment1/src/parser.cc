@@ -27,6 +27,11 @@ void tokenSwitch(const char inputChar, int & id){
         default: 
             break;
     }
+    if ((int(inputChar) >= 65 && int(inputChar) <= 90) || 
+            (int(inputChar) >=97 && int(inputChar) <= 122) || 
+                (int(inputChar) >=48 && int(inputChar) <= 57)){
+        id = var;
+    }
 }// tokenSwitch
 
 
@@ -97,13 +102,34 @@ void stringTokenizer(const string input, tokenList* tList){
 
     for(int i = 0; i < size; i++){
         singleChar = input[i];
+
+        tokenSwitch(input[i], id);
+        // Checks if the input is a var, which can be of indefinete size
+        if (id == var){ 
+            if (i < size-2){
+                int tempId = 0;
+                tokenSwitch(input[i+1], tempId);
+                if (tempId == var){
+                    temp += input[i];
+                }if (tempId == space){
+                    if(!tList -> addToken(tempId, temp)){
+                        cerr << "Failed to add token to the list" << endl;
+                    }
+                }
+            }
+            temp += input[i];
+            if(!tList -> addToken(id, temp)){
+                cerr << "Failed to add token to the list" << endl;
+            }
+        }
+
         // For the normal characters
         if((int(input[i]) >= 65 && int(input[i]) <= 90) || 
             (int(input[i]) >=97 && int(input[i]) <= 122) || 
                 (int(input[i]) >=48 && int(input[i]) <= 57)){
             id = var;
             temp += input[i];
-            if (i < size-1){
+            if (i+1 < size){
                 tokenSwitch(input[i+1], id);
                 if (id != space){
                     temp += input[i+1];
