@@ -15,7 +15,7 @@
 bool syntaxCheck(tokenList* tList);
 
 // Adds a token to the list according to inputChar
-void tokenSwitch(const char inputChar, tokenList* tList);
+void tokenSwitch(const char inputChar, int & id);
 
 bool tokenValid (tokenList* tList);
 

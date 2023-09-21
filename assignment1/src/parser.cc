@@ -1,72 +1,42 @@
 #include "../include/standard.h"
 #include "../include/parser.h"
 #include "../include/token.h"
-
 using namespace std;
 
 enum tokenId {lpar, rpar, lambda, var, space, dot};
 
-// Checks the given tokenList for syntax errors
-bool syntaxCheck(tokenList* tList){
-    int i = 0;
-
-    while (tList->getToken(i)){
-        
-    }
-}// syntaxCheck
-
-
-void tokenSwitch(const char inputChar, tokenList* tList){
-    tokenId id;
-
-    // Switch for the special characters
+// Checks what id the given inputChar has in tokenId
+void tokenSwitch(const char inputChar, int & id){
+    // for all the special characters
     switch(inputChar){
         case '(':
             id = lpar; 
-            if(!(tList->addToken(id, '('))){
-                cerr << "Failed to add token to the list" << endl;
-            }
             break;
         case ')':
             id = rpar;
-            if(!(tList->addToken(id, ')'))){
-                cerr << "Failed to add token to the list" << endl;
-            }
             break;
         case '\\':
             id = lambda;
-            if(!(tList->addToken(id,'\\'))){
-                cerr << "Failed to add token to the list" << endl;
-            }
             break;
         case ' ':
             id = space;
-            if(!(tList->addToken(id, ' '))){
-                cerr << "Failed to add token to the list" << endl;
-            }
             break;
         case '.': 
             id = dot;
-            if(!(tList->addToken(id, '.'))){
-                cerr << "Failed to add token to the list" << endl;
-            }
             break;
         default: 
-
             break;
     }
-
-    // For the normal characters
-    if((int(inputChar) >= 65 && int(inputChar) <= 90) || (int(inputChar) >=97 && int(inputChar) <= 122) || (int(inputChar) >=48 && int(inputChar) <= 57)){
+    if ((int(inputChar) >= 65 && int(inputChar) <= 90) || 
+            (int(inputChar) >=97 && int(inputChar) <= 122) || 
+                (int(inputChar) >=48 && int(inputChar) <= 57)){
         id = var;
-        if(!tList -> addToken(id, inputChar)){
-            cerr << "Failed to add token to the list" << endl;
-        }
     }
 }// tokenSwitch
 
 
-bool tokenValid(tokenList* tList){
+// Checks the syntax of the given token list
+bool syntaxCheck(tokenList* tList){
     // First we're going to count the amount of parantheses
     int leftParCounter = 0;
     int rightParCounter = 0;
@@ -121,12 +91,35 @@ bool tokenValid(tokenList* tList){
 
 // Tokenizes the given string, and adds them to the given token list
 void stringTokenizer(const string input, tokenList* tList){
-    int i = 0;
-
-    while(input[i] != '\0'){
-        tokenSwitch(input[i], tList);
-        i++;
+    int id;
+    string temp = "", singleChar = "";
+    int size = input.length();
+    
+    for(int i = 0; i < size-1; i++){
+        singleChar = input[i];
+        
+        tokenSwitch(input[i], id);
+        // Checks if the input is a var, which can be of indefinete size
+        if (id == var){ 
+            if (i < size-1){
+                int tempId = 0;
+                tokenSwitch(input[i+1], tempId);
+                if (tempId == var){
+                    temp += input[i];
+                }else {
+                    temp += input[i];
+                    if(!tList -> addToken(id, temp)){
+                        cerr << "Failed to add token to the list" << endl;
+                    }
+                    temp.clear();
+                }
+            }
+        }else {
+            if(!(tList->addToken(id, singleChar))){
+                cerr << "Failed to add token to the list" << endl;
+            }
+        }
     }
-    cout << tokenValid(tList) << endl;
 
+    cout << syntaxCheck(tList) << endl;
 }// stringTokenizer

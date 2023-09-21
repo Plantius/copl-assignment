@@ -7,7 +7,7 @@ token::token(){
     next = nullptr;
     prev = nullptr;
     id = 0;
-    tokenChar = '$';
+    tokenChar = "$";
 }// default constructor
 
 
@@ -72,7 +72,7 @@ token* tokenList::getToken(const int index){
 
 
 // Adds a token-object at the back of the tokenList
-bool tokenList::addToken(const int id, const char tokenChar){
+bool tokenList::addToken(const int id, const string tokenChar){
     if(isEmpty()){
         token* newToken = new token;
         newToken->id = id;

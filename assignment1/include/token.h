@@ -18,7 +18,7 @@ class token{
         token* prev;
 
         int id;
-        char tokenChar;
+        std::string tokenChar;
 
 };// token
 
@@ -27,7 +27,7 @@ class tokenList{
         tokenList();
         ~tokenList();
 
-        bool addToken(const int id, const char tokenChar);
+        bool addToken(const int id, const std::string tokenChar);
         token* getToken(const int index);
         int getLength();
         bool isEmpty();
