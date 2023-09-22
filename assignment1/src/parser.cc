@@ -75,21 +75,20 @@ bool syntaxCheck(tokenList* tList){
             if (tList->peekToken(k) != var){
                 cerr << "The token is invalid: no variable after lambda expression." << endl;
                 return false;
-            }k++;
+            }
             tList->skipToken(lpar, k);
             cout << "lpar "<<k << endl;
 
             tList->skipToken(space, k);
             cout << "space2 "<<k << endl;
             
-            if (tList->peekToken(k) == rpar){
-                cerr << "The token is invalid: no variable or expression in parantheses" << endl;
-                return false;
-            }
-            if (tList->peekToken(k) != var){
+            if (k == size-1 || !(tList->peekToken(k) == var || tList->peekToken(k) == lambda)){
                 cerr << "The token is invalid: no variable or expression after lambda expression" << endl;
                 return false;
-            }k++;
+            }if (tList->peekToken(k) == rpar){
+                cerr << "The token is invalid: no variable or expression after lambda expression" << endl;
+                return false;
+            }
         }
     }
 

@@ -69,6 +69,7 @@ int tokenList::peekToken(const int index){
 // Skips tokens of the given id
 void tokenList::skipToken(const int id, int & index){
     while (peekToken(index) == id){
+        cout << "TOKEN "<< peekToken(index) <<endl;
         index++;
     }
 }// skipToken
