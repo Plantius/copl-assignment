@@ -44,6 +44,10 @@ bool syntaxCheck(tokenList* tList){
     int size = tList->getLength();
     for (int i = 0; i < size; i++){
         int tempToken = tList->peekToken(i);
+        if (tempToken == invalid){
+            cerr << "Invalid token." << endl;
+            return false;
+        }
         
         if (tempToken == lpar){
             leftParCounter ++;
@@ -64,25 +68,22 @@ bool syntaxCheck(tokenList* tList){
 
          // Also the lambda expressions are checked (very efficient use of a for loop)
         if (tempToken == lambda){
-            int k = i;
-            while(tList->peekToken(k) == space){
-                if (k == size - 1){
-                    cerr << "The token is invalid: no variable or expression after lambda." << endl;
-                    return false;
-                }
-                k++;
-            }
+            int k = i+1;
+            tList->skipToken(space, k);
+            
             if (tList->peekToken(k) != var){
                 cerr << "The token is invalid: no variable after lambda expression." << endl;
                 return false;
-            }if (tList->peekToken(k+1))
-            int tempNext = tList->getToken(i+1) -> id;
-            int tempDoubleNext = tList->getToken(i+2) -> id; 
-            int tempMoreNext = tList->getToken(i+3) -> id; // In the case the lambda expression uses a dot
-            if ((tempNext != var) || (tempDoubleNext == rpar)){ // klopt nog niet want er moeten nog veel spaties tussen kunnen
-                cerr << "The token is invalid: incomplete lambda-expression." << endl;
-                return false; 
-
+            }
+            tList->skipToken(lpar, k);
+            tList->skipToken(space, k);
+            
+            if (tList->peekToken(k) == rpar){
+                cerr << "The token is invalid: no variable or expression in parantheses" << endl;
+                return false;
+            }if (tList->peekToken(k) != var){
+                cerr << "The token is invalid: no variable or expression after lambda expression" << endl;
+                return false;
             }
         }
     }
