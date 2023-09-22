@@ -30,3 +30,4 @@ Lana van Sprang (s3272192)
    * <del> Adding tokenization
    * Adding syntax checker
    * Adding support for parentheses    
+* Generalizing coding style

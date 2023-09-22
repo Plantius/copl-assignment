@@ -39,37 +39,43 @@ void tokenSwitch(const char inputChar, int & id){
 // Checks the syntax of the given token list
 bool syntaxCheck(tokenList* tList){
     // First we're going to count the amount of parantheses
-    int leftParCounter = 0;
-    int rightParCounter = 0;
+    int leftParCounter = 0, rightParCounter = 0;
 
     int size = tList->getLength();
     for (int i = 0; i < size; i++){
-        int tempToken = tList->getToken(i)->id;
+        int tempToken = tList->peekToken(i);
+        
         if (tempToken == lpar){
             leftParCounter ++;
         }
 
-         // We're also checking whether the parantheses contain an expression or variable
+        // We're also checking whether the parantheses contain an expression or variable
         // If there is a left paranthesis before the right one, then the parantheses are empty
         if (tempToken == rpar){
             if (i == 0){
                 cerr << "The token is invalid: closing parantheses at start." << endl;
                 return false;
-            }
-            rightParCounter ++;
-            // int tempTerug = tList->getToken(i-1) -> id;
-            // if (tempTerug == lpar){
-            //     cerr << "No variable or expression in parantheses." << endl;
-            // }
-            int tempBack = tList->getToken(i-1) -> id;
-            if (tempBack == lpar){
+            }if (tList->peekToken(i-1) == lpar){
                 cerr << "The token is invalid: no variable or expression in parantheses." << endl;
                 return false;
             }
+            rightParCounter ++;
         }
 
          // Also the lambda expressions are checked (very efficient use of a for loop)
         if (tempToken == lambda){
+            int k = i;
+            while(tList->peekToken(k) == space){
+                if (k == size - 1){
+                    cerr << "The token is invalid: no variable or expression after lambda." << endl;
+                    return false;
+                }
+                k++;
+            }
+            if (tList->peekToken(k) != var){
+                cerr << "The token is invalid: no variable after lambda expression." << endl;
+                return false;
+            }if (tList->peekToken(k+1))
             int tempNext = tList->getToken(i+1) -> id;
             int tempDoubleNext = tList->getToken(i+2) -> id; 
             int tempMoreNext = tList->getToken(i+3) -> id; // In the case the lambda expression uses a dot
