@@ -22,7 +22,7 @@ int main(){
     
     if(validInput(input)){
         t1 = clock();
-        cout << stringTokenizer(input, tList) << endl;
+        cout << "Valid: " <<stringTokenizer(input, tList) << endl;
         t2 = clock();
         cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << endl; 
         

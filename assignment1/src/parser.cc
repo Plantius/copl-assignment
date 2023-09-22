@@ -68,23 +68,28 @@ bool syntaxCheck(tokenList* tList){
 
          // Also the lambda expressions are checked (very efficient use of a for loop)
         if (tempToken == lambda){
+            cout << i << endl;
             int k = i+1;
             tList->skipToken(space, k);
-            
+            cout << "space "<<k << endl;
             if (tList->peekToken(k) != var){
                 cerr << "The token is invalid: no variable after lambda expression." << endl;
                 return false;
-            }
+            }k++;
             tList->skipToken(lpar, k);
+            cout << "lpar "<<k << endl;
+
             tList->skipToken(space, k);
+            cout << "space2 "<<k << endl;
             
             if (tList->peekToken(k) == rpar){
                 cerr << "The token is invalid: no variable or expression in parantheses" << endl;
                 return false;
-            }if (tList->peekToken(k) != var){
+            }
+            if (tList->peekToken(k) != var){
                 cerr << "The token is invalid: no variable or expression after lambda expression" << endl;
                 return false;
-            }
+            }k++;
         }
     }
 
