@@ -54,6 +54,13 @@ int tokenList::getLength(){
     return length;
 }// getLength
 
+
+// returns the token type of the token at the given index
+int tokenList::peekToken(const int index){
+    return getToken(index)->id;
+}// peekToken
+
+
 // Returns the token-object at the given list index
 // If the index is greater then half of the list length, the
 // walk is started from the end of the list, instead of the beginning

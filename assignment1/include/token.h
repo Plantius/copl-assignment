@@ -33,8 +33,7 @@ class tokenList{
         bool isEmpty();
         void clear();
         
-        bool compNext(const int id);
-        bool skipNext(token* walker);
+        int peekToken(const int index);
 
         void printList();
 
