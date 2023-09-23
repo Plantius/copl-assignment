@@ -85,7 +85,8 @@ bool syntaxCheck(tokenList* tList){
             if (k == size-1 || !(tList->peekToken(k) == var || tList->peekToken(k) == lambda)){
                 cerr << "The token is invalid: no variable or expression after lambda expression" << endl;
                 return false;
-            }if (tList->peekToken(k) == rpar){
+            }
+            if (k == size-1 || tList->peekToken(k) == rpar){
                 cerr << "The token is invalid: no variable or expression after lambda expression" << endl;
                 return false;
             }
