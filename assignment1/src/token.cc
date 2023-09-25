@@ -79,7 +79,7 @@ void tokenList::skipToken(const int id, int & index){
 // walk is started from the end of the list, instead of the beginning
 token* tokenList::getToken(const int index){
     token* temp = nullptr;
-    
+
     if (index < int(length/2)){
         temp = begin;
         for(int i = 0; i < index; i++){
@@ -130,7 +130,7 @@ bool tokenList::addToken(const int id, const string tokenChar){
 // Prints the contents of tokenList to stdout
 void tokenList::printList(){
     token* temp = begin;
-    
+
     while(temp != nullptr){
         cout << temp->id << ":" << temp->tokenChar << " ";
         temp = temp->next;
