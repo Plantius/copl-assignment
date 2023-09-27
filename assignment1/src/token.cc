@@ -77,7 +77,7 @@ bool tokenList::nextToken(const tokenId id, int &index){
 
 // Skips tokens of the given id
 void tokenList::skipToken(const tokenId id, int & index){
-    if (nextToken(id, index)){
+    while (nextToken(id, index)){
         index++;
     }
     

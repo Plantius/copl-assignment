@@ -82,10 +82,9 @@ bool expr1(int &index, tokenList* tList){
 
 bool fexpr(int &index, tokenList* tList){
     if(!parexpr(index, tList)){
-        return false;
-    }else {
-        if (tList -> peekToken(index)==lambda){
+        if (tList -> peekToken(index) == lambda){
             tList->skipToken(lambda, index);
+            tList->skipToken(space, index);
             if (!tList -> nextToken(var, index)){
                 cerr << "Syntax error: no variable after lambda expression" << endl;
                 return false;
@@ -101,12 +100,14 @@ bool parexpr(int &index, tokenList* tList){
     tList->skipToken(space, index);
     if ((tList -> peekToken(index) == lpar)){
         tList->skipToken(lpar, index);
+        tList->skipToken(space, index);
         expr(index, tList);
         tList->skipToken(space, index);
         tList->skipToken(rpar, index);
         return true;
     }
     else if (tList -> peekToken(index) == var){
+        cout << tList->getToken(index)->tokenChar << endl;
         return true;
     }
     return false;
