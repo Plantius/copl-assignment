@@ -21,15 +21,15 @@ void tokenSwitch(const char inputChar, int & id);
 bool stringTokenizer(const std::string input, tokenList* tList);
 
 // Expression
-void expr();
+void expr(int &index, tokenList* tList);
 
 // Expression'
-void expr1();
+void expr1(int &index, tokenList* tList);
 
 // Function expression
-void fexpr();
+void fexpr(int &index, tokenList* tList);
 
 // Parantheses expression
-void parexpr();
+bool parexpr(int &index, tokenList* tList);
 
 #endif

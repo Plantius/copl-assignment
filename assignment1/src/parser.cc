@@ -109,3 +109,38 @@ bool stringTokenizer(const string input, tokenList* tList){
     }
     return syntaxCheck(tList);
 }// stringTokenizer
+
+
+void expr(int &index, tokenList* tList){
+    fexpr(index, tList);
+    expr1(index, tList);
+}// expr
+
+void expr1(int &index, tokenList* tList){
+
+}
+
+
+void fexpr(int &index, tokenList* tList){
+
+    parexpr(index,tList);
+
+    if (tList -> peekToken(index)==lambda){
+        
+    }
+
+
+}
+
+bool parexpr(int &index, tokenList* tList){
+
+    if ((tList -> peekToken(index) == lpar) || (tList -> peekToken(index) == rpar)){
+        expr(index, tList);
+    }
+    else if (tList -> peekToken(index) == var){
+        return true;
+    }
+
+    return false;
+
+}
