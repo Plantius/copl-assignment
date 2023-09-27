@@ -79,14 +79,16 @@ bool expr1(int &index, tokenList* tList){
 
 bool fexpr(int &index, tokenList* tList){
     if(!parexpr(index, tList)){
-        if (tList -> peekToken(index) == lambda){
-            tList->skipToken(lambda, index);
-            while (tList -> nextToken(var, index)){
-                cout << tList->getToken(index)->tokenChar << endl;
-                index++;
+        if (!(index < 0 || index >= tList->getLength())){
+            if (tList -> peekToken(index) == lambda){
+                tList->skipToken(lambda, index);
+                while (tList -> nextToken(var, index)){
+                    cout << tList->getToken(index)->tokenChar << endl;
+                    index++;
+                }
+                
+                return fexpr(index, tList);
             }
-            
-            return fexpr(index, tList);
         }
     }else {
         return true;
@@ -95,16 +97,18 @@ bool fexpr(int &index, tokenList* tList){
 }
 
 bool parexpr(int &index, tokenList* tList){
-    if ((tList->peekToken(index) == lpar)){
-        tList->skipToken(lpar, index);
-        expr(index, tList);
-        tList->skipToken(rpar, index);
-        return true;
-    }
-    else if (tList -> peekToken(index) == var){
-        cout << tList->getToken(index)->tokenChar << endl;
-        index++;
-        return true;
+    if (!(index < 0 || index >= tList->getLength())){
+        if ((tList->peekToken(index) == lpar)){
+            tList->skipToken(lpar, index);
+            expr(index, tList);
+            tList->skipToken(rpar, index);
+            return true;
+        }
+        else if (tList -> peekToken(index) == var){
+            cout << tList->getToken(index)->tokenChar << endl;
+            index++;
+            return true;
+        }
     }
     return false;
 
