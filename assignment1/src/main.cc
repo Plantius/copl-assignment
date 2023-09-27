@@ -27,13 +27,6 @@ int main(){
         cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << endl; 
         
         t1 = clock();
-        for (int i = 0; i < tList->getLength(); i++){
-            cout << tList->getToken(i)->id << ":" << tList->getToken(i)->tokenChar << " "; 
-        }cout << endl;
-        t2 = clock();
-        cout << "GetToken " << (((double)(t2-t1))/CLOCKS_PER_SEC) << endl;
-        
-        t1 = clock();
         tList->printList();
         t2 = clock();
         cout << "printList " << (((double)(t2-t1))/CLOCKS_PER_SEC) << endl;
