@@ -55,8 +55,9 @@ int tokenList::getLength(){
 
 // Returns the token type of the token at the given index
 int tokenList::peekToken(const int index){
-    int tempToken = invalid;
     token* nextToken = getToken(index);
+    int tempToken = invalid;
+    
     if (nextToken != nullptr){
         tempToken = nextToken->id;
     }

@@ -32,36 +32,36 @@ void tokenSwitch(const char inputChar, tokenId & id){
 }// tokenSwitch
 
 
-// Checks the syntax of the given token list
-bool syntaxCheck(tokenList* tList){
-    // int index = 0;
-    // return expr(index, tList);
+// // Checks the syntax of the given token list
+// bool syntaxCheck(tokenList* tList){
+//     // int index = 0;
+//     // return expr(index, tList);
     
-    // int size = tList->getLength();
+//     // int size = tList->getLength();
     
 
-    // for (int i = 0; i < size; i++){
-    //     int tempToken = tList->peekToken(i);
-    //     if (tempToken == invalid){
-    //         cerr << "Invalid token." << endl;
-    //         return false;
-    //     }
+//     // for (int i = 0; i < size; i++){
+//     //     int tempToken = tList->peekToken(i);
+//     //     if (tempToken == invalid){
+//     //         cerr << "Invalid token." << endl;
+//     //         return false;
+//     //     }
 
-    //     // We're also checking whether the parantheses contain an expression or variable
-    //     // If there is a left paranthesis before the right one, then the parantheses are empty
-    //     if (tempToken == rpar){
-    //         if (i == 0){
-    //             cerr << "The token is invalid: closing parantheses at start." << endl;
-    //             return false;
-    //         }if (tList->peekToken(i-1) == lpar){
-    //             cerr << "The token is invalid: no variable or expression in parantheses." << endl;
-    //             return false;
-    //         }
-    //     }
-    // }
+//     //     // We're also checking whether the parantheses contain an expression or variable
+//     //     // If there is a left paranthesis before the right one, then the parantheses are empty
+//     //     if (tempToken == rpar){
+//     //         if (i == 0){
+//     //             cerr << "The token is invalid: closing parantheses at start." << endl;
+//     //             return false;
+//     //         }if (tList->peekToken(i-1) == lpar){
+//     //             cerr << "The token is invalid: no variable or expression in parantheses." << endl;
+//     //             return false;
+//     //         }
+//     //     }
+//     // }
     
-    // return true;    
-} //tokenValid
+//     // return true;    
+// } //tokenValid
 
 bool expr(int &index, tokenList* tList){
     bool result = false;
@@ -70,13 +70,15 @@ bool expr(int &index, tokenList* tList){
     return result;
 }// expr
 
+
 bool expr1(int &index, tokenList* tList){
     bool result = false;
     result = fexpr(index, tList) && expr1(index, tList);
     return result;
-}
+}// expr1
 
 
+// Checks if the token at the given index is a parexpr or a lambda expression
 bool fexpr(int &index, tokenList* tList){
     if(!parexpr(index, tList)){
         if (!(index < 0 || index >= tList->getLength())){
@@ -94,8 +96,10 @@ bool fexpr(int &index, tokenList* tList){
         return true;
     }
     return false;
-}
+}// fexpr
 
+
+// Checks if the token at the given index is a paranthesis or a variable
 bool parexpr(int &index, tokenList* tList){
     if (!(index < 0 || index >= tList->getLength())){
         if ((tList->peekToken(index) == lpar)){
@@ -112,7 +116,7 @@ bool parexpr(int &index, tokenList* tList){
     }
     return false;
 
-}
+}// parexpr
 
 
 // Tokenizes the given string, and adds them to the given token list
