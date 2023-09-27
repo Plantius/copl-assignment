@@ -17,9 +17,6 @@ void tokenSwitch(const char inputChar, tokenId & id){
         case '\\':
             id = lambda;
             break;
-        case ' ':
-            id = space;
-            break;
         case '.': 
             id = dot;
             break;
@@ -84,30 +81,27 @@ bool fexpr(int &index, tokenList* tList){
     if(!parexpr(index, tList)){
         if (tList -> peekToken(index) == lambda){
             tList->skipToken(lambda, index);
-            tList->skipToken(space, index);
             if (!tList -> nextToken(var, index)){
                 cerr << "Syntax error: no variable after lambda expression" << endl;
                 return false;
             }
-            fexpr(index, tList); 
-            return true;
+            
+            return fexpr(index, tList);
         }
     }
     return false;
 }
 
 bool parexpr(int &index, tokenList* tList){
-    tList->skipToken(space, index);
     if ((tList -> peekToken(index) == lpar)){
         tList->skipToken(lpar, index);
-        tList->skipToken(space, index);
         expr(index, tList);
-        tList->skipToken(space, index);
         tList->skipToken(rpar, index);
         return true;
     }
     else if (tList -> peekToken(index) == var){
         cout << tList->getToken(index)->tokenChar << endl;
+        index++;
         return true;
     }
     return false;
@@ -121,13 +115,15 @@ bool stringTokenizer(const string input, tokenList* tList){
     int lparCounter = 0, rparCounter = 0;
     int size = input.length();
     tokenId id = invalid;
-    string temp = "", singleChar = "";
+    string temp = "";
 
-    for(int i = 0; i < size-1; i++){
-        singleChar = input[i];
+    for(int i = 0; i < size; i++){
+        if (input[i] == ' ' || input[i] == '\n'){
+            continue;
+        }
         
         tokenSwitch(input[i], id);
-        // Checks if the input is a var, which can be of indefinete size
+        // Checks if the input is a var, which can be of indefinite size
         if (id == var){ 
             if (temp.empty() && (int(input[i]) >=48 && int(input[i]) <= 57)){
                 cerr << "The token is invalid: variable name starts with a number." << endl;
@@ -151,7 +147,7 @@ bool stringTokenizer(const string input, tokenList* tList){
             }if (id == rpar){
                 rparCounter++;
             }
-            if(!(tList->addToken(id, singleChar))){
+            if(!(tList->addToken(id, string(1, input[i])))){
                 cerr << "Failed to add token to the list." << endl;
             }
         }
