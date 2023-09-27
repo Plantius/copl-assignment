@@ -1,9 +1,8 @@
 #include "../include/standard.h"
 #include "../include/parser.h"
 #include "../include/token.h"
+#include "../include/tokenId.h"
 using namespace std;
-
-enum tokenId {lpar, rpar, lambda, var, space, dot, invalid};
 
 // Checks what id the given inputChar has in tokenId
 void tokenSwitch(const char inputChar, int & id){
@@ -64,28 +63,6 @@ bool syntaxCheck(tokenList* tList){
                 return false;
             }
             rightParCounter ++;
-        }
-
-         // Also the lambda expressions are checked (very efficient use of a for loop)
-        if (tempToken == lambda){
-            int k = i+1;
-            tList->skipToken(space, k);
-
-            if (tList->peekToken(k) != var){
-                cerr << "The token is invalid: no variable after lambda expression." << endl;
-                return false;
-            }
-            tList->skipToken(lpar, k);
-            tList->skipToken(space, k);
-            
-            if (k == size-1 || !(tList->peekToken(k) == var || tList->peekToken(k) == lambda)){
-                cerr << "The token is invalid: no variable or expression after lambda expression" << endl;
-                return false;
-            }
-            if (k == size-1 || tList->peekToken(k) == rpar){
-                cerr << "The token is invalid: no variable or expression after lambda expression" << endl;
-                return false;
-            }
         }
     }
 

@@ -1,12 +1,13 @@
 #include "../include/standard.h"
 #include "../include/token.h"
+#include "../include/tokenId.h"
 using namespace std;
 
 // Default constructor
 token::token(){
     next = nullptr;
     prev = nullptr;
-    id = 0;
+    id = invalid;
     tokenChar = "$";
 }// default constructor
 
@@ -57,7 +58,7 @@ int tokenList::getLength(){
 
 // returns the token type of the token at the given index
 int tokenList::peekToken(const int index){
-    int tempToken = 6;
+    int tempToken = invalid;
     if (getToken(index) != nullptr){
         tempToken = getToken(index)->id;
     }
