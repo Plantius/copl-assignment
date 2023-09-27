@@ -27,9 +27,9 @@ bool expr(int &index, tokenList* tList);
 bool expr1(int &index, tokenList* tList);
 
 // Function expression
-bool fexpr(int &index, tokenList* tList);
+bool functionExpr(int &index, tokenList* tList);
 
 // Parantheses expression
-bool parexpr(int &index, tokenList* tList);
+bool paranthesesExpr(int &index, tokenList* tList);
 
 #endif

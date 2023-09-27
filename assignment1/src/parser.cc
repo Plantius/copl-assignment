@@ -64,23 +64,18 @@ void tokenSwitch(const char inputChar, tokenId & id){
 // } //tokenValid
 
 bool expr(int &index, tokenList* tList){
-    bool result = false;
-    result = fexpr(index, tList) && expr1(index, tList);
-    
-    return result;
+    return functionExpr(index, tList) && expr1(index, tList);
 }// expr
 
 
 bool expr1(int &index, tokenList* tList){
-    bool result = false;
-    result = fexpr(index, tList) && expr1(index, tList);
-    return result;
+    return functionExpr(index, tList) && expr1(index, tList);
 }// expr1
 
 
 // Checks if the token at the given index is a parexpr or a lambda expression
-bool fexpr(int &index, tokenList* tList){
-    if(!parexpr(index, tList)){
+bool functionExpr(int &index, tokenList* tList){
+    if(!paranthesesExpr(index, tList)){
         if (!(index < 0 || index >= tList->getLength())){
             if (tList -> peekToken(index) == lambda){
                 tList->skipToken(lambda, index);
@@ -89,7 +84,7 @@ bool fexpr(int &index, tokenList* tList){
                     index++;
                 }
                 
-                return fexpr(index, tList);
+                return functionExpr(index, tList);
             }
         }
     }else {
@@ -100,7 +95,7 @@ bool fexpr(int &index, tokenList* tList){
 
 
 // Checks if the token at the given index is a paranthesis or a variable
-bool parexpr(int &index, tokenList* tList){
+bool paranthesesExpr(int &index, tokenList* tList){
     if (!(index < 0 || index >= tList->getLength())){
         if ((tList->peekToken(index) == lpar)){
             tList->skipToken(lpar, index);

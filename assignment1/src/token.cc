@@ -13,6 +13,15 @@ token::token(){
 
 
 // Default constructor
+token::token(const tokenId idToken, token* nextToken, token* prevToken, const std::string c){
+    next = nextToken;
+    prev = prevToken;
+    id = idToken;
+    tokenChar = c;
+}// default constructor
+
+
+// Default constructor
 tokenList::tokenList(){
     begin = nullptr;
     end = nullptr;
@@ -34,6 +43,7 @@ void tokenList::clear(){
         begin = temp;
         length--;
     }
+    begin = nullptr;
     end = nullptr;
 }
 
@@ -123,33 +133,25 @@ token* tokenList::getToken(const int index){
 // Adds a token-object at the back of the tokenList
 bool tokenList::addToken(const tokenId id, const string tokenChar){
     if(isEmpty()){
-        token* newToken = new token;
+        token* newToken = new token(id, nullptr, nullptr, tokenChar);
         if (newToken == nullptr){
             cerr << "Memory allocation failed" << endl;
             return false;
         }
-        newToken->id = id;
-        newToken->tokenChar = tokenChar;
         begin = newToken;
         end = newToken;
         length++;
 
         return true;
     }else {
-        token* temp = begin;
-        token* newToken = new token;
+        token* temp = end;
+
+        token* newToken = new token(id, nullptr, end, tokenChar);
         if (newToken == nullptr){
             cerr << "Memory allocation failed" << endl;
             return false;
         }
-        newToken->id = id;
-        newToken->tokenChar = tokenChar;
-        
-        while (temp->next != nullptr){
-            temp = temp->next;
-        }
         temp->next = newToken;
-        newToken->prev = temp;
         end = newToken;
         length++;
 

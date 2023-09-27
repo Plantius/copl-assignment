@@ -14,6 +14,7 @@
 class token{
     public:
         token();
+        token(const tokenId id, token* next, token* prev, const std::string tokenChar);
         token* next;
         token* prev;
 
