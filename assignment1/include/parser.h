@@ -15,7 +15,7 @@
 bool syntaxCheck(tokenList* tList);
 
 // Adds a token to the list according to inputChar
-void tokenSwitch(const char inputChar, int & id);
+void tokenSwitch(const char inputChar, tokenId & id);
 
 // Tokenizes the given string 
 bool stringTokenizer(const std::string input, tokenList* tList);

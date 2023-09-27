@@ -68,7 +68,7 @@ int tokenList::peekToken(const int index){
 
 
 // Checks if the given id is equal to to token at the given index
-bool tokenList::nextToken(const int id, int &index){
+bool tokenList::nextToken(const tokenId id, int &index){
     if (peekToken(index) != id || index >= length){
         return false;
     }
@@ -77,7 +77,7 @@ bool tokenList::nextToken(const int id, int &index){
 
 
 // Skips tokens of the given id
-void tokenList::skipToken(const int id, int & index){
+void tokenList::skipToken(const tokenId id, int & index){
     if (nextToken(id, index)){
         index++;
     }
@@ -117,7 +117,7 @@ token* tokenList::getToken(const int index){
 
 
 // Adds a token-object at the back of the tokenList
-bool tokenList::addToken(const int id, const string tokenChar){
+bool tokenList::addToken(const tokenId id, const string tokenChar){
     if(isEmpty()){
         token* newToken = new token;
         if (newToken == nullptr){

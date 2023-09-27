@@ -5,7 +5,7 @@
 using namespace std;
 
 // Checks what id the given inputChar has in tokenId
-void tokenSwitch(const char inputChar, int & id){
+void tokenSwitch(const char inputChar, tokenId & id){
     // for all the special characters
     switch(inputChar){
         case '(':
@@ -97,7 +97,7 @@ bool fexpr(int &index, tokenList* tList){
 }
 
 bool parexpr(int &index, tokenList* tList){
-    // tList->skipToken(space, index);
+    tList->skipToken(space, index);
     if ((tList -> peekToken(index) == lpar)){
         tList->skipToken(lpar, index);
         expr(index, tList);
@@ -115,9 +115,10 @@ bool parexpr(int &index, tokenList* tList){
 
 // Tokenizes the given string, and adds them to the given token list
 bool stringTokenizer(const string input, tokenList* tList){
-    int index = 0, id = invalid;
+    int index = 0;
     int lparCounter = 0, rparCounter = 0;
     int size = input.length();
+    tokenId id = invalid;
     string temp = "", singleChar = "";
 
     for(int i = 0; i < size-1; i++){
@@ -130,7 +131,7 @@ bool stringTokenizer(const string input, tokenList* tList){
                 cerr << "The token is invalid: variable name starts with a number." << endl;
                 return false;
             }if (i < size-1){
-                int tempId = 0;
+                tokenId tempId = invalid;
                 tokenSwitch(input[i+1], tempId);
                 if (tempId == var){
                     temp += input[i];
@@ -158,6 +159,6 @@ bool stringTokenizer(const string input, tokenList* tList){
         return false;
     }
     cout << tList->getLength() << endl;
-    expr(index, tList);
+    // expr(index, tList);
     return false;
 }// stringTokenizer

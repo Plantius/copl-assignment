@@ -9,6 +9,7 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 #include <iostream>
+#include "../include/tokenId.h"
 
 class token{
     public:
@@ -16,7 +17,7 @@ class token{
         token* next;
         token* prev;
 
-        int id;
+        tokenId id;
         std::string tokenChar;
 
 };// token
@@ -27,15 +28,15 @@ class tokenList{
         tokenList();
         ~tokenList();
 
-        bool addToken(const int id, const std::string tokenChar);
+        bool addToken(const tokenId id, const std::string tokenChar);
         token* getToken(const int index);
         int getLength();
         bool isEmpty();
         void clear();
         
         int peekToken(const int index);
-        bool nextToken(const int id, int &index);
-        void skipToken(const int id, int &index);
+        bool nextToken(const tokenId id, int &index);
+        void skipToken(const tokenId id, int &index);
         void printList();
 
     private:

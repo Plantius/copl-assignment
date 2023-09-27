@@ -11,8 +11,6 @@
 #include "../include/token.h"
 using namespace std;
 
-enum test { lpar, rpar, lambda, var};
-
 int main(){
     clock_t t1, t2;
     tokenList* tList = new tokenList;
