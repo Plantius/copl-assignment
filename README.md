@@ -5,8 +5,8 @@ A parser written in C++ for the untyped $\lambda$-calculus.
 ## Description
 
 
-### Installing
-Execute the following code in a Unix command terminal in a location of your choice:
+## Installing
+Build the project using the MakeFile:
 ```
 make
 ```
@@ -16,12 +16,13 @@ The included makefile will build the project into a binary file.
 ### Executing program
 The binary file is located in the */bin* folder, and can be executed with the following code snippet:
 ```
-./bin/lambda
+./bin/stack
 ```
 
 ## Authors
 
 Niels Versteeg (s3322637)
+
 Lana van Sprang (s3272192)
 
 ## TODO
