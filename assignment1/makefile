@@ -1,6 +1,6 @@
-CC = g++ -g
+CC = g++
 
-PARAMETERS = -Wall -Wextra -Wpedantic
+PARAMETERS = -Wall -Wextra -Wpedantic -g
 
 SRC_DIR = ./src
 OBJ_DIR = ./obj

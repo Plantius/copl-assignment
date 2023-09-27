@@ -33,7 +33,7 @@ class tokenList{
         bool isEmpty();
         void clear();
         
-        int peekToken(int & index);
+        int peekToken(const int index);
         bool nextToken(const int id, int &index);
         void skipToken(const int id, int &index);
         void printList();

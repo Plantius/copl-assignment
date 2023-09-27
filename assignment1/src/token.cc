@@ -29,15 +29,14 @@ void tokenList::clear(){
     token* temp = begin;
     token* destructor = begin;
 
-    if (temp != nullptr){
-        while (temp->next != nullptr){
-            temp = temp->next;
-            delete destructor;
-            destructor = temp;
-        }
-        delete temp;
-        begin = nullptr;
+    while (temp != nullptr){
+        temp = temp->next;
+        delete destructor;
+        destructor = temp;
+        length--;
     }
+    begin = nullptr;
+    
 }
 
 
@@ -57,10 +56,11 @@ int tokenList::getLength(){
 
 
 // Returns the token type of the token at the given index
-int tokenList::peekToken(int & index){
+int tokenList::peekToken(const int index){
     int tempToken = invalid;
-    if (getToken(index) != nullptr){
-        tempToken = getToken(index)->id;
+    token* nextToken = getToken(index);
+    if (nextToken != nullptr){
+        tempToken = nextToken->id;
     }
 
     return tempToken;
@@ -69,7 +69,7 @@ int tokenList::peekToken(int & index){
 
 // Checks if the given id is equal to to token at the given index
 bool tokenList::nextToken(const int id, int &index){
-    if (peekToken(index) != id){
+    if (peekToken(index) != id || index >= length){
         return false;
     }
     return true;
@@ -94,12 +94,22 @@ token* tokenList::getToken(const int index){
     if (index < int(length/2)){
         temp = begin;
         for(int i = 0; i < index; i++){
-            temp = temp->next;
+            if (temp != nullptr){
+                temp = temp->next;
+            }else {
+                cerr << "Index out of bounds" << endl;
+                return temp;
+            }   
         }
     }else {
         temp = end;
         for(int i = getLength()-1; i > index; i--){
-            temp = temp->prev;
+            if (temp != nullptr){
+                temp = temp->prev;
+            }else {
+                cerr << "Index out of bounds" << endl;
+                return temp;
+            }
         }
     }
     return temp;
@@ -110,6 +120,10 @@ token* tokenList::getToken(const int index){
 bool tokenList::addToken(const int id, const string tokenChar){
     if(isEmpty()){
         token* newToken = new token;
+        if (newToken == nullptr){
+            cerr << "Memory allocation failed" << endl;
+            return false;
+        }
         newToken->id = id;
         newToken->tokenChar = tokenChar;
         begin = newToken;
@@ -120,6 +134,10 @@ bool tokenList::addToken(const int id, const string tokenChar){
     }else {
         token* temp = begin;
         token* newToken = new token;
+        if (newToken == nullptr){
+            cerr << "Memory allocation failed" << endl;
+            return false;
+        }
         newToken->id = id;
         newToken->tokenChar = tokenChar;
         

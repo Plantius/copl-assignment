@@ -66,6 +66,52 @@ bool syntaxCheck(tokenList* tList){
     // return true;    
 } //tokenValid
 
+bool expr(int &index, tokenList* tList){
+    bool result = false;
+    result = fexpr(index, tList);
+    result = expr1(index, tList);
+    return result;
+}// expr
+
+bool expr1(int &index, tokenList* tList){
+    bool result = false;
+    result = fexpr(index, tList);
+    result = expr1(index, tList);
+    return result;
+}
+
+
+bool fexpr(int &index, tokenList* tList){
+    if(!parexpr(index, tList)){
+        if (tList -> peekToken(index)==lambda){
+            tList->skipToken(lambda, index);
+            if (!tList -> nextToken(var, index)){
+                cerr << "Syntax error: no variable after lambda expression" << endl;
+                return false;
+            }
+            fexpr(index, tList); 
+        }
+    }
+    return true;
+
+}
+
+bool parexpr(int &index, tokenList* tList){
+    // tList->skipToken(space, index);
+    if ((tList -> peekToken(index) == lpar)){
+        tList->skipToken(lpar, index);
+        expr(index, tList);
+        tList->skipToken(space, index);
+        tList->skipToken(rpar, index);
+        return true;
+    }
+    else if (tList -> peekToken(index) == var){
+        return true;
+    }
+    return false;
+
+}
+
 
 // Tokenizes the given string, and adds them to the given token list
 bool stringTokenizer(const string input, tokenList* tList){
@@ -111,51 +157,7 @@ bool stringTokenizer(const string input, tokenList* tList){
         cerr << "The token is invalid: not enough beginning/closing parantheses." << endl;
         return false;
     }
-    return expr(index, tList);
-}// stringTokenizer
-
-
-bool expr(int &index, tokenList* tList){
-    bool result = false;
-    result = fexpr(index, tList);
-    result = expr1(index, tList);
-    return result;
-}// expr
-
-bool expr1(int &index, tokenList* tList){
-    bool result = false;
-    result = fexpr(index, tList);
-    result = expr1(index, tList);
-    return result;
-}
-
-
-bool fexpr(int &index, tokenList* tList){
-    if(!parexpr(index, tList)){
-        if (tList -> peekToken(index)==lambda){
-            tList->skipToken(lambda, index);
-            if (!tList -> nextToken(var, index)){
-                cerr << "Syntax error: no variable after lambda expression" << endl;
-                return false;
-            }
-            fexpr(index, tList); 
-        }
-    }
-    return true;
-
-}
-
-bool parexpr(int &index, tokenList* tList){
-    // tList->skipToken(space, index);
-    if ((tList -> peekToken(index) == lpar)){
-        tList->skipToken(lpar, index);
-        expr(index, tList);
-        tList->skipToken(space, index);
-        tList->skipToken(rpar, index);
-    }
-    else if (tList -> peekToken(index) == var){
-        return true;
-    }
+    cout << tList->getLength() << endl;
+    expr(index, tList);
     return false;
-
-}
+}// stringTokenizer
