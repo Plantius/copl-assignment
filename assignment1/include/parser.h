@@ -11,9 +11,6 @@
 #include <iostream>
 #include "../include/token.h"
 
-// Checks the given tokenlist for syntax errors
-bool syntaxCheck(tokenList* tList);
-
 // Adds a token to the list according to inputChar
 void tokenSwitch(const char inputChar, tokenId & id);
 

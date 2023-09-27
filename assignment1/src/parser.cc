@@ -31,38 +31,6 @@ void tokenSwitch(const char inputChar, tokenId & id){
     }
 }// tokenSwitch
 
-
-// // Checks the syntax of the given token list
-// bool syntaxCheck(tokenList* tList){
-//     // int index = 0;
-//     // return expr(index, tList);
-    
-//     // int size = tList->getLength();
-    
-
-//     // for (int i = 0; i < size; i++){
-//     //     int tempToken = tList->peekToken(i);
-//     //     if (tempToken == invalid){
-//     //         cerr << "Invalid token." << endl;
-//     //         return false;
-//     //     }
-
-//     //     // We're also checking whether the parantheses contain an expression or variable
-//     //     // If there is a left paranthesis before the right one, then the parantheses are empty
-//     //     if (tempToken == rpar){
-//     //         if (i == 0){
-//     //             cerr << "The token is invalid: closing parantheses at start." << endl;
-//     //             return false;
-//     //         }if (tList->peekToken(i-1) == lpar){
-//     //             cerr << "The token is invalid: no variable or expression in parantheses." << endl;
-//     //             return false;
-//     //         }
-//     //     }
-//     // }
-    
-//     // return true;    
-// } //tokenValid
-
 bool expr(int &index, tokenList* tList){
     return functionExpr(index, tList) && expr1(index, tList);
 }// expr
