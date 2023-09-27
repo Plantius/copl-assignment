@@ -32,7 +32,7 @@ Lana van Sprang (s3272192)
    * Adding syntax checker   
 * Generalizing coding style
 
-### LL Grammar
+## LL Grammar
 ```
 <expr> ::= <fexpr> <expr1>
 <expr1> ::-= <fexpr> <expr1> | emptystring

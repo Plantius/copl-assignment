@@ -56,7 +56,7 @@ int tokenList::getLength(){
 }// getLength
 
 
-// returns the token type of the token at the given index
+// Returns the token type of the token at the given index
 int tokenList::peekToken(const int index){
     int tempToken = invalid;
     if (getToken(index) != nullptr){
@@ -67,11 +67,21 @@ int tokenList::peekToken(const int index){
 }// peekToken
 
 
+// Checks if the given id is equal to to token at the given index
+bool tokenList::nextToken(const int id, int &index){
+    if (peekToken(index) != id){
+        return false;
+    }
+    return true;
+}// nextToken
+
+
 // Skips tokens of the given id
 void tokenList::skipToken(const int id, int & index){
-    while (peekToken(index) == id){
+    if (nextToken(id, index)){
         index++;
     }
+    
 }// skipToken
 
 

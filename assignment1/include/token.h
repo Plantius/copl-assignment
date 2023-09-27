@@ -34,7 +34,8 @@ class tokenList{
         void clear();
         
         int peekToken(const int index);
-        void skipToken(const int id, int & index);
+        bool nextToken(const int id, int &index);
+        void skipToken(const int id, int &index);
         void printList();
 
     private:
