@@ -33,7 +33,9 @@ Lana van Sprang (s3272192)
 * Generalizing coding style
 
 ### LL Grammar
+```
 <expr> ::= <fexpr> <expr1>
 <expr1> ::-= <fexpr> <expr1> | emptystring
 <fexpr> ::= <parexpr> | '\'<var> <fexpr>
 <parexpr> ::= <var> | '('<expr>')'
+```
