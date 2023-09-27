@@ -35,7 +35,6 @@ void tokenList::clear(){
         length--;
     }
     end = nullptr;
-    
 }
 
 
