@@ -68,21 +68,22 @@ bool syntaxCheck(tokenList* tList){
 
 bool expr(int &index, tokenList* tList){
     bool result = false;
-    result = fexpr(index, tList);
-    result = expr1(index, tList);
+    result = fexpr(index, tList) && expr1(index, tList);
+    
     return result;
 }// expr
 
 bool expr1(int &index, tokenList* tList){
     bool result = false;
-    result = fexpr(index, tList);
-    result = expr1(index, tList);
+    result = fexpr(index, tList) && expr1(index, tList);
     return result;
 }
 
 
 bool fexpr(int &index, tokenList* tList){
     if(!parexpr(index, tList)){
+        return false;
+    }else {
         if (tList -> peekToken(index)==lambda){
             tList->skipToken(lambda, index);
             if (!tList -> nextToken(var, index)){
@@ -90,10 +91,10 @@ bool fexpr(int &index, tokenList* tList){
                 return false;
             }
             fexpr(index, tList); 
+            return true;
         }
     }
-    return true;
-
+    return false;
 }
 
 bool parexpr(int &index, tokenList* tList){
@@ -158,7 +159,6 @@ bool stringTokenizer(const string input, tokenList* tList){
         cerr << "The token is invalid: not enough beginning/closing parantheses." << endl;
         return false;
     }
-    cout << tList->getLength() << endl;
-    // expr(index, tList);
-    return false;
+    
+    return expr(index, tList);
 }// stringTokenizer

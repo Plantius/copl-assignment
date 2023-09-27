@@ -27,15 +27,14 @@ tokenList::~tokenList(){
 
 void tokenList::clear(){
     token* temp = begin;
-    token* destructor = begin;
 
     while (temp != nullptr){
         temp = temp->next;
-        delete destructor;
-        destructor = temp;
+        delete begin;
+        begin = temp;
         length--;
     }
-    begin = nullptr;
+    end = nullptr;
     
 }
 
@@ -90,7 +89,12 @@ void tokenList::skipToken(const tokenId id, int & index){
 // walk is started from the end of the list, instead of the beginning
 token* tokenList::getToken(const int index){
     token* temp = nullptr;
-    // cout << int(length/2) << " "<<index << endl;
+
+    if (index < 0 || index >= length){
+        cerr << "Index out of bounds" << endl;
+        return temp;
+    }
+
     if (index < int(length/2)){
         temp = begin;
         for(int i = 0; i < index; i++){
