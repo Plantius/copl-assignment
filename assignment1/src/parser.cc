@@ -37,19 +37,13 @@ void tokenSwitch(const char inputChar, int & id){
 
 // Checks the syntax of the given token list
 bool syntaxCheck(tokenList* tList){
-    // First we're going to count the amount of parantheses
-    int leftParCounter = 0, rightParCounter = 0;
-
     int size = tList->getLength();
+    
     for (int i = 0; i < size; i++){
         int tempToken = tList->peekToken(i);
         if (tempToken == invalid){
             cerr << "Invalid token." << endl;
             return false;
-        }
-        
-        if (tempToken == lpar){
-            leftParCounter ++;
         }
 
         // We're also checking whether the parantheses contain an expression or variable
@@ -62,13 +56,7 @@ bool syntaxCheck(tokenList* tList){
                 cerr << "The token is invalid: no variable or expression in parantheses." << endl;
                 return false;
             }
-            rightParCounter ++;
         }
-    }
-
-    if (leftParCounter!=rightParCounter){
-        cerr << "The token is invalid: not enough beginning/closing parantheses." << endl;
-        return false;
     }
     
     return true;    
@@ -77,10 +65,11 @@ bool syntaxCheck(tokenList* tList){
 
 // Tokenizes the given string, and adds them to the given token list
 bool stringTokenizer(const string input, tokenList* tList){
-    int id;
-    string temp = "", singleChar = "";
+    int id = invalid;
+    int lparCounter = 0, rparCounter = 0;
     int size = input.length();
-    
+    string temp = "", singleChar = "";
+
     for(int i = 0; i < size-1; i++){
         singleChar = input[i];
         
@@ -104,10 +93,19 @@ bool stringTokenizer(const string input, tokenList* tList){
                 }
             }
         }else {
+            if (id == lpar){
+                lparCounter++;
+            }if (id == rpar){
+                rparCounter++;
+            }
             if(!(tList->addToken(id, singleChar))){
                 cerr << "Failed to add token to the list." << endl;
             }
         }
+    }
+    if (lparCounter != rparCounter){
+        cerr << "The token is invalid: not enough beginning/closing parantheses." << endl;
+        return false;
     }
     return syntaxCheck(tList);
 }// stringTokenizer
