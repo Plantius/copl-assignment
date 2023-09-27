@@ -117,15 +117,17 @@ void expr(int &index, tokenList* tList){
 }// expr
 
 void expr1(int &index, tokenList* tList){
-
+    fexpr(index, tList);
+    expr1(index, tList);
 }
 
 
 void fexpr(int &index, tokenList* tList){
-
     parexpr(index,tList);
 
     if (tList -> peekToken(index)==lambda){
+        tList->skipToken(lambda, index);
+        
     }
 
 
