@@ -20,4 +20,16 @@ void tokenSwitch(const char inputChar, int & id);
 // Tokenizes the given string 
 bool stringTokenizer(const std::string input, tokenList* tList);
 
+// Expression
+void expr();
+
+// Expression'
+void expr1();
+
+// Function expression
+void fexpr();
+
+// Parantheses expression
+void parexpr();
+
 #endif
