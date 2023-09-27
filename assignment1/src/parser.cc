@@ -111,29 +111,29 @@ bool stringTokenizer(const string input, tokenList* tList){
 }// stringTokenizer
 
 
-void expr(int &index, tokenList* tList){
+bool expr(int &index, tokenList* tList){
     fexpr(index, tList);
     expr1(index, tList);
 }// expr
 
-void expr1(int &index, tokenList* tList){
+bool expr1(int &index, tokenList* tList){
     fexpr(index, tList);
     expr1(index, tList);
 }
 
 
-void fexpr(int &index, tokenList* tList){
-    parexpr(index,tList);
-
-    if (tList -> peekToken(index)==lambda){
-        tList->skipToken(lambda, index);
-        if (!tList -> nextToken(var, index)){
-            cerr << "Syntax error: no variable after lambda expression" << endl;
+bool fexpr(int &index, tokenList* tList){
+    if(!parexpr(index,tList)){
+        if (tList -> peekToken(index)==lambda){
+            tList->skipToken(lambda, index);
+            if (!tList -> nextToken(var, index)){
+                cerr << "Syntax error: no variable after lambda expression" << endl;
+                return false;
+            }
+            fexpr(index, tList); 
         }
-        fexpr(index, tList); 
-        
     }
-
+    return true;
 
 }
 
