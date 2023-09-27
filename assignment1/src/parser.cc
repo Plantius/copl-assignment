@@ -80,7 +80,7 @@ bool functionExpr(int &index, tokenList* tList){
             if (tList -> peekToken(index) == lambda){
                 tList->skipToken(lambda, index);
                 while (tList -> nextToken(var, index)){
-                    cout << tList->getToken(index)->tokenChar << endl;
+                    // cout << tList->getToken(index)->tokenChar << endl;
                     index++;
                 }
                 
@@ -104,7 +104,7 @@ bool paranthesesExpr(int &index, tokenList* tList){
             return true;
         }
         else if (tList -> peekToken(index) == var){
-            cout << tList->getToken(index)->tokenChar << endl;
+            // cout << tList->getToken(index)->tokenChar << endl;
             index++;
             return true;
         }
@@ -161,6 +161,6 @@ bool stringTokenizer(const string input, tokenList* tList){
         cerr << "The token is invalid: not enough beginning/closing parantheses." << endl;
         return false;
     }
-    
+    cout << "Length " << tList->getLength() << endl;
     return expr(index, tList);
 }// stringTokenizer

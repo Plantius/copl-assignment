@@ -8,6 +8,8 @@
 **/
 
 #include "../include/standard.h"
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 // Reads input from stdin and concatenates it to a string
@@ -19,6 +21,16 @@ void getInput(string & input){
         input += c;
     }
 }// getInput
+
+
+string readFile(const string filepath){
+    ifstream file(filepath);
+    stringstream buffer;
+
+    buffer << file.rdbuf();
+    return buffer.str();
+}// readFile
+
 
 // Checks if the given string contains only ASCII-characters
 bool validInput(const string input){
