@@ -1,4 +1,4 @@
-CC = g++
+CC = g++ -g
 
 PARAMETERS = -Wall -Wextra -Wpedantic
 

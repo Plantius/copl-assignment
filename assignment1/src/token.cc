@@ -57,7 +57,7 @@ int tokenList::getLength(){
 
 
 // Returns the token type of the token at the given index
-int tokenList::peekToken(const int index){
+int tokenList::peekToken(int & index){
     int tempToken = invalid;
     if (getToken(index) != nullptr){
         tempToken = getToken(index)->id;
@@ -90,7 +90,7 @@ void tokenList::skipToken(const int id, int & index){
 // walk is started from the end of the list, instead of the beginning
 token* tokenList::getToken(const int index){
     token* temp = nullptr;
-
+    // cout << int(length/2) << " "<<index << endl;
     if (index < int(length/2)){
         temp = begin;
         for(int i = 0; i < index; i++){
