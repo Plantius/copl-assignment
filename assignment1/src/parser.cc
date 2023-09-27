@@ -128,8 +128,9 @@ void fexpr(int &index, tokenList* tList){
     if (tList -> peekToken(index)==lambda){
         tList->skipToken(lambda, index);
         if (!tList -> nextToken(var, index)){
-            fexpr(index, tList);    
+            cerr << "Syntax error: no variable after lambda expression" << endl;
         }
+        fexpr(index, tList); 
         
     }
 
