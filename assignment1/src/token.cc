@@ -109,7 +109,7 @@ token* tokenList::getToken(const int index){
     token* temp = nullptr;
 
     if (index < 0 || index >= length){
-        cerr << "Index out of bounds" << endl;
+        printError("Invalid token: index out of bounds");
         return temp;
     }
 
@@ -119,7 +119,7 @@ token* tokenList::getToken(const int index){
             if (temp != nullptr){
                 temp = temp->next;
             }else {
-                cerr << "Index out of bounds" << endl;
+                printError("Invalid token: index out of bounds");
                 return temp;
             }   
         }
@@ -129,7 +129,7 @@ token* tokenList::getToken(const int index){
             if (temp != nullptr){
                 temp = temp->prev;
             }else {
-                cerr << "Index out of bounds" << endl;
+                printError("Invalid token: index out of bounds");
                 return temp;
             }
         }
@@ -143,7 +143,7 @@ bool tokenList::addToken(const tokenId id, const string tokenChar){
     if(isEmpty()){
         token* newToken = new token(id, nullptr, nullptr, tokenChar);
         if (newToken == nullptr){
-            cerr << "Memory allocation failed" << endl;
+            printError("Memory allocation failed");
             return false;
         }
         begin = newToken;
@@ -155,7 +155,7 @@ bool tokenList::addToken(const tokenId id, const string tokenChar){
         token* temp = end;
         token* newToken = new token(id, nullptr, end, tokenChar);
         if (newToken == nullptr){
-            cerr << "Memory allocation failed" << endl;
+            printError("Memory allocation failed");
             return false;
         }
         temp->next = newToken;

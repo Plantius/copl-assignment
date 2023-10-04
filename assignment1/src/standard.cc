@@ -18,7 +18,7 @@ void getInput(string & input){
     while (c != '\n' && c != '\r'){
         c = getchar();
         if ((u_char)c > 127){
-            cerr << "Invalid input: outside standard ASCII range" << endl;
+            printError("Invalid input: outside standard ASCII range");
             exit(1);
         }
         input += c;
@@ -31,7 +31,7 @@ string readFile(const string filepath){
     ifstream file(filepath);
     stringstream buffer;
     if(!file.good()){
-        cerr << "Invalid input: file does not exist/is corrupted" << endl;
+        printError("Invalid input: file does not exist/is corrupted");
         exit(1);
     }
     buffer << file.rdbuf();
@@ -53,5 +53,6 @@ bool validInput(const string input){
 
 // Prints the given string to stdout
 void printError(const string input){
-    cout << input << endl;
+    cerr << string(input.length(), '-') << endl 
+         << input << endl << string(input.length(), '-') << endl;
 }// print_cout

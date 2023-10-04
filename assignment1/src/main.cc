@@ -22,7 +22,7 @@ int main(){
     clock_t t1, t2;
     tokenList list;
     string input = "", filepath = "";
-    parser p; 
+    parser parse; 
     int option = 0;
     
     while(option != 1){
@@ -37,14 +37,13 @@ int main(){
             if (validInput(filepath)){
                 cout << "Reading from " << filepath << ":" <<endl;
                 input = readFile(filepath);
-    
                 if(validInput(input)){
                     t1 = clock();
-                    p.stringTokenizer(input, list);
+                    parse.stringTokenizer(input, list);
                     t2 = clock();
 
                     cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
-                    if(p.getError()){
+                    if(parse.getError()){
                         return 1;
                     }
                 }

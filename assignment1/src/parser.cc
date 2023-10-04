@@ -74,13 +74,13 @@ void parser::functionExpr(tokenList & list){
         if (list.peekToken() == var){
             list.consumeToken();
             if(list.peekToken() == eol){
-                cerr << "Syntax error: no expression after lambda" << endl;
+                printError("Syntax error: no expression after lambda");
                 error = true;
                 return;
             }
             functionExpr(list);
         }else{
-            cerr << "Syntax error: no variable after lambda"<<endl;
+            printError("Syntax error: no variable after lambda");
             error = true;
             return;
         }
@@ -98,7 +98,7 @@ void parser::paranthesesExpr(tokenList & list){
         list.consumeToken();  
         expr(list);
     }else {
-        cerr << "Syntax error: no variable or left paranthesis" << endl;
+        printError("Syntax error: no variable or left paranthesis");
         error = true;
         return;
     }
@@ -120,12 +120,12 @@ void parser::stringTokenizer(const string input, tokenList & list){
                 break;
             }
             if(!(list.addToken(eol, "$"))){
-                cerr << "Error: Failed to add token to the list." << endl;
+                printError("Error: Failed to add token to the list.");
             }
             list.printList();
             
             if (lparCounter != rparCounter){
-                cerr << "The token is invalid: not enough beginning/closing parantheses." << endl;
+                printError("The token is invalid: not enough beginning/closing parantheses.");
                 exit(1);
             }
             expr(list);
@@ -140,7 +140,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
             // Checks if the input is a var, which can be of indefinite size
             if (id == var){ 
                 if (temp.empty() && (int(input[i]) >= 48 && int(input[i]) <= 57)){
-                    cerr << "The token is invalid: variable name starts with a number." << endl;
+                    printError("The token is invalid: variable name starts with a number.");
                     exit(1);
 
                 }if (i < size-1){
@@ -151,7 +151,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
                     }else {
                         temp += input[i];
                         if(!list.addToken(id, temp)){
-                            cerr << "Error: Failed to add token to the list." << endl;
+                            printError("Error: Failed to add token to the list.");
                         }
                         temp.clear();
                     }
@@ -163,7 +163,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
                     rparCounter++;
                 }
                 if(!(list.addToken(id, string(1, input[i])))){
-                    cerr << "Error: Failed to add token to the list." << endl;
+                    printError("Error: Failed to add token to the list.");
                 }
             }
         }
