@@ -23,6 +23,7 @@ void getInput(string & input){
 }// getInput
 
 
+// Reads an istream from a file, and reads it into a stringstream 
 string readFile(const string filepath){
     ifstream file(filepath);
     stringstream buffer;

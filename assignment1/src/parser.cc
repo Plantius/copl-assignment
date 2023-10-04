@@ -31,53 +31,50 @@ void tokenSwitch(const char inputChar, tokenId & id){
     }
 }// tokenSwitch
 
-bool expr(int &index, tokenList* tList){
-    return functionExpr(index, tList) && expr1(index, tList);
+void expr(int &index, tokenList* tList){
+    functionExpr(index, tList);
+    expr1(index, tList);
 }// expr
 
 
-bool expr1(int &index, tokenList* tList){
-    return functionExpr(index, tList) && expr1(index, tList);
+void expr1(int &index, tokenList* tList){
+    functionExpr(index, tList);
+    expr1(index, tList);
 }// expr1
 
 
 // Checks if the token at the given index is a parexpr or a lambda expression
-bool functionExpr(int &index, tokenList* tList){
-    if(!paranthesesExpr(index, tList)){
-        if (!(index < 0 || index >= tList->getLength())){
-            if (tList -> peekToken(index) == lambda){
-                tList->skipToken(lambda, index);
-                while (tList -> nextToken(var, index)){
-                    // cout << tList->getToken(index)->tokenChar << endl;
-                    index++;
-                }
-                
-                return functionExpr(index, tList);
+void functionExpr(int &index, tokenList* tList){
+    paranthesesExpr(index, tList);
+
+    if (!(index < 0 || index >= tList->getLength())){
+        if (tList -> peekToken(index) == lambda){
+            tList->skipToken(lambda, index);
+            while (tList -> nextToken(var, index)){
+                // cout << tList->getToken(index)->tokenChar << endl;
+                index++;
             }
+            
+            functionExpr(index, tList);
         }
-    }else {
-        return true;
     }
-    return false;
+    
 }// fexpr
 
 
 // Checks if the token at the given index is a paranthesis or a variable
-bool paranthesesExpr(int &index, tokenList* tList){
+void paranthesesExpr(int &index, tokenList* tList){
     if (!(index < 0 || index >= tList->getLength())){
         if ((tList->peekToken(index) == lpar)){
             tList->skipToken(lpar, index);
             expr(index, tList);
             tList->skipToken(rpar, index);
-            return true;
         }
         else if (tList -> peekToken(index) == var){
             // cout << tList->getToken(index)->tokenChar << endl;
             index++;
-            return true;
         }
     }
-    return false;
 
 }// parexpr
 
