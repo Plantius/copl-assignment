@@ -145,7 +145,6 @@ bool tokenList::addToken(const tokenId id, const string tokenChar){
         return true;
     }else {
         token* temp = end;
-
         token* newToken = new token(id, nullptr, end, tokenChar);
         if (newToken == nullptr){
             cerr << "Memory allocation failed" << endl;

@@ -57,12 +57,12 @@ void parser::functionExpr(tokenList* tList){
             tList->consumeToken();
             if(tList->peekToken() == eol){
                 cerr << "Syntax error: no expression after lambda" << endl;
-                exit(1);
+                exitProgram(1, tList);
             }
             functionExpr(tList);
         }else{
             cerr << "Syntax error: no variable after lambda"<<endl;
-            exit(1);
+            exitProgram(1, tList);
         }
     }else{
         paranthesesExpr(tList);
@@ -79,7 +79,7 @@ void parser::paranthesesExpr(tokenList* tList){
         expr(tList);
     }else {
         cerr << "Syntax error: no variable or left paranthesis" << endl;
-        exit(1);
+        exitProgram(1, tList);
     }
 }// parexpr
 
@@ -95,6 +95,9 @@ void parser::stringTokenizer(const string input, tokenList* tList){
 
     while(input[i] != '\0'){
         if (input[i] == '\n'){
+            if (tList->isEmpty()){
+                break;
+            }
             if(!(tList->addToken(eol, "$"))){
                 cerr << "Error: Failed to add token to the list." << endl;
             }
@@ -102,7 +105,7 @@ void parser::stringTokenizer(const string input, tokenList* tList){
             
             if (lparCounter != rparCounter){
                 cerr << "The token is invalid: not enough beginning/closing parantheses." << endl;
-                exit(1);
+                exitProgram(1, tList);
             }
             expr(tList);
             tList->clear();
@@ -114,7 +117,7 @@ void parser::stringTokenizer(const string input, tokenList* tList){
             if (id == var){ 
                 if (temp.empty() && (int(input[i]) >=48 && int(input[i]) <= 57)){
                     cerr << "The token is invalid: variable name starts with a number." << endl;
-                    exit(1);
+                    exitProgram(1, tList);
 
                 }if (i < size-1){
                     tokenId tempId = invalid;
