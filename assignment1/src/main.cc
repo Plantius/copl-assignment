@@ -18,7 +18,7 @@ int main(){
     parser p;
     string input = "", filePath = ""; 
 
-    getInput(filePath); 
+    // getInput(filePath); 
     if (validInput(filePath)){
         for(int i = 0; i < filePath.length(); i++){
             cout << int(filePath[i]) << " ";

@@ -51,33 +51,40 @@ void parser::expr1(tokenList* tList){
 
 // Checks if the token at the given index is a parexpr or a lambda expression
 void parser::functionExpr(tokenList* tList){
-    if (!(tList->getIndex() < 0 || tList->getIndex() >= tList->getLength())){
-        paranthesesExpr(tList);
-        
-        if (tList->peekToken() == lambda){
+    if (tList->peekToken() == lambda){
+        cout << "lambda" << endl;
+        tList->consumeToken();
+        if (tList->peekToken() == var){
             tList->consumeToken();
+            if(tList->peekToken() == invalid){
+                cerr << "Invalid" << endl;
+                exit(1);
+            }
             functionExpr(tList);
+
+        }else{
+            cerr << "Invalid token: no variable after lambda"<<endl;
+            exit(1);
         }
+    }else{
+        paranthesesExpr(tList);
     }
+    
     
 }// fexpr
 
 
 // Checks if the token at the given index is a paranthesis or a variable
 void parser::paranthesesExpr(tokenList* tList){
-    if (!(tList->getIndex() < 0 || tList->getIndex() >= tList->getLength())){
-        if ((tList->peekToken() == lpar)){
-            tList->skipToken(lpar);
-            expr(tList);
-            tList->skipToken(rpar);
-        }
-        else if (tList->peekToken() == var){
-            tList->consumeToken();
-        }
+    if (tList->peekToken() == var){
+        tList->consumeToken();
+    }else if ((tList->peekToken() == lpar)){
+        expr(tList);
     }else {
-        cerr << "Invalid token: index out of bounds" << endl;
+        cerr << "Invalid token: no variable or left paranthesis" << endl;
         exit(1);
     }
+    
 
 }// parexpr
 
