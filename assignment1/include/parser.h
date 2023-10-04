@@ -30,6 +30,9 @@ class parser{
 
         // Parantheses expression
         void paranthesesExpr(int &index, tokenList* tList);
+
+        // Prints the expression
+        void printExpression(const std::string input, int &index, tokenList* tList);
 };
 
 
