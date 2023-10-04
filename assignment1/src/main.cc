@@ -15,6 +15,7 @@ using namespace std;
 int main(){
     clock_t t1, t2;
     tokenList* tList = new tokenList;
+    parser p;
     string input = "", filePath = ""; 
 
     getInput(filePath); 
@@ -25,7 +26,7 @@ int main(){
         input = readFile("/home/niels/year2/CoPL/copl-assignment/tests/input.txt");
         if(validInput(input)){
             t1 = clock();
-            cout << "Valid: " << stringTokenizer(input, tList) << endl;
+            p.stringTokenizer(input, tList);
             t2 = clock();
 
             cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 

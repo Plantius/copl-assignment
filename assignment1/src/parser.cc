@@ -97,7 +97,7 @@ void parser::stringTokenizer(const string input, tokenList* tList){
         if (id == var){ 
             if (temp.empty() && (int(input[i]) >=48 && int(input[i]) <= 57)){
                 cerr << "The token is invalid: variable name starts with a number." << endl;
-                return false;
+                exit(1);
             }if (i < size-1){
                 tokenId tempId = invalid;
                 tokenSwitch(input[i+1], tempId);
@@ -124,7 +124,7 @@ void parser::stringTokenizer(const string input, tokenList* tList){
     }
     if (lparCounter != rparCounter){
         cerr << "The token is invalid: not enough beginning/closing parantheses." << endl;
-        return false;
+        exit(1);
     }
     cout << "Length " << tList->getLength() << endl;
     expr(index, tList);
