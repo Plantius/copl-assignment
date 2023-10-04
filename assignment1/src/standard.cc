@@ -17,6 +17,10 @@ void getInput(string & input){
     char c = '$';
     while (c != '\n' && c != '\r'){
         c = getchar();
+        if ((u_char)c > 127){
+            cerr << "Invalid input: outside standard ASCII range" << endl;
+            exit(1);
+        }
         input += c;
     }
 }// getInput
@@ -26,7 +30,10 @@ void getInput(string & input){
 string readFile(const string filepath){
     ifstream file(filepath);
     stringstream buffer;
-
+    if(!file.good()){
+        cerr << "Invalid input: file does not exist/is corrupted" << endl;
+        exit(1);
+    }
     buffer << file.rdbuf();
     return buffer.str();
 }// readFile

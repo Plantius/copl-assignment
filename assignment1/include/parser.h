@@ -35,10 +35,7 @@ class parser{
         void printExpression(const std::string input, tokenList* tList);
 
         // Clean up pointers and exit with given exit code
-        void exitProgram(const int code, tokenList* tList){
-            delete tList;
-            exit(code);
-        }// exitProgram
+        void exitProgram(const int code, tokenList* tList);
         
 };
 

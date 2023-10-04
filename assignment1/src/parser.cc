@@ -12,6 +12,12 @@
 #include "../include/tokenId.h"
 using namespace std;
 
+// Clean up pointers and exit with given exit code
+void parser::exitProgram(const int code, tokenList* tList){
+    delete tList;
+    exit(code);
+}// exitProgram
+
 // Checks what id the given inputChar has in tokenId
 void parser::tokenSwitch(const char inputChar, tokenId & id){
     // for all the special characters
@@ -134,7 +140,7 @@ void parser::stringTokenizer(const string input, tokenList* tList){
                         temp += input[i];
                     }else {
                         temp += input[i];
-                        if(!tList -> addToken(id, temp)){
+                        if(!tList->addToken(id, temp)){
                             cerr << "Error: Failed to add token to the list." << endl;
                         }
                         temp.clear();
@@ -156,7 +162,7 @@ void parser::stringTokenizer(const string input, tokenList* tList){
 }// stringTokenizer
 
 void parser::printExpression(const string input, tokenList* tList){
-    int length = tList -> getLength();
+    int length = tList->getLength();
     if (!(tList->isEmpty())){
         for (int i = 0; i < length; i++){
             cout << input[i] << endl; //?? not done
