@@ -35,10 +35,12 @@ class tokenList{
         bool isEmpty();
         void clear();
         
-        int peekToken(const int index);
-        bool nextToken(const tokenId id, int &index);
-        void skipToken(const tokenId id, int &index);
+        int peekToken();
+        void skipToken(const tokenId id);
+        void consumeToken();
         void printList();
+
+        int getIndex();
 
     private:
         token* begin;
