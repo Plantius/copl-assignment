@@ -10,6 +10,8 @@
 #define STANDARD_H
 #include <iostream>
 
+const char invalidChar = '$';
+
 // Reads input from stdin
 void getInput(std::string & input);
 
@@ -21,6 +23,6 @@ std::string readFile(const std::string filepath);
 bool validInput(const std::string input);
 
 // Reads a constant string and prints it to stdout
-void printCout(const std::string input);
+void printError(const std::string error);
 
 #endif

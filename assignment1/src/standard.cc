@@ -14,7 +14,7 @@ using namespace std;
 // Reads input from stdin and concatenates it to a string
 // until a newline or a carriage-return and newline character is met
 void getInput(string & input){
-    char c = '$';
+    char c = invalidChar;
     while (c != '\n' && c != '\r'){
         c = getchar();
         if ((u_char)c > 127){
@@ -52,6 +52,6 @@ bool validInput(const string input){
 }// valid_input
 
 // Prints the given string to stdout
-void printCout(const string input){
+void printError(const string input){
     cout << input << endl;
 }// print_cout

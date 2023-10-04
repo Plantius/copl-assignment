@@ -13,32 +13,34 @@
 
 class parser{
     public:
+        parser();
+
+        bool getError();
+
         // Adds a token to the list according to inputChar
         void tokenSwitch(const char inputChar, tokenId & id);
 
         // Tokenizes the given string 
-        void stringTokenizer(const std::string input, tokenList* tList);
+        void stringTokenizer(const std::string input, tokenList & list);
 
         // Expression
-        void expr(tokenList* tList);
+        void expr(tokenList & list);
 
         // Expression'
-        void expr1(tokenList* tList);
+        void expr1(tokenList & list);
 
         // Function expression
-        void functionExpr(tokenList* tList);
+        void functionExpr(tokenList & list);
 
         // Parantheses expression
-        void paranthesesExpr(tokenList* tList);
+        void paranthesesExpr(tokenList & list);
 
         // Prints the expression
-        void printExpression(const std::string input, tokenList* tList);
+        void printExpression(const std::string input, tokenList & list);
 
-        // Clean up pointers and exit with given exit code
-        void exitProgram(const int code, tokenList* tList);
+    private:
+        bool error;
         
 };
-
-
 
 #endif

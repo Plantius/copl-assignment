@@ -9,6 +9,7 @@
 #include "../include/standard.h"
 #include "../include/parser.h"
 #include "../include/token.h"
+#include <memory>
 using namespace std;
 
 void menuChoice(){
@@ -19,7 +20,7 @@ void menuChoice(){
 
 int main(){
     clock_t t1, t2;
-    tokenList* list = new tokenList;
+    tokenList list;
     string input = "", filepath = "";
     parser p; 
     int option = 0;
@@ -43,6 +44,9 @@ int main(){
                     t2 = clock();
 
                     cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
+                    if(p.getError()){
+                        return 1;
+                    }
                 }
             }
             break;
@@ -53,6 +57,5 @@ int main(){
             break;
         }
     }
-    delete list;
     return 0;
 }// main
