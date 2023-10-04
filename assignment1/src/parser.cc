@@ -1,3 +1,11 @@
+/**
+* Implementation of the parser functions
+* Niels Versteeg (s3322637)
+* Lana van Sprang (s3272192)
+* parser.cc
+* 04-10-2023
+**/ 
+
 #include "../include/standard.h"
 #include "../include/parser.h"
 #include "../include/token.h"

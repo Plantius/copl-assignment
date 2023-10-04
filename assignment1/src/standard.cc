@@ -1,10 +1,9 @@
 /**
-* Implementation of the standard header, containing the valid_input and 
-* print_cout functions
+* Implementation of the standard functions
 * Niels Versteeg (s3322637)
 * Lana van Sprang (s3272192)
 * standard.cc
-* 15-09-2023
+* 04-10-2023
 **/
 
 #include "../include/standard.h"
