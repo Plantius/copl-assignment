@@ -23,9 +23,6 @@ void parser::tokenSwitch(const char inputChar, tokenId & id){
         case ' ': 
             id = space;
             break;
-        case '\0': 
-            id = eof;
-            break;
         default: 
             id = invalid;
             break;
@@ -44,7 +41,7 @@ void parser::expr(tokenList* tList){
 
 
 void parser::expr1(tokenList* tList){
-    if (tList->peekToken() == invalid){
+    if (tList->peekToken() == eol){
         return;
     }
     functionExpr(tList);
@@ -58,7 +55,7 @@ void parser::functionExpr(tokenList* tList){
         tList->consumeToken();
         if (tList->peekToken() == var){
             tList->consumeToken();
-            if(tList->peekToken() == invalid){
+            if(tList->peekToken() == eol){
                 cerr << "Syntax error: no expression after lambda" << endl;
                 exit(1);
             }
@@ -70,8 +67,6 @@ void parser::functionExpr(tokenList* tList){
     }else{
         paranthesesExpr(tList);
     }
-    
-    
 }// fexpr
 
 
@@ -86,8 +81,6 @@ void parser::paranthesesExpr(tokenList* tList){
         cerr << "Syntax error: no variable or left paranthesis" << endl;
         exit(1);
     }
-    
-
 }// parexpr
 
 
@@ -95,55 +88,63 @@ void parser::paranthesesExpr(tokenList* tList){
 void parser::stringTokenizer(const string input, tokenList* tList){
     int lparCounter = 0, rparCounter = 0;
     int size = input.length();
+    int i = 0;
     tokenId id = invalid;
     string temp = "";
-    for(int i = 0; i < size; i++){
-        if (input[i] == '\n'){
-            cout << "NewLine" << endl;
-        }if (input[i] == 0){
-            break;
-        }
-        
-        tokenSwitch(input[i], id);
-        // Checks if the input is a var, which can be of indefinite size
-        if (id == var){ 
-            if (temp.empty() && (int(input[i]) >=48 && int(input[i]) <= 57)){
-                cerr << "The token is invalid: variable name starts with a number." << endl;
-                exit(1);
 
-            }if (i < size-1){
-                tokenId tempId = invalid;
-                tokenSwitch(input[i+1], tempId);
-                if (tempId == var){
-                    temp += input[i];
-                }else {
-                    temp += input[i];
-                    if(!tList -> addToken(id, temp)){
-                        cerr << "Failed to add token to the list." << endl;
+
+    while(input[i] != '\0'){
+        if (input[i] == '\n'){
+            if(!(tList->addToken(eol, "$"))){
+                cerr << "Error: Failed to add token to the list." << endl;
+            }
+            tList->printList();
+            
+            if (lparCounter != rparCounter){
+                cerr << "The token is invalid: not enough beginning/closing parantheses." << endl;
+                exit(1);
+            }
+            expr(tList);
+            tList->clear();
+            lparCounter = 0;
+            rparCounter = 0;
+        }else {
+            tokenSwitch(input[i], id);
+            // Checks if the input is a var, which can be of indefinite size
+            if (id == var){ 
+                if (temp.empty() && (int(input[i]) >=48 && int(input[i]) <= 57)){
+                    cerr << "The token is invalid: variable name starts with a number." << endl;
+                    exit(1);
+
+                }if (i < size-1){
+                    tokenId tempId = invalid;
+                    tokenSwitch(input[i+1], tempId);
+                    if (tempId == var){
+                        temp += input[i];
+                    }else {
+                        temp += input[i];
+                        if(!tList -> addToken(id, temp)){
+                            cerr << "Error: Failed to add token to the list." << endl;
+                        }
+                        temp.clear();
                     }
-                    temp.clear();
+                }
+            }else {
+                if (id == lpar){
+                    lparCounter++;
+                }if (id == rpar){
+                    rparCounter++;
+                }
+                if(!(tList->addToken(id, string(1, input[i])))){
+                    cerr << "Error: Failed to add token to the list." << endl;
                 }
             }
-        }else {
-            if (id == lpar){
-                lparCounter++;
-            }if (id == rpar){
-                rparCounter++;
-            }
-            if(!(tList->addToken(id, string(1, input[i])))){
-                cerr << "Failed to add token to the list." << endl;
-            }
         }
+        i++;
     }
-    if (lparCounter != rparCounter){
-        cerr << "The token is invalid: not enough beginning/closing parantheses." << endl;
-        exit(1);
-    }
-    cout << "Length " << tList->getLength() << endl;
-    expr(tList);
 }// stringTokenizer
 
-void parser::printExpression(const string input, int& index, tokenList* tList){
+void parser::printExpression(const string input, tokenList* tList){
     int length = tList -> getLength();
     if (!(tList->isEmpty())){
         for (int i = 0; i < length; i++){

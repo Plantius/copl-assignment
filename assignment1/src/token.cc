@@ -26,6 +26,7 @@ tokenList::tokenList(){
     begin = nullptr;
     end = nullptr;
     length = 0;
+    index = 0;
 }// default constructor
 
 
@@ -45,6 +46,7 @@ void tokenList::clear(){
     }
     begin = nullptr;
     end = nullptr;
+    index = 0;
 }
 
 
