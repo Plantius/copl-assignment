@@ -12,10 +12,12 @@
 using namespace std;
 
 void menuChoice(){
-    cout << endl << "0: Input the path of the file to be read"<<endl;
-    cout << "1: Exit the program" << endl;
-}
+    cout << endl << "0: Input a file to be parsed" << endl;
+    cout << "1: Input a string to be parsed" << endl;
+    cout << "2: Exit the program" << endl;
+}// menuChoice
 
+// Main menu
 void mainMenu(const int option){
     clock_t t1, t2;
     tokenList* list = new tokenList;
@@ -40,18 +42,29 @@ void mainMenu(const int option){
         }
         break;
     case 1:
+        cout << "Enter the string to parse: ";
+        getInput(input);
+        if(validInput(input)){
+            t1 = clock();
+            p.stringTokenizer(input, list);
+            t2 = clock();
+
+            cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
+        }
+        break;
+    case 2:
         cout << "Exit program" << endl;
         break;
     default:
         break;
     }
     delete list;
-}
+}// mainMenu
 
 int main(){
     int option = 0;
     
-    while(option != 1){
+    while(option != 2){
         menuChoice();
         cout << "Enter an option: ";
         cin >> option;

@@ -35,7 +35,6 @@ string readFile(const string filepath){
 // Checks if the given string contains only ASCII-characters
 bool validInput(const string input){
     int i = 0;
-
     while(input[i] != '\0'){
         if ((u_char)input[i] > 127){
             return false;
