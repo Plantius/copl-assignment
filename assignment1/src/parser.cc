@@ -88,7 +88,7 @@ void parser::stringTokenizer(const string input, tokenList* tList){
     string temp = "";
 
     for(int i = 0; i < size; i++){
-        if (input[i] == ' ' || input[i] == '\n'){
+        if (input[i] == '\n'){
             continue;
         }
         
