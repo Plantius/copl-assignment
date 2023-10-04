@@ -1,8 +1,6 @@
-- Can you review my code:
+- Can you review my code: $main.cc$
 ```
-main.cc
-```
-** Your code appears to be a C++ program for parsing and tokenizing files based on user input. Overall, it seems well-structured and logically organized. I have a few suggestions and comments to improve the code:
+Your code appears to be a C++ program for parsing and tokenizing files based on user input. Overall, it seems well-structured and logically organized. I have a few suggestions and comments to improve the code:
 
 Comments and Documentation:
 It's great that you've included comments at the beginning of your code to explain its purpose and authorship. However, it's also important to provide inline comments explaining complex logic or non-obvious parts of the code. Inline comments help others understand your code more easily. For instance, explaining what validInput(filepath) and parse.getError() do would be helpful.
@@ -38,3 +36,4 @@ Resource Management:
 You're using std::string, which manages its own memory, but if your actual code involves more complex resource management (e.g., dynamic memory allocation), remember to handle resource cleanup and deallocation properly.
 
 By following these suggestions, you can improve the readability, maintainability, and robustness of your code. 
+```
