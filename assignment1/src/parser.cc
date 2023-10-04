@@ -5,7 +5,7 @@
 using namespace std;
 
 // Checks what id the given inputChar has in tokenId
-void tokenSwitch(const char inputChar, tokenId & id){
+void parser::tokenSwitch(const char inputChar, tokenId & id){
     // for all the special characters
     switch(inputChar){
         case '(':
@@ -31,20 +31,20 @@ void tokenSwitch(const char inputChar, tokenId & id){
     }
 }// tokenSwitch
 
-void expr(int &index, tokenList* tList){
+void parser::expr(int &index, tokenList* tList){
     functionExpr(index, tList);
     expr1(index, tList);
 }// expr
 
 
-void expr1(int &index, tokenList* tList){
+void parser::expr1(int &index, tokenList* tList){
     functionExpr(index, tList);
     expr1(index, tList);
 }// expr1
 
 
 // Checks if the token at the given index is a parexpr or a lambda expression
-void functionExpr(int &index, tokenList* tList){
+void parser::functionExpr(int &index, tokenList* tList){
     paranthesesExpr(index, tList);
 
     if (!(index < 0 || index >= tList->getLength())){
@@ -63,7 +63,7 @@ void functionExpr(int &index, tokenList* tList){
 
 
 // Checks if the token at the given index is a paranthesis or a variable
-void paranthesesExpr(int &index, tokenList* tList){
+void parser::paranthesesExpr(int &index, tokenList* tList){
     if (!(index < 0 || index >= tList->getLength())){
         if ((tList->peekToken(index) == lpar)){
             tList->skipToken(lpar, index);
@@ -80,7 +80,7 @@ void paranthesesExpr(int &index, tokenList* tList){
 
 
 // Tokenizes the given string, and adds them to the given token list
-bool stringTokenizer(const string input, tokenList* tList){
+void parser::stringTokenizer(const string input, tokenList* tList){
     int index = 0;
     int lparCounter = 0, rparCounter = 0;
     int size = input.length();
@@ -127,5 +127,5 @@ bool stringTokenizer(const string input, tokenList* tList){
         return false;
     }
     cout << "Length " << tList->getLength() << endl;
-    return expr(index, tList);
+    expr(index, tList);
 }// stringTokenizer

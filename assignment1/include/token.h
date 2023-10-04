@@ -44,6 +44,7 @@ class tokenList{
         token* begin;
         token* end;
         int length;
+        int index;
     
 };// tokenList
 
