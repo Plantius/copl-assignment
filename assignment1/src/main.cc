@@ -20,10 +20,8 @@ int main(){
 
     // getInput(filePath); 
     if (validInput(filePath)){
-        for(int i = 0; i < filePath.length(); i++){
-            cout << int(filePath[i]) << " ";
-        }
         input = readFile("/home/niels/year2/CoPL/copl-assignment/tests/input.txt");
+        
         if(validInput(input)){
             t1 = clock();
             p.stringTokenizer(input, tList);

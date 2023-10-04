@@ -44,6 +44,9 @@ void parser::expr(tokenList* tList){
 
 
 void parser::expr1(tokenList* tList){
+    if (tList->peekToken() == invalid){
+        return;
+    }
     functionExpr(tList);
     expr1(tList);
 }// expr1
@@ -52,18 +55,16 @@ void parser::expr1(tokenList* tList){
 // Checks if the token at the given index is a parexpr or a lambda expression
 void parser::functionExpr(tokenList* tList){
     if (tList->peekToken() == lambda){
-        cout << "lambda" << endl;
         tList->consumeToken();
         if (tList->peekToken() == var){
             tList->consumeToken();
             if(tList->peekToken() == invalid){
-                cerr << "Invalid" << endl;
+                cerr << "Syntax error: no expression after lambda" << endl;
                 exit(1);
             }
             functionExpr(tList);
-
         }else{
-            cerr << "Invalid token: no variable after lambda"<<endl;
+            cerr << "Syntax error: no variable after lambda"<<endl;
             exit(1);
         }
     }else{
@@ -79,9 +80,10 @@ void parser::paranthesesExpr(tokenList* tList){
     if (tList->peekToken() == var){
         tList->consumeToken();
     }else if ((tList->peekToken() == lpar)){
+        tList->consumeToken();  
         expr(tList);
     }else {
-        cerr << "Invalid token: no variable or left paranthesis" << endl;
+        cerr << "Syntax error: no variable or left paranthesis" << endl;
         exit(1);
     }
     
@@ -91,15 +93,15 @@ void parser::paranthesesExpr(tokenList* tList){
 
 // Tokenizes the given string, and adds them to the given token list
 void parser::stringTokenizer(const string input, tokenList* tList){
-    int index = 0;
     int lparCounter = 0, rparCounter = 0;
     int size = input.length();
     tokenId id = invalid;
     string temp = "";
-
     for(int i = 0; i < size; i++){
         if (input[i] == '\n'){
-            continue;
+            cout << "NewLine" << endl;
+        }if (input[i] == 0){
+            break;
         }
         
         tokenSwitch(input[i], id);

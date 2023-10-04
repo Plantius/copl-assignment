@@ -72,7 +72,6 @@ int tokenList::getIndex(){
 // Returns the token type of the token at the given index
 int tokenList::peekToken(){
     token* nextToken = getToken(index);
-    
     while(nextToken->next != nullptr && (nextToken->id == space || nextToken->id == rpar)){
         nextToken = nextToken->next;
         index++;
@@ -91,15 +90,6 @@ void tokenList::consumeToken(){
         index++;
     }
 }// consumeToken
-
-
-// Skips tokens of the given id
-void tokenList::skipToken(const tokenId id){
-    while (peekToken() == id){
-        index++;
-    }
-    
-}// skipToken
 
 
 // Returns the token-object at the given list index

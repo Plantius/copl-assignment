@@ -36,7 +36,6 @@ class tokenList{
         void clear();
         
         int peekToken();
-        void skipToken(const tokenId id);
         void consumeToken();
         void printList();
 
