@@ -13,10 +13,6 @@
 
 class parser{
     public:
-        parser();
-
-        bool getError();
-
         // Adds a token to the list according to inputChar
         void tokenSwitch(const char inputChar, tokenId & id);
 
@@ -30,17 +26,14 @@ class parser{
         void expr1(tokenList & list);
 
         // Function expression
-        void functionExpr(tokenList & list);
+        void lambdaExpr(tokenList & list);
 
         // Parantheses expression
-        void paranthesesExpr(tokenList & list);
+        void varExpr(tokenList & list);
 
         // Prints the expression
         void printExpression(const std::string input, tokenList & list);
 
-    private:
-        bool error;
-        
 };
 
 #endif

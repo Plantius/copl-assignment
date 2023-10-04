@@ -89,6 +89,9 @@ int tokenList::peekToken(){
         }
         
         if(nextToken != nullptr){
+            if (nextToken->id == INVALID){
+                throw string("Invalid token: token id is invalid");
+            }
             return nextToken->id;
         }
     }

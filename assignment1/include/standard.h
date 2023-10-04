@@ -20,7 +20,7 @@ std::string readFile(const std::string filepath);
 
 // Reads a constant string and checks if it is valid, e.i. if
 // it only contains ASCII-characters
-bool validInput(const std::string input);
+void validInput(const std::string input);
 
 // Reads a constant string and prints it to stdout
 void printError(const std::string error);
