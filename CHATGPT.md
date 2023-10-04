@@ -1,4 +1,4 @@
-- $\textbf{Can you review my code: \textit{main.cc}}$
+$\textbf{Can you review my code: \textit{main.cc}}$
 
 Your code appears to be a C++ program for parsing and tokenizing files based on user input. Overall, it seems well-structured and logically organized. I have a few suggestions and comments to improve the code:
 
