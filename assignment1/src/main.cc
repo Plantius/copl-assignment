@@ -11,25 +11,51 @@
 #include "../include/token.h"
 using namespace std;
 
+void menuChoice(){
+    cout << endl << "0: Input the path of the file to be read"<<endl;
+    cout << "1: Exit the program" << endl;
+}
+
+void mainMenu(const int option){
+    clock_t t1, t2;
+    tokenList* list = new tokenList;
+    string input = "", filepath = "";
+    parser p; 
+
+    switch (option)
+    {
+    case 0:
+        cout << "Enter the path of the file: ";
+        cin >> filepath;
+        if (validInput(filepath)){
+            cout << "Reading from " << filepath << ":" <<endl;
+            input = readFile(filepath);
+            if(validInput(input)){
+                t1 = clock();
+                p.stringTokenizer(input, list);
+                t2 = clock();
+
+                cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
+            }
+        }
+        break;
+    case 1:
+        cout << "Exit program" << endl;
+        break;
+    default:
+        break;
+    }
+    delete list;
+}
 
 int main(){
-    clock_t t1, t2;
-    tokenList* tList = new tokenList;
-    parser p;
-    string input = "", filePath = ""; 
-
-    // getInput(filePath); 
-    if (validInput(filePath)){
-        input = readFile("/home/niels/year2/CoPL/copl-assignment/tests/input.txt");
-        
-        if(validInput(input)){
-            t1 = clock();
-            p.stringTokenizer(input, tList);
-            t2 = clock();
-
-            cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
-        }
+    int option = 0;
+    
+    while(option != 1){
+        menuChoice();
+        cout << "Enter an option: ";
+        cin >> option;
+        mainMenu(option);
     }
-    delete tList;
     return 0;
 }// main
