@@ -32,6 +32,7 @@ Lana van Sprang (s3272192)
    * Adding the four parse functions
    * Adding syntax checker   
 * Generalizing coding style
+* Adding parser output
 
 ## LL Grammar
 ```
