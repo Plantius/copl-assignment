@@ -37,6 +37,7 @@ int main(){
             if (validInput(filepath)){
                 cout << "Reading from " << filepath << ":" <<endl;
                 input = readFile(filepath);
+                cout << input << endl;
                 if(validInput(input)){
                     t1 = clock();
                     parse.stringTokenizer(input, list);

@@ -27,28 +27,28 @@ void parser::tokenSwitch(const char inputChar, tokenId & id){
     // for all the special characters
     switch(inputChar){
         case '(':
-            id = lpar; 
+            id = LPAR; 
             break;
         case ')':
-            id = rpar;
+            id = RPAR;
             break;
         case '\\':
-            id = lambda;
+            id = LAMBDA;
             break;
         case '.': 
-            id = dot;
+            id = DOT;
             break;
         case ' ': 
-            id = space;
+            id = SPACE;
             break;
         default: 
-            id = invalid;
+            id = INVALID;
             break;
     }
     if ((int(inputChar) >= 65 && int(inputChar) <= 90) || 
             (int(inputChar) >=97 && int(inputChar) <= 122) || 
                 (int(inputChar) >=48 && int(inputChar) <= 57)){
-        id = var;
+        id = VAR;
     }
 }// tokenSwitch
 
@@ -59,7 +59,7 @@ void parser::expr(tokenList & list){
 
 
 void parser::expr1(tokenList & list){
-    if (list.peekToken() == eol){
+    if (list.peekToken() == EOL){
         return;
     }
     functionExpr(list);
@@ -69,11 +69,11 @@ void parser::expr1(tokenList & list){
 
 // Checks if the token at the given index is a parexpr or a lambda expression
 void parser::functionExpr(tokenList & list){
-    if (list.peekToken() == lambda){
+    if (list.peekToken() == LAMBDA){
         list.consumeToken();
-        if (list.peekToken() == var){
+        if (list.peekToken() == VAR){
             list.consumeToken();
-            if(list.peekToken() == eol){
+            if(list.peekToken() == EOL){
                 printError("Syntax error: no expression after lambda");
                 error = true;
                 return;
@@ -92,9 +92,9 @@ void parser::functionExpr(tokenList & list){
 
 // Checks if the token at the given index is a paranthesis or a variable
 void parser::paranthesesExpr(tokenList & list){
-    if (list.peekToken() == var){
+    if (list.peekToken() == VAR){
         list.consumeToken();
-    }else if ((list.peekToken() == lpar)){
+    }else if ((list.peekToken() == LPAR)){
         list.consumeToken();  
         expr(list);
     }else {
@@ -110,7 +110,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
     int lparCounter = 0, rparCounter = 0;
     int size = input.length();
     int i = 0;
-    tokenId id = invalid;
+    tokenId id = INVALID;
     string temp = "";
 
 
@@ -119,14 +119,15 @@ void parser::stringTokenizer(const string input, tokenList & list){
             if (list.isEmpty()){
                 break;
             }
-            if(!(list.addToken(eol, "$"))){
+            if(!(list.addToken(EOL, "$"))){
                 printError("Error: Failed to add token to the list.");
             }
             list.printList();
             
             if (lparCounter != rparCounter){
                 printError("The token is invalid: not enough beginning/closing parantheses.");
-                exit(1);
+                error = true;
+                return;
             }
             expr(list);
             if(error){
@@ -138,15 +139,16 @@ void parser::stringTokenizer(const string input, tokenList & list){
         }else {
             tokenSwitch(input[i], id);
             // Checks if the input is a var, which can be of indefinite size
-            if (id == var){ 
+            if (id == VAR){ 
                 if (temp.empty() && (int(input[i]) >= 48 && int(input[i]) <= 57)){
                     printError("The token is invalid: variable name starts with a number.");
-                    exit(1);
+                    error = true;
+                    return;
 
-                }if (i < size-1){
-                    tokenId tempId = invalid;
+                }if (i < size){
+                    tokenId tempId = INVALID;
                     tokenSwitch(input[i+1], tempId);
-                    if (tempId == var){
+                    if (tempId == VAR){
                         temp += input[i];
                     }else {
                         temp += input[i];
@@ -157,9 +159,9 @@ void parser::stringTokenizer(const string input, tokenList & list){
                     }
                 }
             }else {
-                if (id == lpar){
+                if (id == LPAR){
                     lparCounter++;
-                }if (id == rpar){
+                }if (id == RPAR){
                     rparCounter++;
                 }
                 if(!(list.addToken(id, string(1, input[i])))){
@@ -169,6 +171,18 @@ void parser::stringTokenizer(const string input, tokenList & list){
         }
         i++;
     }
+    if(!(list.addToken(EOL, "$"))){
+        printError("Error: Failed to add token to the list.");
+    }
+    list.printList();
+            
+    if (lparCounter != rparCounter){
+        printError("The token is invalid: not enough beginning/closing parantheses.");
+        error = true;
+        return;
+    }
+    expr(list);
+
 }// stringTokenizer
 
 void parser::printExpression(const string input, tokenList & list){

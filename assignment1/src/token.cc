@@ -15,7 +15,7 @@ using namespace std;
 token::token(){
     next = nullptr;
     prev = nullptr;
-    id = invalid;
+    id = INVALID;
     tokenChar = "$";
 }// default constructor
 
@@ -82,15 +82,17 @@ int tokenList::getIndex(){
 // Returns the token type of the token at the given index
 int tokenList::peekToken(){
     token* nextToken = getToken(index);
-    while(nextToken->next != nullptr && (nextToken->id == space || nextToken->id == rpar)){
-        nextToken = nextToken->next;
-        index++;
+    if (nextToken != nullptr){
+        while(nextToken->next != nullptr && (nextToken->id == SPACE || nextToken->id == RPAR)){
+            nextToken = nextToken->next;
+            index++;
+        }
+        
+        if(nextToken != nullptr){
+            return nextToken->id;
+        }
     }
-    
-    if(nextToken != nullptr){
-        return nextToken->id;
-    }
-    return invalid;
+    return INVALID;
 }// peekToken
 
 
