@@ -29,9 +29,11 @@ int main(){
         menuChoice();
         cout << "Enter an option: ";
         cin >> option;
+
+        // Switch statement to choose the required option
         switch (option)
         {
-        case 0:
+        case 0: // Reads the given file, and parses it
             cout << "Enter the path of the file: ";
             cin >> filepath;
             if (validInput(filepath)){
@@ -50,10 +52,11 @@ int main(){
                 }
             }
             break;
-        case 1:
+        case 1: // Exits the program
             cout << "Exit program" << endl;
             break;
         default:
+            cout << "Invalid input, try again." << endl;
             break;
         }
     }
