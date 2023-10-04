@@ -20,19 +20,20 @@ class parser{
         void stringTokenizer(const std::string input, tokenList* tList);
 
         // Expression
-        void expr(int &index, tokenList* tList);
+        void expr(tokenList* tList);
 
         // Expression'
-        void expr1(int &index, tokenList* tList);
+        void expr1(tokenList* tList);
 
         // Function expression
-        void functionExpr(int &index, tokenList* tList);
+        void functionExpr(tokenList* tList);
 
         // Parantheses expression
-        void paranthesesExpr(int &index, tokenList* tList);
+        void paranthesesExpr(tokenList* tList);
 
         // Prints the expression
         void printExpression(const std::string input, int &index, tokenList* tList);
+        
 };
 
 
