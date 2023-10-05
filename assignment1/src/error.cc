@@ -17,10 +17,18 @@ string errorHandler::getError(){
     return error;
 }// getError
 
+memoryError::memoryError(const string err){
+    error = err;
+}// default memory error constructor
+
 syntaxError::syntaxError(const string err){
     error = err;
 }// default syntax error constructor
 
-memoryError::memoryError(const string err){
+tokenError::tokenError(const string err){
     error = err;
-}// default syntax error constructor
+}// default token error constructor
+
+inputError::inputError(const string err){
+    error = err;
+}// default token error constructor

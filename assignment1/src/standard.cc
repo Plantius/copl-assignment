@@ -20,7 +20,7 @@ void getInput(string & input){
     while (c != '\n' && c != '\r'){
         c = getchar();
         if ((u_char)c > 127){
-            throw string("Invalid input: outside standard ASCII range");
+            throw inputError("Contains non-standard ASCII characters");
         }
         input += c;
     }
@@ -32,7 +32,7 @@ string readFile(const string filepath){
     ifstream file(filepath);
     stringstream buffer;
     if(!file.good() || !file.is_open()){
-        throw string("Invalid input: file does not exist/is corrupted");
+        throw inputError("File does not exist or is corrupted");
     }
     buffer << file.rdbuf();
     return buffer.str();
@@ -44,7 +44,7 @@ void validInput(const string input){
     int i = 0;
     while(input[i] != '\0'){
         if ((u_char)input[i] > 127){
-            throw string("Invalid input: contains non-ASCII characters");
+            throw inputError("Contains non-standard ASCII characters");
         }
         i++;
     }
@@ -53,5 +53,5 @@ void validInput(const string input){
 // Prints the given string to stdout
 void printError(const string error, const string filepath, const string errType){
     cerr << string(error.length(), '-') << endl 
-         << errType << ": " << filepath << "\n\t " << error << endl << string(error.length(), '-') << endl;
+         << filepath << ": " << errType << "\n\t " << error << endl << string(error.length(), '-') << endl;
 }// print_cout

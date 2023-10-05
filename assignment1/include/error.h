@@ -18,14 +18,27 @@ class errorHandler{
         std::string error;
 };
 
+// Handles memory errors
 class memoryError : public errorHandler{
     public:
         memoryError(const std::string err);
 };
 
+// Handles syntax errors
 class syntaxError : public errorHandler{
     public:
         syntaxError(const std::string err);
 };
 
+// Handles tokenization errors
+class tokenError : public errorHandler{
+    public:
+        tokenError(const std::string err);
+};
+
+// Handles input errors
+class inputError : public errorHandler{
+    public:
+        inputError(const std::string err);
+};
 #endif

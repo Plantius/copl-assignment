@@ -11,6 +11,7 @@
 #include <iostream>
 
 const char invalidChar = '$';
+const std::string emptyStr = "";
 
 // Reads input from stdin
 void getInput(std::string & input);

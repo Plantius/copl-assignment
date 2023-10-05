@@ -32,7 +32,7 @@ void menuChoice(){
 int main(){
     clock_t t1, t2;
     tokenList list;
-    string input = "", filepath = "";
+    string input = emptyStr, filepath = emptyStr;
     parser parse; 
     int option = 0;
     try{
@@ -66,10 +66,16 @@ int main(){
         }
     }catch(memoryError & error){
         printError(error.getError(), filepath, "Memory Error");
-        return 1;
+        return EXIT_FAILURE;
     }catch(syntaxError & error){
         printError(error.getError(), filepath, "Syntax Error");
-        return 1;
+        return EXIT_FAILURE;
+    }catch(tokenError & error){
+        printError(error.getError(), filepath, "Tokenization Error");
+        return EXIT_FAILURE;
+    }catch(inputError & error){
+        printError(error.getError(), filepath, "Input Error");
+        return EXIT_FAILURE;
     }
-    return 0;
+    return EXIT_SUCCESS;
 }// main

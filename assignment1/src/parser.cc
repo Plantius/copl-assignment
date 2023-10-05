@@ -66,11 +66,11 @@ void parser::lambdaExpr(tokenList & list){
         if (list.peekToken() == VAR){
             list.consumeToken();
             if(list.peekToken() == EOL){
-                throw syntaxError("No expression after lambda");
+                throw syntaxError("No expression after lambda.");
             }
             lambdaExpr(list);
         }else{
-            throw syntaxError("No variable after lambda");
+            throw syntaxError("No variable after lambda.");
         }
     }else{
         varExpr(list);
@@ -86,7 +86,7 @@ void parser::varExpr(tokenList & list){
         list.consumeToken();  
         expr(list);
     }else {
-        throw syntaxError("No variable or left paranthesis");
+        throw syntaxError("No variable or opening paranthesis.");
     }
 }// parexpr
 
@@ -97,7 +97,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
     int size = input.length();
     int i = 0;
     tokenId id = INVALID;
-    string tempVar = "";
+    string tempVar = emptyStr;
 
 
     while(input[i] != '\0'){
@@ -106,12 +106,12 @@ void parser::stringTokenizer(const string input, tokenList & list){
                 break;
             }
             if(!(list.addToken(EOL, "$"))){
-                throw string("Error: Failed to add token to the list.");
+                throw tokenError("Failed to add token to the list.");
             }
             list.printList();
             
             if (lparCounter != rparCounter){
-                throw string("The token is invalid: not enough beginning/closing parantheses.");
+                throw tokenError("Not enough beginning/closing parantheses.");
             }
             expr(list);
       
@@ -123,7 +123,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
             // Checks if the input is a var, which can be of indefinite size
             if (id == VAR){ 
                 if (tempVar.empty() && (int(input[i]) >= 48 && int(input[i]) <= 57)){
-                    throw string("The token is invalid: variable name starts with a number.");
+                    throw tokenError("Variable name starts with a number.");
 
                 }if (i < size){
                     tokenId tempId = INVALID;
@@ -133,7 +133,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
                     }else {
                         tempVar += input[i];
                         if(!list.addToken(id, tempVar)){
-                            throw string("Error: Failed to add token to the list.");
+                            throw tokenError("Failed to add token to the list.");
                         }
                         tempVar.clear();
                     }
@@ -145,19 +145,19 @@ void parser::stringTokenizer(const string input, tokenList & list){
                     rparCounter++;
                 }
                 if(!(list.addToken(id, string(1, input[i])))){
-                    throw string("Error: Failed to add token to the list.");
+                    throw tokenError("Failed to add token to the list.");
                 }
             }
         }
         i++;
     }
     if(!(list.addToken(EOL, "$"))){
-        throw string("Error: Failed to add token to the list.");
+        throw tokenError("Failed to add token to the list.");
     }
     list.printList();
             
     if (lparCounter != rparCounter){
-        throw string("The token is invalid: not enough beginning/closing parantheses.");
+        throw tokenError("Number of beginning and closing parantheses do not match.");
     }
     expr(list);
 
@@ -171,7 +171,7 @@ void parser::printExpression(const string input, tokenList & list){
         }
     }
     else{
-        cout << "" << endl;
+        cout << " " << endl;
     }
     
 }
