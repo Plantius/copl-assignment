@@ -4,6 +4,7 @@ A parser written in C++ for the untyped $\lambda$-calculus.
 
 ## Description
 
+This project is a parser written for the untyped $\lambda$-calculus, in C++. It parses an input, checks it for syntax errors, and produces an output with left precedence, and inserted parantheses to elliminate ambiguity.
 
 ## Installing
 Build the project using the MakeFile:
