@@ -67,16 +67,20 @@ int main(){
             }
         }
     }catch(memoryError & error){
-        printError(error.getError(), filepath, parse.getRow(), parse.getCol(), "Memory Error");
+        printError(error.getError(), filepath, 
+                    parse.getRow(), parse.getCol(), "Memory Error");
         return EXIT_FAILURE;
     }catch(syntaxError & error){
-        printError(error.getError(), filepath, parse.getRow(), parse.getCol(), "Syntax Error");
+        printError(error.getError(), filepath, 
+                    parse.getRow(), parse.getCol(), "Syntax Error");
         return EXIT_FAILURE;
     }catch(tokenError & error){
-        printError(error.getError(), filepath, parse.getRow(), parse.getCol(), "Tokenization Error");
+        printError(error.getError(), filepath, 
+                    parse.getRow(), parse.getCol(), "Tokenization Error");
         return EXIT_FAILURE;
     }catch(inputError & error){
-        printError(error.getError(), filepath, parse.getRow(), parse.getCol(), "Input Error");
+        printError(error.getError(), filepath, 
+                    parse.getRow(), parse.getCol(), "Input Error");
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;

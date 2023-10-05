@@ -28,7 +28,7 @@ Lana van Sprang (s3272192)
 ## TODO
 * <del> Constructing LL grammar
 * <del> Parser
-   * <del> Adding tokenization
+   * Adding tokenization
    * Adding the four parse functions
    * Adding syntax checker   
 * Generalizing coding style
