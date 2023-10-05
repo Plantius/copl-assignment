@@ -30,6 +30,7 @@ class tokenList{
         ~tokenList();
 
         bool addToken(const tokenId id, const std::string tokenChar);
+        bool insertToken(const tokenId id, const std::string tokenChar, const int index);
         token* getToken(const int index);
         int getLength();
         bool isEmpty();

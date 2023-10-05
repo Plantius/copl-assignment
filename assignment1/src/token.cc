@@ -169,6 +169,35 @@ bool tokenList::addToken(const tokenId id, const string tokenChar){
     return false;
 }// addToken
 
+// Adds a token-object at the back of the tokenList
+bool tokenList::insertToken(const tokenId id, const string tokenChar, const int index){
+    if(!isEmpty()){
+        token* temp = getToken(index);
+
+        token* newToken = new token(id, temp->next, temp, tokenChar);
+        
+        if (newToken == nullptr){
+            throw memoryError("Memory allocation failed");
+        }
+        
+        if (temp->next != nullptr){
+            temp->next->prev = newToken;
+            temp->next = newToken;
+
+        }else {
+            temp->next = newToken;
+            end = newToken;
+        }
+        length++;
+
+        return true;
+    }else {
+        addToken(id, tokenChar);
+        return true;
+    }
+
+    return false;
+}// addToken
 
 // Prints the contents of tokenList to stdout
 void tokenList::printList(){

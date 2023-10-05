@@ -38,5 +38,6 @@ void validInput(const string input){
 // Prints the given string to stdout
 void printError(const string error, const string filepath, const int row, const int col, const string errType){
     cerr << string(error.length(), '-') << endl 
-         << filepath << ": "<< row << ":" << col <<": " << errType << "\n\t " << error << endl << string(error.length(), '-') << endl;
+         << filepath << ": "<< row << ":" << col <<": " << errType 
+         << "\n\t " << error << endl << string(error.length(), '-') << endl;
 }// print_cout
