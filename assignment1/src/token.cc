@@ -91,7 +91,7 @@ int tokenList::peekToken(){
         
         if(nextToken != nullptr){
             if (nextToken->id == INVALID){
-                throw tokenError("Token id is invalid");
+                throw inputError("Token id is invalid");
             }
             return nextToken->id;
         }
@@ -115,7 +115,7 @@ token* tokenList::getToken(const int index){
     token* temp = nullptr;
 
     if (index < 0 || index >= length){
-        throw tokenError("Index out of bounds");
+        throw inputError("Index out of bounds");
     }
 
     if (index < int(length/2)){
@@ -124,7 +124,7 @@ token* tokenList::getToken(const int index){
             if (temp != nullptr){
                 temp = temp->next;
             }else {
-                throw tokenError("Index out of bounds");
+                throw inputError("Index out of bounds");
             }   
         }
     }else {
@@ -133,7 +133,7 @@ token* tokenList::getToken(const int index){
             if (temp != nullptr){
                 temp = temp->prev;
             }else {
-                throw tokenError("Index out of bounds");
+                throw inputError("Index out of bounds");
             }
         }
     }

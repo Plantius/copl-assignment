@@ -13,7 +13,6 @@
 
 class parser{
     public:
-        parser(const int row, const int col);
         // Adds a token to the list according to inputChar
         void tokenSwitch(const char inputChar, tokenId & id);
 
@@ -35,13 +34,9 @@ class parser{
         // Prints the expression
         void printExpression(const std::string input, tokenList & list);
 
-        int getRow(); // Returns the last read row
-        int getCol(); // Returns the last read column 
-
-        void setVar(const int row, const int col);
-
+        void setRowcol(const int row, const int col);
     private:
-        int row, col;
+        int row = 1, col = 1;
 };
 
 #endif

@@ -13,23 +13,11 @@
 #include "../include/error.h"
 using namespace std;
 
-parser::parser(const int newRow, const int newCol){
+// Sets the row and column trackers to the given values
+void parser::setRowcol(const int newRow, const int newCol){
     row = newRow;
     col = newCol;
-}// default constructor
-
-int parser::getRow(){
-    return row;
-}// getRow
-
-int parser::getCol(){
-    return col;
-}// getCol
-
-void parser::setVar(const int newRow, const int newCol){
-    row = newRow;
-    col = newCol;
-}// setVar
+}// setRowCol
 
 // Checks what id the given inputChar has in tokenId
 void parser::tokenSwitch(const char inputChar, tokenId & id){
@@ -83,11 +71,11 @@ void parser::lambdaExpr(tokenList & list){
         if (list.peekToken() == VAR){
             list.consumeToken();
             if(list.peekToken() == EOL){
-                throw syntaxError("No expression after lambda.");
+                throw syntaxError("No expression after lambda.", row, col);
             }
             lambdaExpr(list);
         }else{
-            throw syntaxError("No variable after lambda.");
+            throw syntaxError("No variable after lambda.", row, col);
         }
     }else{
         varExpr(list);
@@ -103,7 +91,7 @@ void parser::varExpr(tokenList & list){
         list.consumeToken();  
         expr(list);
     }else {
-        throw syntaxError("No variable or opening paranthesis.");
+        throw syntaxError("No variable or opening paranthesis.", row, col);
     }
 }// parexpr
 
@@ -123,12 +111,12 @@ void parser::stringTokenizer(const string input, tokenList & list){
                 break;
             }
             if(!(list.addToken(EOL, "#"))){
-                throw tokenError("Failed to add token to the list.");
+                throw tokenError("Failed to add token to the list.", row, col);
             }
             list.printList();
             
             if (lparCounter != rparCounter){
-                throw syntaxError("Not enough beginning/closing parantheses.");
+                throw syntaxError("Not enough beginning/closing parantheses.", row, col);
             }
             expr(list);
       
@@ -142,7 +130,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
             // Checks if the input is a var, which can be of indefinite size
             if (id == VAR){ 
                 if (tempVar.empty() && (int(input[i]) >= 48 && int(input[i]) <= 57)){
-                    throw tokenError("Variable name starts with a number.");
+                    throw tokenError("Variable name starts with a number.", row, col);
 
                 }if (i < size){
                     tokenId tempId = INVALID;
@@ -152,7 +140,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
                     }else {
                         tempVar += input[i];
                         if(!list.addToken(id, tempVar)){
-                            throw tokenError("Failed to add token to the list.");
+                            throw tokenError("Failed to add token to the list.", row, col);
                         }
                         tempVar.clear();
                     }
@@ -164,7 +152,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
                     rparCounter++;
                 }
                 if(!(list.addToken(id, string(1, input[i])))){
-                    throw tokenError("Failed to add token to the list.");
+                    throw tokenError("Failed to add token to the list.", row, col);
                 }
             }
         }
@@ -172,12 +160,12 @@ void parser::stringTokenizer(const string input, tokenList & list){
         col++;
     }
     if(!(list.addToken(EOL, "#"))){
-        throw tokenError("Failed to add token to the list.");
+        throw tokenError("Failed to add token to the list.", row, col);
     }
     list.printList();
             
     if (lparCounter != rparCounter){
-        throw syntaxError("Number of beginning and closing parantheses do not match.");
+        throw syntaxError("Number of beginning and closing parantheses do not match.", row, col);
     }
     expr(list);
 

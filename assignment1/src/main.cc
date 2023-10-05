@@ -32,7 +32,7 @@ void menuChoice(){
 int main(){
     clock_t t1, t2;
     tokenList list;
-    parser parse(1, 1); 
+    parser parse; 
 
     string input = emptyStr, filepath = "NULL";
     int option = 0;
@@ -58,8 +58,8 @@ int main(){
                 t2 = clock();
                 cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
         
+                parse.setRowcol(1, 1);
                 list.clear();
-                parse.setVar(1, 1);
                 break;
             case 1: // Exits the program
                 cout << "Exit program" << endl;
@@ -70,20 +70,16 @@ int main(){
             }
         }
     }catch(memoryError & error){
-        printError(error.getError(), filepath, 
-                    parse.getRow(), parse.getCol(), "Memory Error");
+        printError<memoryError>(error, filepath, "Memory Error");
         return EXIT_FAILURE;
     }catch(syntaxError & error){
-        printError(error.getError(), filepath, 
-                    parse.getRow(), parse.getCol(), "Syntax Error");
+        printError<syntaxError>(error, filepath, "Syntax Error");
         return EXIT_FAILURE;
     }catch(tokenError & error){
-        printError(error.getError(), filepath, 
-                    parse.getRow(), parse.getCol(), "Tokenization Error");
+        printError<tokenError>(error, filepath, "Tokenization Error");
         return EXIT_FAILURE;
     }catch(inputError & error){
-        printError(error.getError(), filepath, 
-                    parse.getRow(), parse.getCol(), "Input Error");
+        printError<inputError>(error, filepath, "Input Error");
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
