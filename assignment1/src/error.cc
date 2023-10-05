@@ -9,6 +9,12 @@
 #include "../include/error.h"
 using namespace std;
 
+errorHandler::errorHandler(){
+    error = "";
+    row = 0;
+    col = 0;
+}// default constructor
+
 string errorHandler::getError(){
     return error;
 }// getError

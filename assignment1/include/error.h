@@ -13,11 +13,11 @@
 // Base error class
 class errorHandler{
     public:
-        errorHandler(){};
+        errorHandler();
         std::string getError();
         int getRow();
         int getCol();
-        
+
     protected:
         std::string error;
         int row, col;
