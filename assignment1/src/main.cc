@@ -3,7 +3,7 @@
 * Niels Versteeg (s3322637)
 * Lana van Sprang (s3272192)
 * main.cc
-* 15-09-2023
+* 05-10-2023
 **/ 
 
 #include "../include/standard.h"
@@ -32,9 +32,11 @@ void menuChoice(){
 int main(){
     clock_t t1, t2;
     tokenList list;
-    string input = emptyStr, filepath = emptyStr;
     parser parse; 
+
+    string input = emptyStr, filepath = emptyStr;
     int option = 0;
+    
     try{
         while(option != 1){
             menuChoice();
@@ -65,16 +67,16 @@ int main(){
             }
         }
     }catch(memoryError & error){
-        printError(error.getError(), filepath, "Memory Error");
+        printError(error.getError(), filepath, parse.getRow(), parse.getCol(), "Memory Error");
         return EXIT_FAILURE;
     }catch(syntaxError & error){
-        printError(error.getError(), filepath, "Syntax Error");
+        printError(error.getError(), filepath, parse.getRow(), parse.getCol(), "Syntax Error");
         return EXIT_FAILURE;
     }catch(tokenError & error){
-        printError(error.getError(), filepath, "Tokenization Error");
+        printError(error.getError(), filepath, parse.getRow(), parse.getCol(), "Tokenization Error");
         return EXIT_FAILURE;
     }catch(inputError & error){
-        printError(error.getError(), filepath, "Input Error");
+        printError(error.getError(), filepath, parse.getRow(), parse.getCol(), "Input Error");
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;

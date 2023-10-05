@@ -3,7 +3,7 @@
 * Niels Versteeg (s3322637)
 * Lana van Sprang (s3272192)
 * parser.h
-* 15-09-2023
+* 05-10-2023
 **/
 
 #ifndef PARSER_H
@@ -34,6 +34,13 @@ class parser{
         // Prints the expression
         void printExpression(const std::string input, tokenList & list);
 
+        // Returns the last read row
+        int getRow();
+
+        // Returns the last read column
+        int getCol();
+    private:
+        int row = 1, col = 0;
 };
 
 #endif

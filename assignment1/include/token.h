@@ -3,7 +3,7 @@
 * Niels Versteeg (s3322637)
 * Lana van Sprang (s3272192)
 * parser.h
-* 15-09-2023
+* 05-10-2023
 **/
 
 #ifndef TOKEN_H

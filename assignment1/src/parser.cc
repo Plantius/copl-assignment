@@ -13,6 +13,13 @@
 #include "../include/error.h"
 using namespace std;
 
+int parser::getRow(){
+    return row;
+}// getRow
+
+int parser::getCol(){
+    return col;
+}// getCol
 
 // Checks what id the given inputChar has in tokenId
 void parser::tokenSwitch(const char inputChar, tokenId & id){
@@ -105,7 +112,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
             if (list.isEmpty()){
                 break;
             }
-            if(!(list.addToken(EOL, "$"))){
+            if(!(list.addToken(EOL, "#"))){
                 throw tokenError("Failed to add token to the list.");
             }
             list.printList();
@@ -118,6 +125,8 @@ void parser::stringTokenizer(const string input, tokenList & list){
             list.clear();
             lparCounter = 0;
             rparCounter = 0;
+            row++;
+            col = 0;
         }else {
             tokenSwitch(input[i], id);
             // Checks if the input is a var, which can be of indefinite size
@@ -150,8 +159,9 @@ void parser::stringTokenizer(const string input, tokenList & list){
             }
         }
         i++;
+        col++;
     }
-    if(!(list.addToken(EOL, "$"))){
+    if(!(list.addToken(EOL, "#"))){
         throw tokenError("Failed to add token to the list.");
     }
     list.printList();

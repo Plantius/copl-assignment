@@ -3,7 +3,7 @@
 * Niels Versteeg (s3322637)
 * Lana van Sprang (s3272192)
 * standard.h
-* 15-09-2023
+* 05-10-2023
 **/
 
 #ifndef STANDARD_H
@@ -13,9 +13,6 @@
 const char invalidChar = '$';
 const std::string emptyStr = "";
 
-// Reads input from stdin
-void getInput(std::string & input);
-
 // Reads input from a file
 std::string readFile(const std::string filepath);
 
@@ -24,6 +21,6 @@ std::string readFile(const std::string filepath);
 void validInput(const std::string input);
 
 // Reads a constant string and prints it to stdout
-void printError(const std::string error, const std::string filepath, const std::string errType);
+void printError(const std::string error, const std::string filepath, const int row, const int col, const std::string errType);
 
 #endif
