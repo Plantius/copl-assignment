@@ -204,7 +204,7 @@ void tokenList::printList(){
     token* temp = begin;
 
     while(temp != nullptr){
-        cout << temp->id << ":" << temp->tokenChar << " ";
+        cout << temp->tokenChar;
         temp = temp->next;
     }cout << endl;
 }// printList

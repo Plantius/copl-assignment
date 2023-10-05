@@ -13,6 +13,11 @@
 #include "../include/error.h"
 using namespace std;
 
+parser::parser(const int newRow, const int newCol){
+    row = newRow;
+    col = newCol;
+}// default constructor
+
 int parser::getRow(){
     return row;
 }// getRow
@@ -20,6 +25,11 @@ int parser::getRow(){
 int parser::getCol(){
     return col;
 }// getCol
+
+void parser::setVar(const int newRow, const int newCol){
+    row = newRow;
+    col = newCol;
+}// setVar
 
 // Checks what id the given inputChar has in tokenId
 void parser::tokenSwitch(const char inputChar, tokenId & id){
@@ -118,7 +128,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
             list.printList();
             
             if (lparCounter != rparCounter){
-                throw tokenError("Not enough beginning/closing parantheses.");
+                throw syntaxError("Not enough beginning/closing parantheses.");
             }
             expr(list);
       
@@ -167,7 +177,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
     list.printList();
             
     if (lparCounter != rparCounter){
-        throw tokenError("Number of beginning and closing parantheses do not match.");
+        throw syntaxError("Number of beginning and closing parantheses do not match.");
     }
     expr(list);
 

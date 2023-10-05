@@ -32,16 +32,18 @@ void menuChoice(){
 int main(){
     clock_t t1, t2;
     tokenList list;
-    parser parse; 
+    parser parse(1, 1); 
 
-    string input = emptyStr, filepath = emptyStr;
+    string input = emptyStr, filepath = "NULL";
     int option = 0;
     
     try{
         while(option != 1){
             menuChoice();
             cout << "Enter an option: ";
-            cin >> option;
+            if(!(cin >> option)){
+                throw inputError("Invalid option");
+            }
 
             // Switch statement to choose the required option
             switch (option)
@@ -57,6 +59,7 @@ int main(){
                 cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
         
                 list.clear();
+                parse.setVar(1, 1);
                 break;
             case 1: // Exits the program
                 cout << "Exit program" << endl;
