@@ -7,6 +7,7 @@
 **/
 
 #include "../include/standard.h"
+#include "../include/error.h"
 #include <fstream>
 #include <sstream>
 using namespace std;
@@ -50,7 +51,7 @@ void validInput(const string input){
 }// valid_input
 
 // Prints the given string to stdout
-void printError(const string input){
-    cerr << string(input.length(), '-') << endl 
-         << input << endl << string(input.length(), '-') << endl;
+void printError(const string error, const string filepath, const string errType){
+    cerr << string(error.length(), '-') << endl 
+         << errType << ": " << filepath << "\n\t " << error << endl << string(error.length(), '-') << endl;
 }// print_cout

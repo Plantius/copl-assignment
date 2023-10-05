@@ -23,6 +23,6 @@ std::string readFile(const std::string filepath);
 void validInput(const std::string input);
 
 // Reads a constant string and prints it to stdout
-void printError(const std::string error);
+void printError(const std::string error, const std::string filepath, const std::string errType);
 
 #endif

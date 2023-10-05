@@ -9,6 +9,7 @@
 #include "../include/standard.h"
 #include "../include/token.h"
 #include "../include/tokenId.h"
+#include "../include/error.h"
 using namespace std;
 
 // Default constructor
@@ -114,8 +115,7 @@ token* tokenList::getToken(const int index){
     token* temp = nullptr;
 
     if (index < 0 || index >= length){
-        printError("Invalid token: index out of bounds");
-        return temp;
+        throw string("Invalid token: index out of bounds");
     }
 
     if (index < int(length/2)){
@@ -124,8 +124,7 @@ token* tokenList::getToken(const int index){
             if (temp != nullptr){
                 temp = temp->next;
             }else {
-                printError("Invalid token: index out of bounds");
-                return temp;
+                throw string("Invalid token: index out of bounds");
             }   
         }
     }else {
@@ -134,8 +133,7 @@ token* tokenList::getToken(const int index){
             if (temp != nullptr){
                 temp = temp->prev;
             }else {
-                printError("Invalid token: index out of bounds");
-                return temp;
+                throw string("Invalid token: index out of bounds");
             }
         }
     }
@@ -148,8 +146,7 @@ bool tokenList::addToken(const tokenId id, const string tokenChar){
     if(isEmpty()){
         token* newToken = new token(id, nullptr, nullptr, tokenChar);
         if (newToken == nullptr){
-            printError("Memory allocation failed");
-            return false;
+            throw memoryError("Memory allocation failed");
         }
         begin = newToken;
         end = newToken;
@@ -160,8 +157,7 @@ bool tokenList::addToken(const tokenId id, const string tokenChar){
         token* temp = end;
         token* newToken = new token(id, nullptr, end, tokenChar);
         if (newToken == nullptr){
-            printError("Memory allocation failed");
-            return false;
+            throw memoryError("Memory allocation failed");
         }
         temp->next = newToken;
         end = newToken;

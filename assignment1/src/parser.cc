@@ -10,6 +10,7 @@
 #include "../include/parser.h"
 #include "../include/token.h"
 #include "../include/tokenId.h"
+#include "../include/error.h"
 using namespace std;
 
 
@@ -65,11 +66,11 @@ void parser::lambdaExpr(tokenList & list){
         if (list.peekToken() == VAR){
             list.consumeToken();
             if(list.peekToken() == EOL){
-                throw string("Syntax error: no expression after lambda");
+                throw syntaxError("No expression after lambda");
             }
             lambdaExpr(list);
         }else{
-            throw string("Syntax error: no variable after lambda");
+            throw syntaxError("No variable after lambda");
         }
     }else{
         varExpr(list);
@@ -85,7 +86,7 @@ void parser::varExpr(tokenList & list){
         list.consumeToken();  
         expr(list);
     }else {
-        throw string("Syntax error: no variable or left paranthesis");
+        throw syntaxError("No variable or left paranthesis");
     }
 }// parexpr
 

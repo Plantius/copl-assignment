@@ -9,10 +9,11 @@
 #include "../include/standard.h"
 #include "../include/parser.h"
 #include "../include/token.h"
+#include "../include/error.h"
 using namespace std;
 
 // Reads the file and writes it to a string
-string readInput(string filepath){
+string readInput(string & filepath){
     cout << "Enter the path of the file: ";
     cin >> filepath;
 
@@ -63,8 +64,11 @@ int main(){
                 break;
             }
         }
-    }catch(const string error){
-        printError(error);
+    }catch(memoryError & error){
+        printError(error.getError(), filepath, "Memory Error");
+        return 1;
+    }catch(syntaxError & error){
+        printError(error.getError(), filepath, "Syntax Error");
         return 1;
     }
     return 0;
