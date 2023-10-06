@@ -32,6 +32,7 @@ void menuChoice(){
 int main(){
     clock_t t1, t2;
     tokenList list;
+    int clockCount = 0, count = 0, nr = 1000;
     parser parse; 
 
     string input = emptyStr, filepath = "NULL";
@@ -64,6 +65,27 @@ int main(){
             case 1: // Exits the program
                 cout << "Exit program" << endl;
                 break;
+
+            case 2:
+                cout << "Running test" << endl;
+                filepath = "../tests/in";
+                input = readFile(filepath);
+                while (count < nr){
+                    t1 = clock();
+                    // Checks if any errors are thrown from the stringTokenizer function
+                    parse.stringTokenizer(input, list);
+                    t2 = clock();
+                    parse.setRowcol(1, 1);
+                    list.clear();
+                    clockCount += t2-t1;
+                    count++;
+                }
+                cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
+                cout << "Average " << (((double)(clockCount/nr))/CLOCKS_PER_SEC) << " in " << int(clockCount/nr) << " ticks"<< endl; 
+                clockCount = 0, count = 0;
+                
+                break;
+
             default:
                 cout << "Invalid input, try again." << endl;
                 break;

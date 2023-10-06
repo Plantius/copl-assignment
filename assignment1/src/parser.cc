@@ -113,7 +113,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
             if(!(list.addToken(EOL, "#"))){
                 throw tokenError("Failed to add token to the list.", row, col);
             }
-            list.printList();
+            // list.printList();
             
             if (lparCounter != rparCounter){
                 throw syntaxError("Not enough beginning/closing parantheses.", row, col);
@@ -121,10 +121,9 @@ void parser::stringTokenizer(const string input, tokenList & list){
             expr(list);
       
             list.clear();
-            lparCounter = 0;
-            rparCounter = 0;
-            row++;
-            col = 0;
+            lparCounter = 0, rparCounter = 0;
+            col = 0, row++;
+            
         }else {
             tokenSwitch(input[i], id);
             // Checks if the input is a var, which can be of indefinite size
@@ -162,7 +161,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
     if(!(list.addToken(EOL, "#"))){
         throw tokenError("Failed to add token to the list.", row, col);
     }
-    list.printList();
+    // list.printList();
             
     if (lparCounter != rparCounter){
         throw syntaxError("Number of beginning and closing parantheses do not match.", row, col);
