@@ -70,16 +70,16 @@ int main(){
             }
         }
     }catch(memoryError & error){
-        printError<memoryError>(error, filepath, "Memory Error");
+        printError<memoryError>(error, filepath);
         return EXIT_FAILURE;
     }catch(syntaxError & error){
-        printError<syntaxError>(error, filepath, "Syntax Error");
+        printError<syntaxError>(error, filepath);
         return EXIT_FAILURE;
     }catch(tokenError & error){
-        printError<tokenError>(error, filepath, "Tokenization Error");
+        printError<tokenError>(error, filepath);
         return EXIT_FAILURE;
     }catch(inputError & error){
-        printError<inputError>(error, filepath, "Input Error");
+        printError<inputError>(error, filepath);
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;

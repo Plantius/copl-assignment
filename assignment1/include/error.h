@@ -17,9 +17,11 @@ class errorHandler{
         std::string getError();
         int getRow();
         int getCol();
+        std::string getType();
 
     protected:
         std::string error;
+        std::string type;
         int row, col;
 };// errorHandler
 
@@ -51,9 +53,9 @@ class inputError : public errorHandler{
 
 // Prints the given error to cerr
 template<class C>
-void printError(C error, const std::string filepath, const std::string errType){
+void printError(C error, const std::string filepath){
     std::cerr << std::string((error.getError()).length(), '-') << std::endl 
-         << filepath << ": "<< error.getRow() << ":" << error.getCol() <<": " << errType 
+         << filepath << ": "<< error.getRow() << ":" << error.getCol() <<": " << error.getType() 
          << "\n\t " << error.getError() << std::endl << std::string((error.getError()).length(), '-') << std::endl;
 }// printError
 
