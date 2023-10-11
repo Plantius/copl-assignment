@@ -173,8 +173,15 @@ void parser::stringTokenizer(const string input, tokenList & list){
 
 void parser::printExpression(const string input, tokenList & list){
     int length = list.getLength();
+    int linkerhaakje = 0;
     if (!(list.isEmpty())){
         for (int i = 0; i < length; i++){
+            if (input[i] == LAMBDA || input[i] == VAR){
+                cout <<"(" << input[i];
+            }
+            if (input[i] == VAR && (linkerhaakje % 2 == 1)){
+                cout << input[i] << ')';
+            }
             cout << input[i] << endl; //?? not done
         }
     }
