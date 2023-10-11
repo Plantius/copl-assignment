@@ -20,7 +20,7 @@ void parser::setRowcol(const int newRow, const int newCol){
 }// setRowCol
 
 // Checks what id the given inputChar has in tokenId
-void parser::tokenSwitch(const char inputChar, tokenId & id){
+void parser::tokenSwitch(const char inputChar, tokenId & id) const{
     // for all the special characters
     switch(inputChar){
         case '(':
@@ -49,13 +49,13 @@ void parser::tokenSwitch(const char inputChar, tokenId & id){
     }
 }// tokenSwitch
 
-void parser::expr(tokenList & list){
+void parser::expr(tokenList & list) const{
     lambdaExpr(list);
     expr1(list);
 }// expr
 
 
-void parser::expr1(tokenList & list){
+void parser::expr1(tokenList & list) const{
     if (list.peekToken() == EOL){
         return;
     }
@@ -65,7 +65,7 @@ void parser::expr1(tokenList & list){
 
 
 // Checks if the token at the given index is a parexpr or a lambda expression
-void parser::lambdaExpr(tokenList & list){
+void parser::lambdaExpr(tokenList & list) const{
     if (list.peekToken() == LAMBDA){
         list.consumeToken();
         if (list.peekToken() == VAR){
@@ -84,7 +84,7 @@ void parser::lambdaExpr(tokenList & list){
 
 
 // Checks if the token at the given index is a paranthesis or a variable
-void parser::varExpr(tokenList & list){
+void parser::varExpr(tokenList & list) const{
     if (list.peekToken() == VAR){
         list.consumeToken();
     }else if ((list.peekToken() == LPAR)){
@@ -113,7 +113,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
             if(!(list.addToken(EOL, "#"))){
                 throw tokenError("Failed to add token to the list.", row, col);
             }
-            // list.printList();
+            list.printList();
             
             if (lparCounter != rparCounter){
                 throw syntaxError("Not enough beginning/closing parantheses.", row, col);
@@ -167,6 +167,7 @@ void parser::stringTokenizer(const string input, tokenList & list){
         throw syntaxError("Number of beginning and closing parantheses do not match.", row, col);
     }
     expr(list);
+    list.printList();
 
 }// stringTokenizer
 

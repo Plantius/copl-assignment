@@ -58,7 +58,7 @@ int main(){
                 parse.stringTokenizer(input, list);
                 t2 = clock();
                 cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
-        
+
                 parse.setRowcol(1, 1);
                 list.clear();
                 break;

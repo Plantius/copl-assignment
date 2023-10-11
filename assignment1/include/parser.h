@@ -14,22 +14,22 @@
 class parser{
     public:
         // Adds a token to the list according to inputChar
-        void tokenSwitch(const char inputChar, tokenId & id);
+        void tokenSwitch(const char inputChar, tokenId & id) const;
 
         // Tokenizes the given string 
         void stringTokenizer(const std::string input, tokenList & list);
 
         // Expression
-        void expr(tokenList & list);
+        void expr(tokenList & list) const;
 
         // Expression'
-        void expr1(tokenList & list);
+        void expr1(tokenList & list) const;
 
         // Function expression
-        void lambdaExpr(tokenList & list);
+        void lambdaExpr(tokenList & list) const;
 
         // Parantheses expression
-        void varExpr(tokenList & list);
+        void varExpr(tokenList & list) const;
 
         // Prints the expression
         void printExpression(const std::string input, tokenList & list);
