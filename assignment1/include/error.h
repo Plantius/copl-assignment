@@ -14,10 +14,10 @@
 class errorHandler{
     public:
         errorHandler();
-        std::string getError();
-        int getRow();
-        int getCol();
-        std::string getType();
+        std::string getError() const;
+        int getRow() const;
+        int getCol() const;
+        std::string getType() const;
 
     protected:
         std::string error;

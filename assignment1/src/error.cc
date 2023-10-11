@@ -15,19 +15,19 @@ errorHandler::errorHandler(){
     col = 0;
 }// default constructor
 
-string errorHandler::getError(){
+string errorHandler::getError() const{
     return error;
 }// getError
 
-int errorHandler::getRow(){
+int errorHandler::getRow() const{
     return row;
 }// getRow
 
-int errorHandler::getCol(){
+int errorHandler::getCol() const{
     return col;
 }// getCol
 
-string errorHandler::getType(){
+string errorHandler::getType() const{
     return type;
 }// getType
 
