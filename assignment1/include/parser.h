@@ -39,4 +39,31 @@ class parser{
         int row = 1, col = 1;
 };
 
+class node{
+    public:
+        node ();
+
+        node* left;
+        node* right;
+
+        tokenId id;
+        std::string tokenChar;
+};
+
+class tree{
+    public:
+        tree();
+        ~tree();
+
+        bool isEmpty();
+        bool makeNode(tokenId id, node* & index);
+        void makeTree();
+        void deleteNode();
+        void printTree();
+
+
+    private:
+        node* begin;
+};
+
 #endif

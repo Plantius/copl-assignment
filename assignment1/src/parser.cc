@@ -119,7 +119,6 @@ void parser::stringTokenizer(const string input, tokenList & list){
                 throw syntaxError("Not enough beginning/closing parantheses.", row, col);
             }
             expr(list);
-      
             list.clear();
             lparCounter = 0, rparCounter = 0;
             col = 0, row++;
@@ -189,4 +188,38 @@ void parser::printExpression(const string input, tokenList & list){
         cout << " " << endl;
     }
     
+}
+
+node::node(){
+    left = nullptr;
+    right = nullptr;
+}
+
+tree::tree(){
+    begin = nullptr;
+}
+
+tree::~tree(){
+
+}
+
+bool tree::isEmpty(){
+    if (begin == nullptr){
+        return true;
+    }
+    return false;
+}
+
+bool tree::makeNode(tokenId id, node* & index){
+    if (isEmpty()){
+       // Als de boom leeg is, begint de boom met het eerste element
+        begin = new node;
+        begin->id = id;
+        index = begin;
+        return true;
+    }
+
+    else{
+        
+    }
 }
