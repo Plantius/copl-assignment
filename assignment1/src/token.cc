@@ -60,7 +60,7 @@ void tokenList::clear(){
 
 
 // Checks if the tokenList is empty
-bool tokenList::isEmpty(){
+bool tokenList::isEmpty() const{
     if (begin != nullptr){
         return false;
     }
@@ -69,13 +69,13 @@ bool tokenList::isEmpty(){
 
 
 // Returns the length of the list
-int tokenList::getLength(){
+int tokenList::getLength() const{
     return length;
 }// getLength
 
 
 // Returns the current index
-int tokenList::getIndex(){
+int tokenList::getIndex() const{
     return index;
 }// getIndex
 
@@ -111,7 +111,7 @@ void tokenList::consumeToken(){
 // Returns the token-object at the given list index
 // If the index is greater then half of the list length, the
 // walk is started from the end of the list, instead of the beginning
-token* tokenList::getToken(const int index){
+token* tokenList::getToken(const int index) const{
     token* temp = nullptr;
 
     if (index < 0 || index >= length){
@@ -200,7 +200,7 @@ bool tokenList::insertToken(const tokenId id, const string tokenChar, const int 
 }// addToken
 
 // Prints the contents of tokenList to stdout
-void tokenList::printList(){
+void tokenList::printList() const{
     token* temp = begin;
 
     while(temp != nullptr){

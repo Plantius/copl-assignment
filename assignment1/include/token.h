@@ -31,16 +31,16 @@ class tokenList{
 
         bool addToken(const tokenId id, const std::string tokenChar);
         bool insertToken(const tokenId id, const std::string tokenChar, const int index);
-        token* getToken(const int index);
-        int getLength();
-        bool isEmpty();
+        token* getToken(const int index) const;
+        int getLength() const;
+        bool isEmpty() const;
         void clear();
         
         int peekToken();
         void consumeToken();
-        void printList();
+        void printList() const;
 
-        int getIndex();
+        int getIndex() const;
 
     private:
         token* begin;
