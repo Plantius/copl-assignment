@@ -13,11 +13,13 @@
 
 class parser{
     public:
+        parser();
+        ~parser() {};
         // Adds a token to the list according to inputChar
-        void tokenSwitch(const char inputChar, tokenId & id) const;
+        tokenId tokenSwitch(const char inputChar) const;
 
         // Tokenizes the given string 
-        void stringTokenizer(const std::string input, tokenList & list);
+        void stringTokenizer(const std::string input);
 
         // Expression
         void expr(tokenList & list) const;
@@ -34,7 +36,6 @@ class parser{
         // Prints the expression
         void printExpression(const std::string input, tokenList & list);
 
-        void setRowcol(const int row, const int col);
     private:
         int row = 1, col = 1;
 };

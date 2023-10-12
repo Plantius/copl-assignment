@@ -13,40 +13,29 @@
 #include "../include/error.h"
 using namespace std;
 
-// Sets the row and column trackers to the given values
-void parser::setRowcol(const int newRow, const int newCol){
-    row = newRow;
-    col = newCol;
-}// setRowCol
+parser::parser(){
+    row = 1, col = 1;
+}// Default constructor
+
 
 // Checks what id the given inputChar has in tokenId
-void parser::tokenSwitch(const char inputChar, tokenId & id) const{
+tokenId parser::tokenSwitch(const char inputChar) const{
     // for all the special characters
     switch(inputChar){
-        case '(':
-            id = LPAR; 
-            break;
-        case ')':
-            id = RPAR;
-            break;
-        case '\\':
-            id = LAMBDA;
-            break;
-        case '.': 
-            id = DOT;
-            break;
-        case ' ': 
-            id = SPACE;
-            break;
-        default: 
-            id = INVALID;
-            break;
+        case '(': return LPAR; 
+        case ')': return RPAR;
+        case '\\': return LAMBDA;
+        case '.': return DOT;
+        case ' ': return SPACE;
+        
+        default: break;
     }
     if ((int(inputChar) >= 65 && int(inputChar) <= 90) || 
             (int(inputChar) >=97 && int(inputChar) <= 122) || 
                 (int(inputChar) >=48 && int(inputChar) <= 57)){
-        id = VAR;
+        return VAR;
     }
+    return INVALID;
 }// tokenSwitch
 
 void parser::expr(tokenList & list) const{
@@ -97,7 +86,8 @@ void parser::varExpr(tokenList & list) const{
 
 
 // Tokenizes the given string, and adds them to the given token list
-void parser::stringTokenizer(const string input, tokenList & list){
+void parser::stringTokenizer(const string input){
+    tokenList list;
     int lparCounter = 0, rparCounter = 0;
     int size = input.length();
     int i = 0;
@@ -124,15 +114,14 @@ void parser::stringTokenizer(const string input, tokenList & list){
             col = 0, row++;
             
         }else {
-            tokenSwitch(input[i], id);
+            id = tokenSwitch(input[i]);
             // Checks if the input is a var, which can be of indefinite size
             if (id == VAR){ 
                 if (tempVar.empty() && (int(input[i]) >= 48 && int(input[i]) <= 57)){
                     throw tokenError("Variable name starts with a number.", row, col);
 
                 }if (i < size){
-                    tokenId tempId = INVALID;
-                    tokenSwitch(input[i+1], tempId);
+                    tokenId tempId = tokenSwitch(input[i+1]);
                     if (tempId == VAR){
                         tempVar += input[i];
                     }else {
@@ -222,4 +211,5 @@ bool tree::makeNode(tokenId id, node* & index){
     else{
         
     }
+    return false;
 }

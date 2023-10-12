@@ -11,10 +11,11 @@
 #include <iostream>
 #include "../include/tokenId.h"
 
+// Token class
 class token{
     public:
         token();
-        token(const tokenId id, token* next, token* prev, const std::string tokenChar);
+        token(const tokenId newId, token* newNext, token* newPrev, const std::string newTokenChar);
         token* next;
         token* prev;
 
@@ -23,24 +24,41 @@ class token{
 
 };// token
 
-
+// Token list class
 class tokenList{
     public:
-        tokenList();
+        tokenList() : begin(nullptr), end(nullptr), length(0), index(0) {};
         ~tokenList();
 
+        // Adds a token to the list
         bool addToken(const tokenId id, const std::string tokenChar);
+        
+        // Inserts a token in the list
         bool insertToken(const tokenId id, const std::string tokenChar, const int index);
+        
+        // Returns the type of the token at the current index
+        int peekToken();
+        
+        // Consumes the current token
+        void consumeToken();
+
+        // Returns the token a the given index
         token* getToken(const int index) const;
+
+        // Returns the current list size
         int getLength() const;
+        
+        // Returns the current index
+        int getIndex() const;
+        
+        // Returns if the list is empty
         bool isEmpty() const;
+
+        // Clears the list
         void clear();
         
-        int peekToken();
-        void consumeToken();
+        // Prints the list
         void printList() const;
-
-        int getIndex() const;
 
     private:
         token* begin;

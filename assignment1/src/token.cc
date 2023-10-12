@@ -17,7 +17,7 @@ token::token(){
     next = nullptr;
     prev = nullptr;
     id = INVALID;
-    tokenChar = "$";
+    tokenChar = emptyStr;
 }// default constructor
 
 
@@ -27,15 +27,6 @@ token::token(const tokenId idToken, token* nextToken, token* prevToken, const st
     prev = prevToken;
     id = idToken;
     tokenChar = c;
-}// default constructor
-
-
-// Default constructor
-tokenList::tokenList(){
-    begin = nullptr;
-    end = nullptr;
-    length = 0;
-    index = 0;
 }// default constructor
 
 

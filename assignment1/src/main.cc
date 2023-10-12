@@ -29,80 +29,107 @@ void menuChoice(){
 }// menuChoice
 
 // Tokenizes a given string, and parses it
-int main(){
+int main(int argc, char** argv){
     clock_t t1, t2;
-    tokenList list;
     int clockCount = 0, count = 0, nr = 1000;
-    parser parse; 
-
+    parser* parse = new parser; 
+    bool debug;
     string input = emptyStr, filepath = "NULL";
     int option = 0;
     
+    if(argc < 2){
+        debug = false;
+    }else if (string(argv[1]) == "d"){
+        debug = true;
+    }
+
+    
     try{
         while(option != 1){
-            menuChoice();
-            cout << "Enter an option: ";
-            if(!(cin >> option)){
-                throw inputError("Invalid option");
-            }
+            if (!debug){
+                menuChoice();
+                cout << "Enter an option: ";
+                if(!(cin >> option)){
+                    throw inputError("Invalid option");
+                }
 
-            // Switch statement to choose the required option
-            switch (option)
-            {
-            case 0: // Reads the given file, and parses it
-                input = readInput(filepath);
+                // Switch statement to choose the required option
+                switch (option)
+                {
+                case 0: // Reads the given file, and parses it
+                    input = readInput(filepath);
 
-                validInput(input);
-                t1 = clock();
-                // Checks if any errors are thrown from the stringTokenizer function
-                parse.stringTokenizer(input, list);
-                t2 = clock();
-                cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
-
-                parse.setRowcol(1, 1);
-                list.clear();
-                break;
-            case 1: // Exits the program
-                cout << "Exit program" << endl;
-                break;
-
-            case 2:
-                cout << "Running test" << endl;
-                filepath = "../tests/in";
-                input = readFile(filepath);
-                while (count < nr){
+                    validInput(input);
+                    delete parse;
+                    parse = new parser;
                     t1 = clock();
                     // Checks if any errors are thrown from the stringTokenizer function
-                    parse.stringTokenizer(input, list);
+                    parse->stringTokenizer(input);
                     t2 = clock();
-                    parse.setRowcol(1, 1);
-                    list.clear();
-                    clockCount += t2-t1;
-                    count++;
-                }
-                cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
-                cout << "Average " << (((double)(clockCount/nr))/CLOCKS_PER_SEC) << " in " << int(clockCount/nr) << " ticks"<< endl; 
-                clockCount = 0, count = 0;
-                
-                break;
+                    cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
 
-            default:
-                cout << "Invalid input, try again." << endl;
-                break;
+                    break;
+                case 1: // Exits the program
+                    cout << "Exit program" << endl;
+                    break;
+
+                case 2:
+                    cout << "Running test" << endl;
+                    filepath = "../tests/in";
+                    input = readFile(filepath);
+                    while (count < nr){
+                        delete parse;
+                        parse = new parser;
+                        t1 = clock();
+                        // Checks if any errors are thrown from the stringTokenizer function
+                        parse->stringTokenizer(input);
+                        t2 = clock();
+                        clockCount += t2-t1;
+                        count++;
+                    }
+                    cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
+                    cout << "Average " << (((double)(clockCount/nr))/CLOCKS_PER_SEC) << " in " << int(clockCount/nr) << " ticks"<< endl; 
+                    clockCount = 0, count = 0;
+                    
+                    break;
+
+                default:
+                    cout << "Invalid input, try again." << endl;
+                    break;
+                }
+            }else {
+                if (cin >> filepath){
+                    input = readInput(filepath);
+
+                    validInput(input);
+                    delete parse;
+                    parse = new parser;
+                    t1 = clock();
+                    // Checks if any errors are thrown from the stringTokenizer function
+                    parse->stringTokenizer(input);
+                    t2 = clock();
+                    cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
+
+                }
             }
         }
     }catch(memoryError & error){
         printError<memoryError>(error, filepath);
+        delete parse;
         return EXIT_FAILURE;
     }catch(syntaxError & error){
         printError<syntaxError>(error, filepath);
+        delete parse;
         return EXIT_FAILURE;
     }catch(tokenError & error){
         printError<tokenError>(error, filepath);
+        delete parse;
         return EXIT_FAILURE;
     }catch(inputError & error){
         printError<inputError>(error, filepath);
+        delete parse;
         return EXIT_FAILURE;
     }
+    delete parse;
     return EXIT_SUCCESS;
 }// main

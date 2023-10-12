@@ -13,11 +13,12 @@
 // Base error class
 class errorHandler{
     public:
-        errorHandler();
-        std::string getError() const;
-        int getRow() const;
-        int getCol() const;
-        std::string getType() const;
+        errorHandler() : error(""), row(0), col(0) {};
+        errorHandler(const std::string err) : error(err) {};
+        std::string getError() const {return error;};
+        int getRow() const {return row;};
+        int getCol() const {return col;};
+        std::string getType() const {return type;};
 
     protected:
         std::string error;
@@ -28,27 +29,41 @@ class errorHandler{
 // Handles memory errors
 class memoryError : public errorHandler{
     public:
-        memoryError(const std::string err);
+        memoryError(const std::string err){
+            error = err;
+            type = "Memory Error";
+        };
 };// memoryError
 
 // Handles syntax errors
 class syntaxError : public errorHandler{
     public:
         syntaxError(const std::string err, 
-                    const int row, const int col);
+                    const int r, const int c){
+            error = err;
+            type = "Syntax Error";
+            row = r, col = c;
+        };
 };// syntaxError
 
 // Handles tokenization errors
 class tokenError : public errorHandler{
     public:
         tokenError(const std::string err, 
-                    const int row, const int col);
+                    const int r, const int c){
+            error = err;
+            type = "Token Error";
+            row = r, col = c;
+        };
 };// tokenError
 
 // Handles input errors
 class inputError : public errorHandler{
     public:
-        inputError(const std::string err);
+        inputError(const std::string err){
+            error = err;
+            type = "Input Error";
+        };
 };// inputError
 
 // Prints the given error to cerr
