@@ -10,6 +10,7 @@
 #include "../include/parser.h"
 #include "../include/token.h"
 #include "../include/error.h"
+#include <fstream>
 using namespace std;
 
 // Tokenizes a given string, and parses it
@@ -18,7 +19,6 @@ int main(int argc, char* argv[]){
     parser* parse = new parser; 
     string input = emptyStr, filepath = "NULL";
     bool debug = false;
-    int nr = 0, avg = 0;
     
     if(argc < 2){
         delete parse;
@@ -30,8 +30,20 @@ int main(int argc, char* argv[]){
     try{
         if (!debug){
             filepath = string(argv[1]);
-            input = readFile(filepath);
-            validInput(input);
+            ifstream file(filepath);
+            if(!file.good() || !file.is_open()){
+                throw inputError("File does not exist or is corrupted");
+            }
+            while (getline(file, input)){
+                validInput(input);
+                t1 = clock();
+                // Checks if any errors are thrown from the stringTokenizer function
+                parse->stringTokenizer(input);
+                input.clear();
+                t2 = clock();
+                cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
+            }
+            
             t1 = clock();
             // Checks if any errors are thrown from the stringTokenizer function
             parse->stringTokenizer(input);
@@ -39,16 +51,14 @@ int main(int argc, char* argv[]){
             cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
         }else {
             while (getline(cin >> ws, input)){
+                validInput(input);
                 t1 = clock();
                 // Checks if any errors are thrown from the stringTokenizer function
                 parse->stringTokenizer(input);
                 t2 = clock();
                 cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
                 input.clear();
-                nr++;
-                avg +=(t2-t1);
             }
-            cout << "Average " <<(((double)(avg)/nr)/CLOCKS_PER_SEC) << " in " << (avg)/nr << " ticks"<< endl; 
         }
     }
     catch(memoryError & error){

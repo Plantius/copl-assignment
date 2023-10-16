@@ -96,51 +96,32 @@ void parser::stringTokenizer(const string input){
 
 
     while(input[i] != '\0'){
-        if (input[i] == '\n'){
-            if (list.isEmpty()){
-                break;
-            }
-            if(!(list.addToken(EOL, "#"))){
-                throw tokenError("Failed to add token to the list.", row, col);
-            }
-            list.printList();
-            
-            if (lparCounter != rparCounter){
-                throw syntaxError("Not enough beginning/closing parantheses.", row, col);
-            }
-            expr(list);
-            list.clear();
-            lparCounter = 0, rparCounter = 0;
-            col = 0, row++;
-            
-        }else {
-            id = tokenSwitch(input[i]);
-            // Checks if the input is a var, which can be of indefinite size
-            if (id == VAR){ 
-                if (tempVar.empty() && (int(input[i]) >= 48 && int(input[i]) <= 57)){
-                    throw tokenError("Variable name starts with a number.", row, col);
+        id = tokenSwitch(input[i]);
+        // Checks if the input is a var, which can be of indefinite size
+        if (id == VAR){ 
+            if (tempVar.empty() && (int(input[i]) >= 48 && int(input[i]) <= 57)){
+                throw tokenError("Variable name starts with a number.", row, col);
 
-                }if (i < size){
-                    tokenId tempId = tokenSwitch(input[i+1]);
-                    if (tempId == VAR){
-                        tempVar += input[i];
-                    }else {
-                        tempVar += input[i];
-                        if(!list.addToken(id, tempVar)){
-                            throw tokenError("Failed to add token to the list.", row, col);
-                        }
-                        tempVar.clear();
+            }if (i < size){
+                tokenId tempId = tokenSwitch(input[i+1]);
+                if (tempId == VAR){
+                    tempVar += input[i];
+                }else {
+                    tempVar += input[i];
+                    if(!list.addToken(id, tempVar)){
+                        throw tokenError("Failed to add token to the list.", row, col);
                     }
+                    tempVar.clear();
                 }
-            }else {
-                if (id == LPAR){
-                    lparCounter++;
-                }if (id == RPAR){
-                    rparCounter++;
-                }
-                if(!(list.addToken(id, string(1, input[i])))){
-                    throw tokenError("Failed to add token to the list.", row, col);
-                }
+            }
+        }else {
+            if (id == LPAR){
+                lparCounter++;
+            }if (id == RPAR){
+                rparCounter++;
+            }
+            if(!(list.addToken(id, string(1, input[i])))){
+                throw tokenError("Failed to add token to the list.", row, col);
             }
         }
         i++;
@@ -149,13 +130,13 @@ void parser::stringTokenizer(const string input){
     if(!(list.addToken(EOL, "#"))){
         throw tokenError("Failed to add token to the list.", row, col);
     }
-    // list.printList();
             
     if (lparCounter != rparCounter){
         throw syntaxError("Number of beginning and closing parantheses do not match.", row, col);
     }
     expr(list);
     list.printList();
+    col = 0, row++;
 
 }// stringTokenizer
 

@@ -15,12 +15,14 @@ using namespace std;
 // Reads an istream from a file, and reads it into a stringstream 
 string readFile(const string filepath){
     ifstream file(filepath);
-    stringstream buffer;
+    string input;
     if(!file.good() || !file.is_open()){
         throw inputError("File does not exist or is corrupted");
     }
-    buffer << file.rdbuf();
-    return buffer.str();
+    while (getline(file, input)){
+        
+    }
+    return input;
 }// readFile
 
 
