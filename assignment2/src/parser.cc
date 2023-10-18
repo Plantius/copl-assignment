@@ -16,22 +16,26 @@ using namespace std;
 node::node(){
     left = nullptr;
     right = nullptr;
-}
+}// Default constructor
 
 tree::tree(){
     begin = nullptr;
-}
+}// Default constructor
 
 tree::~tree(){
 
-}
+}// Destructor
 
-bool tree::isEmpty(){
+bool tree::isEmpty() const{
     if (begin == nullptr){
         return true;
     }
     return false;
-}
+}// isEmpty
+
+bool tree::isOperator(const node* node) const {
+    return false;
+}// isOperator
 
 bool tree::makeNode(tokenId id, node* & index){
     bool var = false;
@@ -66,7 +70,7 @@ bool tree::makeNode(tokenId id, node* & index){
         }
     }
     return false;
-}
+}// makeNode
 
 parser::parser(){
     row = 1, col = 1;

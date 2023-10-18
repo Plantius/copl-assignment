@@ -56,12 +56,12 @@ class tree{
         tree();
         ~tree();
 
-        bool isEmpty();
-        bool isOperator(node* node);
-        bool makeNode(tokenId id, node* & index);
+        bool isEmpty() const;
+        bool isOperator(const node* node) const;
+        bool makeNode(const tokenId id, node* & index);
         void makeTree();
-        void deleteNode();
-        void printTree();
+        void deleteNode() const;
+        void printTree() const;
 
 
     private:
