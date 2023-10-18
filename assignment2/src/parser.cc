@@ -115,8 +115,10 @@ void parser::expr1(tokenList & list) const{
 // Checks if the token at the given index is a parexpr or a lambda expression
 void parser::lambdaExpr(tokenList & list) const{
     if (list.peekToken() == LAMBDA){
+        cout << list.getToken(list.getIndex())->tokenChar << endl;
         list.consumeToken();
         if (list.peekToken() == VAR){
+            cout << list.getToken(list.getIndex())->tokenChar << endl;
             list.consumeToken();
             if(list.peekToken() == EOL){
                 throw syntaxError("No expression after lambda.", row, col);
@@ -134,8 +136,11 @@ void parser::lambdaExpr(tokenList & list) const{
 // Checks if the token at the given index is a paranthesis or a variable
 void parser::varExpr(tokenList & list) const{
     if (list.peekToken() == VAR){
+        cout << list.getToken(list.getIndex())->tokenChar << endl;
         list.consumeToken();
+        
     }else if ((list.peekToken() == LPAR)){
+        cout << list.getToken(list.getIndex())->tokenChar << endl;
         list.consumeToken();  
         expr(list);
     }else {
