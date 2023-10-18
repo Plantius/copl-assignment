@@ -31,7 +31,7 @@ class tokenList{
         ~tokenList();
 
         // Adds a token to the list
-        bool addToken(const tokenId id, const std::string tokenChar);
+        void addToken(const tokenId id, const std::string tokenChar);
         
         // Inserts a token in the list
         bool insertToken(const tokenId id, const std::string tokenChar, const int index);

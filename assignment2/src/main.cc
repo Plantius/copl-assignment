@@ -25,20 +25,20 @@ int main(int argc, char* argv[]){
     }
 
     try{
-            filepath = string(argv[1]);
-            ifstream file(filepath);
-            if(!file.good() || !file.is_open()){
-                throw inputError("File does not exist or is corrupted");
-            }
-            while (getline(file, input)){
-                validInput(input);
-                t1 = clock();
-                // Checks if any errors are thrown from the stringTokenizer function
-                parse->stringTokenizer(input);
-                input.clear();
-                t2 = clock();
-                cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
-            }
+        filepath = string(argv[1]);
+        ifstream file(filepath);
+        if(!file.good() || !file.is_open()){
+            throw inputError("File does not exist or is corrupted");
+        }
+        while (getline(file, input)){
+            validInput(input);
+            t1 = clock();
+            // Checks if any errors are thrown from the stringTokenizer function
+            parse->stringTokenizer(input);
+            input.clear();
+            t2 = clock();
+            cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
+        }
     }
     catch(memoryError & error){
         printError<memoryError>(error, filepath);
