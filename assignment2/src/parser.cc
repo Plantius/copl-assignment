@@ -13,6 +13,41 @@
 #include "../include/error.h"
 using namespace std;
 
+node::node(){
+    left = nullptr;
+    right = nullptr;
+}
+
+tree::tree(){
+    begin = nullptr;
+}
+
+tree::~tree(){
+
+}
+
+bool tree::isEmpty(){
+    if (begin == nullptr){
+        return true;
+    }
+    return false;
+}
+
+bool tree::makeNode(tokenId id, node* & index){
+    if (isEmpty()){
+       // Als de boom leeg is, begint de boom met het eerste element
+        begin = new node;
+        begin->id = id;
+        index = begin;
+        return true;
+    }
+
+    else{
+        
+    }
+    return false;
+}
+
 parser::parser(){
     row = 1, col = 1;
 }// Default constructor
@@ -158,39 +193,4 @@ void parser::printExpression(const string input, tokenList & list){
         cout << " " << endl;
     }
     
-}
-
-node::node(){
-    left = nullptr;
-    right = nullptr;
-}
-
-tree::tree(){
-    begin = nullptr;
-}
-
-tree::~tree(){
-
-}
-
-bool tree::isEmpty(){
-    if (begin == nullptr){
-        return true;
-    }
-    return false;
-}
-
-bool tree::makeNode(tokenId id, node* & index){
-    if (isEmpty()){
-       // Als de boom leeg is, begint de boom met het eerste element
-        begin = new node;
-        begin->id = id;
-        index = begin;
-        return true;
-    }
-
-    else{
-        
-    }
-    return false;
 }
