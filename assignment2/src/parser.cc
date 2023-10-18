@@ -181,6 +181,8 @@ bool tree::isEmpty(){
 }
 
 bool tree::makeNode(tokenId id, node* & index){
+    bool var = false;
+
     if (isEmpty()){
        // Als de boom leeg is, begint de boom met het eerste element
         begin = new node;
@@ -189,8 +191,26 @@ bool tree::makeNode(tokenId id, node* & index){
         return true;
     }
 
-    else{
-        
+    if (isOperator(index)){
+        if(index->left != nullptr){
+            var = makeNode(id, index->left);
+        }else{
+            index->left = new node;
+            index->left->id = id;
+            return true;
+            }
+        if(!var){
+            if (index->right != nullptr){
+                var = makeNode(id, index->right);
+            }else{
+                index -> right = new node;
+                index -> right -> id = id;
+                return true;
+            }
+            return var;
+        }else {
+            return true;
+        }
     }
     return false;
 }

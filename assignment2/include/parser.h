@@ -57,6 +57,7 @@ class tree{
         ~tree();
 
         bool isEmpty();
+        bool isOperator(node* node);
         bool makeNode(tokenId id, node* & index);
         void makeTree();
         void deleteNode();
