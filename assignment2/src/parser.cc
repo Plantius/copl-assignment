@@ -13,6 +13,61 @@
 #include "../include/error.h"
 using namespace std;
 
+node::node(){
+    left = nullptr;
+    right = nullptr;
+}
+
+tree::tree(){
+    begin = nullptr;
+}
+
+tree::~tree(){
+
+}
+
+bool tree::isEmpty(){
+    if (begin == nullptr){
+        return true;
+    }
+    return false;
+}
+
+bool tree::makeNode(tokenId id, node* & index){
+    bool var = false;
+
+    if (isEmpty()){
+       // Als de boom leeg is, begint de boom met het eerste element
+        begin = new node;
+        begin->id = id;
+        index = begin;
+        return true;
+    }
+
+    if (isOperator(index)){
+        if(index->left != nullptr){
+            var = makeNode(id, index->left);
+        }else{
+            index->left = new node;
+            index->left->id = id;
+            return true;
+            }
+        if(!var){
+            if (index->right != nullptr){
+                var = makeNode(id, index->right);
+            }else{
+                index -> right = new node;
+                index -> right -> id = id;
+                return true;
+            }
+            return var;
+        }else {
+            return true;
+        }
+    }
+    return false;
+}
+
 parser::parser(){
     row = 1, col = 1;
 }// Default constructor
@@ -92,11 +147,12 @@ void parser::stringTokenizer(const string input){
     int size = input.length();
     int i = 0;
     tokenId id = INVALID;
-    string tempVar = emptyStr;
+    string tempVar = emptyStr, character = emptyStr;
 
 
     while(input[i] != '\0'){
         id = tokenSwitch(input[i]);
+        character = input[i];
         // Checks if the input is a var, which can be of indefinite size
         if (id == VAR){ 
             if (tempVar.empty() && (int(input[i]) >= 48 && int(input[i]) <= 57)){
@@ -108,9 +164,7 @@ void parser::stringTokenizer(const string input){
                     tempVar += input[i];
                 }else {
                     tempVar += input[i];
-                    if(!list.addToken(id, tempVar)){
-                        throw tokenError("Failed to add token to the list.", row, col);
-                    }
+                    list.addToken(id, tempVar);
                     tempVar.clear();
                 }
             }
@@ -120,16 +174,15 @@ void parser::stringTokenizer(const string input){
             }if (id == RPAR){
                 rparCounter++;
             }
-            if(!(list.addToken(id, string(1, input[i])))){
-                throw tokenError("Failed to add token to the list.", row, col);
+            if (id == SPACE){
+                character = "@";
             }
+            list.addToken(id, character);
         }
         i++;
         col++;
     }
-    if(!(list.addToken(EOL, "#"))){
-        throw tokenError("Failed to add token to the list.", row, col);
-    }
+    list.addToken(EOL, "#");
             
     if (lparCounter != rparCounter){
         throw syntaxError("Number of beginning and closing parantheses do not match.", row, col);
@@ -158,59 +211,4 @@ void parser::printExpression(const string input, tokenList & list){
         cout << " " << endl;
     }
     
-}
-
-node::node(){
-    left = nullptr;
-    right = nullptr;
-}
-
-tree::tree(){
-    begin = nullptr;
-}
-
-tree::~tree(){
-
-}
-
-bool tree::isEmpty(){
-    if (begin == nullptr){
-        return true;
-    }
-    return false;
-}
-
-bool tree::makeNode(tokenId id, node* & index){
-    bool var = false;
-
-    if (isEmpty()){
-       // Als de boom leeg is, begint de boom met het eerste element
-        begin = new node;
-        begin->id = id;
-        index = begin;
-        return true;
-    }
-
-    if (isOperator(index)){
-        if(index->left != nullptr){
-            var = makeNode(id, index->left);
-        }else{
-            index->left = new node;
-            index->left->id = id;
-            return true;
-            }
-        if(!var){
-            if (index->right != nullptr){
-                var = makeNode(id, index->right);
-            }else{
-                index -> right = new node;
-                index -> right -> id = id;
-                return true;
-            }
-            return var;
-        }else {
-            return true;
-        }
-    }
-    return false;
 }
