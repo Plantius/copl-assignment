@@ -1,0 +1,9 @@
+(a b)
+abc
+a b c
+(a (b c)) d
+(\ x a b)
+(\x((a) (b)))
+\ a b c
+\x ab
+\x(a b \a b)
