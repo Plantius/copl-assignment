@@ -11,10 +11,9 @@
 #include <iostream>
 #include "../include/tokenId.h"
 
-
 class node{
     public:
-        node ();
+        node();
 
         node* left;
         node* right;
@@ -25,21 +24,17 @@ class node{
 
 class tree{
     public:
-        tree();
-        ~tree();
         void deleteNode(node* & walker) const;
         node* getBegin();
 
         bool isEmpty(node* leaf) const;
         bool isOperator(const node* node) const;
-        bool makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start);
+        bool makeNode(const tokenId id, const std::string nodeChar, node* & walker);
         void makeTree();
         void deleteNode() const;
 
         void printRecursion(node* & walker);
         void printTree();
-
-
     private:
         node* begin;
 };

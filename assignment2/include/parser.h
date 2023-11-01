@@ -15,7 +15,7 @@
 class parser{
     public:
         parser();
-        ~parser() {delete parseTree;};
+        ~parser();
         // Adds a token to the list according to inputChar
         tokenId tokenSwitch(const char inputChar) const;
 
@@ -23,16 +23,16 @@ class parser{
         void stringTokenizer(const std::string input);
 
         // Expression
-        void expr(tokenList & list, node* & walker) const;
+        void expr(tokenList & list) const;
 
         // Expression'
-        void expr1(tokenList & list, node* & walker) const;
+        void expr1(tokenList & list) const;
 
         // Function expression
-        void lambdaExpr(tokenList & list, node* & walker) const;
+        void lambdaExpr(tokenList & list) const;
 
         // Parantheses expression
-        void varExpr(tokenList & list, node* & walker) const;
+        void varExpr(tokenList & list) const;
 
         // Prints the expression
         void printExpression(const std::string input, tokenList & list);
@@ -40,7 +40,6 @@ class parser{
     private:
         int row = 1, col = 1;
         tree* parseTree;
-        node* begin;
 };
 
 #endif

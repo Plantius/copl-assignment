@@ -3,14 +3,13 @@
 * Niels Versteeg (s3322637)
 * Lana van Sprang (s3272192)
 * tree.cc
-* 01-11-2023
+* 04-10-2023
 **/ 
 
-#include "../include/tree.h"
-#include "../include/error.h"
 #include "../include/standard.h"
+#include "../include/error.h"
+#include "../include/tree.h"
 using namespace std;
-
 
 node::node(){
     left = nullptr;
@@ -19,14 +18,6 @@ node::node(){
     tokenChar = invalidChar;
 }// Default constructor
 
-tree::tree(){
-    begin = nullptr;
-}// Default constructor
-
-tree::~tree(){
-    deleteNode(begin);
-    begin = nullptr;
-}// Destructor
 
 // Verwijdert recursief alle takken
 void tree::deleteNode(node* & walker) const{
@@ -60,21 +51,21 @@ bool tree::isOperator(const node* node) const {
     return false;
 }// isOperator
 
-bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start){
+bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker){
     bool var = false;
 
-    if (isEmpty(walker) && isEmpty(start)){
+    if (isEmpty(walker) && isEmpty(begin)){
        // Als de boom leeg is, begint de boom met het eerste element
-        start = new node;
-        start->id = id;
-        start->tokenChar = nodeChar;
+        begin = new node;
+        begin->id = id;
+        begin->tokenChar = nodeChar;
         walker = begin;
         return true;
     }
 
     if (isOperator(walker)){
         if(walker->left != nullptr){
-            var = makeNode(id, nodeChar, walker->left, start);
+            var = makeNode(id, nodeChar, walker->left);
         }else{
             walker->left = new node;
             walker->left->id = id;
@@ -83,7 +74,7 @@ bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker
             }
         if(!var){
             if (walker->right != nullptr){
-                var = makeNode(id, nodeChar, walker->right, start);
+                var = makeNode(id, nodeChar, walker->right);
             }else{
                 walker -> right = new node;
                 walker -> right -> id = id;

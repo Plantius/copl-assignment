@@ -16,10 +16,12 @@ using namespace std;
 
 parser::parser(){
     parseTree = new tree;
-    begin = parseTree->getBegin();
     row = 1, col = 1;
 }// Default constructor
 
+parser::~parser(){
+    delete parseTree;
+}
 
 // Checks what id the given inputChar has in tokenId
 tokenId parser::tokenSwitch(const char inputChar) const{
@@ -41,55 +43,55 @@ tokenId parser::tokenSwitch(const char inputChar) const{
     return INVALID;
 }// tokenSwitch
 
-void parser::expr(tokenList & list, node* & walker) const{
-    lambdaExpr(list, walker);
-    expr1(list, walker);
+void parser::expr(tokenList & list) const{
+    lambdaExpr(list);
+    expr1(list);
 }// expr
 
 
-void parser::expr1(tokenList & list, node* & walker) const{
+void parser::expr1(tokenList & list) const{
     if (list.peekToken() == EOL){
         return;
     }
-    lambdaExpr(list, walker);
-    expr1(list, walker);
+    lambdaExpr(list);
+    expr1(list);
 }// expr1
 
 
 // Checks if the token at the given index is a parexpr or a lambda expression
-void parser::lambdaExpr(tokenList & list, node* & walker) const{
+void parser::lambdaExpr(tokenList & list) const{
     if (list.peekToken() == LAMBDA){
-        cout << list.getToken(list.getIndex())->tokenChar << endl;
+        // LAMBDA
+        // cout << list.getToken(list.getIndex())->tokenChar << endl;
         list.consumeToken();
         if (list.peekToken() == VAR){
-            cout << list.getToken(list.getIndex())->tokenChar << endl;
+            // VAR
+            // cout << list.getToken(list.getIndex())->tokenChar << endl;
             list.consumeToken();
             if(list.peekToken() == EOL){
                 throw syntaxError("No expression after lambda.", row, col);
             }
-            lambdaExpr(list, walker);
+            lambdaExpr(list);
 
         }else{
             throw syntaxError("No variable after lambda.", row, col);
         }
     }else{
-        varExpr(list, walker);
+        varExpr(list);
     }
 }// fexpr
 
 
 // Checks if the token at the given index is a paranthesis or a variable
-void parser::varExpr(tokenList & list, node* & walker) const{
-    node* start = parseTree->getBegin();
+void parser::varExpr(tokenList & list) const{
     if (list.peekToken() == VAR){
         // cout << list.getToken(list.getIndex())->tokenChar << endl;
-        parseTree->makeNode(list.peekToken(), list.getToken(list.getIndex())->tokenChar, walker, start);
         list.consumeToken();
         
     }else if ((list.peekToken() == LPAR)){
-        cout << list.getToken(list.getIndex())->tokenChar << endl;
+        // cout << list.getToken(list.getIndex())->tokenChar << endl;
         list.consumeToken();  
-        expr(list, walker);
+        expr(list);
     }else {
         throw syntaxError("No variable or opening paranthesis.", row, col);
     }
@@ -104,8 +106,6 @@ void parser::stringTokenizer(const string input){
     int i = 0;
     tokenId id = INVALID;
     string tempVar = emptyStr, character = emptyStr;
-    node* walker = parseTree->getBegin();
-
 
     while(input[i] != '\0'){
         id = tokenSwitch(input[i]);
@@ -144,10 +144,9 @@ void parser::stringTokenizer(const string input){
     if (lparCounter != rparCounter){
         throw syntaxError("Number of beginning and closing parantheses do not match.", row, col);
     }
-    expr(list, walker);
+    expr(list);
     list.printList();
     col = 0, row++;
-    parseTree->printTree();
 }// stringTokenizer
 
 void parser::printExpression(const string input, tokenList & list){
