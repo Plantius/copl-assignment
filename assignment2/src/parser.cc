@@ -11,8 +11,8 @@
 #include "../include/token.h"
 #include "../include/tokenId.h"
 #include "../include/error.h"
+#include "../include/tree.h"
 using namespace std;
-
 
 parser::parser(){
     row = 1, col = 1;
