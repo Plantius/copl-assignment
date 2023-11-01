@@ -72,7 +72,7 @@ int tokenList::getIndex() const{
 
 
 // Returns the token type of the token at the given index
-int tokenList::peekToken(){
+tokenId tokenList::peekToken(){
     token* nextToken = getToken(index);
     if (nextToken != nullptr){
         while(nextToken->next != nullptr && (nextToken->id == SPACE || nextToken->id == RPAR)){

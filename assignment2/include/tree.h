@@ -9,7 +9,8 @@
 #ifndef TREE_H
 #define TREE_H
 #include <iostream>
-#include "../include/parser.h"
+#include "../include/tokenId.h"
+
 
 class node{
     public:
@@ -26,13 +27,17 @@ class tree{
     public:
         tree();
         ~tree();
+        void deleteNode(node* & walker) const;
+        node* getBegin();
 
-        bool isEmpty() const;
+        bool isEmpty(node* leaf) const;
         bool isOperator(const node* node) const;
-        bool makeNode(const tokenId id, node* & index);
+        bool makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start);
         void makeTree();
         void deleteNode() const;
-        void printTree() const;
+
+        void printRecursion(node* & walker);
+        void printTree();
 
 
     private:

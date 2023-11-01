@@ -37,7 +37,7 @@ class tokenList{
         bool insertToken(const tokenId id, const std::string tokenChar, const int index);
         
         // Returns the type of the token at the current index
-        int peekToken();
+        tokenId peekToken();
         
         // Consumes the current token
         void consumeToken();
