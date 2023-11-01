@@ -10,6 +10,7 @@
 #define TREE_H
 #include <iostream>
 #include "../include/tokenId.h"
+#include "../include/parser.h"
 
 
 class node{
@@ -33,7 +34,7 @@ class tree{
         bool isEmpty(node* leaf) const;
         bool isOperator(const node* node) const;
         bool makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start);
-        void makeTree();
+        void makeTree(tokenList & list,  node* & walker);
         void deleteNode() const;
 
         void printRecursion(node* & walker);

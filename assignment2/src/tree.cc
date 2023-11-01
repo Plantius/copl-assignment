@@ -116,3 +116,33 @@ void tree::printTree() {
     printRecursion(walker);
     cout << endl;
 }// printTree
+
+void tree::makeTree(tokenList & list, node* & walker){
+    int size = list.getLength();
+    int lparN = 0;
+    int rparN = 0;
+    // rewriting makeNode so that it makes a node based on the type
+    for (int i = 0; i < size; i++){
+        switch (list.getToken(i).id){
+        case LPAR:
+            lparN++;
+            makeNode(type)
+            break;
+        case SPACE:
+            makeNode(type);
+            break;
+        case RPAR:
+            rparN++;
+            break;
+        case LAMBDA:
+            makeNode(type);
+            break;
+        case VAR:
+            makeNode(type);
+            break;
+
+        default:
+            break;
+        }
+    }
+} // makeTree 
