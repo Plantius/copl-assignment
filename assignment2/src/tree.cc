@@ -121,23 +121,30 @@ void tree::makeTree(tokenList & list, node* & walker){
     int size = list.getLength();
     int lparN = 0;
     int rparN = 0;
+    char type = '$';
     // rewriting makeNode so that it makes a node based on the type
     for (int i = 0; i < size; i++){
         switch (list.getToken(i).id){
         case LPAR:
             lparN++;
-            makeNode(type)
+            type = '@';
+            makeNode(type);
             break;
         case SPACE:
-            makeNode(type);
             break;
         case RPAR:
             rparN++;
             break;
         case LAMBDA:
+            type = '\\';
             makeNode(type);
             break;
         case VAR:
+            if (list.peekToken() == SPACE){
+                type = '@';
+                makeNode(type);
+            }
+            type = 'VAR';
             makeNode(type);
             break;
 
