@@ -118,17 +118,18 @@ void tree::printTree() {
 }// printTree
 
 void tree::makeTree(tokenList & list, node* & walker){
+    node* walker = begin;
     int size = list.getLength();
     int lparN = 0;
     int rparN = 0;
-    char type = '$';
+    string type = "$";
     // rewriting makeNode so that it makes a node based on the type
     for (int i = 0; i < size; i++){
-        switch (list.getToken(i).id){
+        switch (list.getToken(i)->id){
         case LPAR:
             lparN++;
-            type = '@';
-            makeNode(type);
+            type = "@";
+            makeNode(SPACE, type, walker, begin);
             break;
         case SPACE:
             break;
@@ -136,16 +137,16 @@ void tree::makeTree(tokenList & list, node* & walker){
             rparN++;
             break;
         case LAMBDA:
-            type = '\\';
-            makeNode(type);
+            type = "\\";
+            makeNode(LAMBDA, type, walker, begin);
             break;
         case VAR:
             if (list.peekToken() == SPACE){
-                type = '@';
-                makeNode(type);
+                type = "@";
+                makeNode(SPACE, type, walker, begin);
             }
-            type = 'VAR';
-            makeNode(type);
+            type = "VAR";
+            makeNode(VAR, type, walker, begin);
             break;
 
         default:
