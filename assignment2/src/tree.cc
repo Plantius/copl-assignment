@@ -11,7 +11,6 @@
 #include "../include/standard.h"
 using namespace std;
 
-
 node::node(){
     left = nullptr;
     right = nullptr;
@@ -40,7 +39,7 @@ void tree::deleteNode(node* & walker) const{
     delete walker;
 }// verwijderTak
 
-node* tree::getBegin(){
+node* tree::getBegin() const{
     return begin;
 }
 
@@ -60,7 +59,7 @@ bool tree::isOperator(const node* node) const {
     return false;
 }// isOperator
 
-bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start){
+bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start) const{
     bool var = false;
 
     if (isEmpty(walker) && isEmpty(start)){
@@ -118,7 +117,7 @@ void tree::printTree() {
 }// printTree
 
 void tree::makeTree(tokenList & list, node* & walker){
-    node* walker = begin;
+    walker = begin;
     int size = list.getLength();
     int lparN = 0;
     int rparN = 0;

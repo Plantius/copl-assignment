@@ -11,15 +11,7 @@
 #include "../include/token.h"
 #include "../include/tokenId.h"
 #include "../include/error.h"
-#include "../include/tree.h"
 using namespace std;
-
-parser::parser(){
-    parseTree = new tree;
-    begin = parseTree->getBegin();
-    row = 1, col = 1;
-}// Default constructor
-
 
 // Checks what id the given inputChar has in tokenId
 tokenId parser::tokenSwitch(const char inputChar) const{
@@ -80,10 +72,10 @@ void parser::lambdaExpr(tokenList & list, node* & walker) const{
 
 // Checks if the token at the given index is a paranthesis or a variable
 void parser::varExpr(tokenList & list, node* & walker) const{
-    node* start = parseTree->getBegin();
+    node* start = parseTree.getBegin();
     if (list.peekToken() == VAR){
         // cout << list.getToken(list.getIndex())->tokenChar << endl;
-        parseTree->makeNode(list.peekToken(), list.getToken(list.getIndex())->tokenChar, walker, start);
+        parseTree.makeNode(list.peekToken(), list.getToken(list.getIndex())->tokenChar, walker, start);
         list.consumeToken();
         
     }else if ((list.peekToken() == LPAR)){
@@ -104,7 +96,7 @@ void parser::stringTokenizer(const string input){
     int i = 0;
     tokenId id = INVALID;
     string tempVar = emptyStr, character = emptyStr;
-    node* walker = parseTree->getBegin();
+    node* walker = parseTree.getBegin();
 
 
     while(input[i] != '\0'){
@@ -147,7 +139,7 @@ void parser::stringTokenizer(const string input){
     expr(list, walker);
     list.printList();
     col = 0, row++;
-    parseTree->printTree();
+    parseTree.printTree();
 }// stringTokenizer
 
 void parser::printExpression(const string input, tokenList & list){

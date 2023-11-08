@@ -16,7 +16,8 @@ using namespace std;
 // Tokenizes a given string, and parses it
 int main(int argc, char* argv[]){
     clock_t t1, t2;
-    parser* parse = new parser; 
+    tree T;
+    parser* parse = new parser(T); 
     string input = emptyStr, filepath = "NULL";
     
     if(argc < 2){
