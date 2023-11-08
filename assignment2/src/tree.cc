@@ -27,6 +27,11 @@ tree::~tree(){
     begin = nullptr;
 }// Destructor
 
+void tree::clearTree(){
+    deleteNode(begin);
+    begin = nullptr;
+}// clearTree
+
 // Verwijdert recursief alle takken
 void tree::deleteNode(node* & walker) const{
     if (walker == nullptr){
@@ -118,6 +123,7 @@ void tree::printTree() {
 }// printTree
 
 void tree::makeTree(tokenList & list, node* & walker){
+    clearTree();
     walker = begin;
     int lparN = 0;
     int rparN = 0;
@@ -149,7 +155,7 @@ void tree::makeTree(tokenList & list, node* & walker){
                 type = "@";
                 makeNode(SPACE, type, walker, begin);
             }
-            type = "VAR";
+            type = list.getToken(i)->tokenChar;
             makeNode(VAR, type, walker, begin);
             break;
 

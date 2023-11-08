@@ -27,6 +27,7 @@ class tree{
     public:
         tree();
         ~tree();
+        void clearTree();
         void deleteNode(node* & walker) const;
         node* getBegin() const;
 
