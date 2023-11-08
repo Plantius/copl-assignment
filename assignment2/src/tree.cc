@@ -27,6 +27,11 @@ tree::~tree(){
     begin = nullptr;
 }// Destructor
 
+void tree::clearTree(){
+    deleteNode(begin);
+    begin = nullptr;
+}// clearTree
+
 // Verwijdert recursief alle takken
 void tree::deleteNode(node* & walker) const{
     if (walker == nullptr){
@@ -103,9 +108,10 @@ void tree::printRecursion(node* & walker){
         return;
     }
 
-    cout << walker->tokenChar;
-
     printRecursion(walker->left);
+
+    cout << walker->tokenChar;
+    
     printRecursion(walker->right);
 }// printRecursion
 
@@ -117,15 +123,15 @@ void tree::printTree() {
 }// printTree
 
 void tree::makeTree(tokenList & list, node* & walker){
+    clearTree();
     walker = begin;
-    int size = list.getLength();
     int lparN = 0;
     int rparN = 0;
     string type = "$";
     //bool parSeen = false; 
 
     // rewriting makeNode so that it makes a node based on the type
-    for (int i = 0; i < size; i++){
+    for (int i = 0; i < list.getLength(); i++){
         switch (list.getToken(i)->id){
         case LPAR:
             lparN++;
@@ -149,7 +155,7 @@ void tree::makeTree(tokenList & list, node* & walker){
                 type = "@";
                 makeNode(SPACE, type, walker, begin);
             }
-            type = "VAR";
+            type = list.getToken(i)->tokenChar;
             makeNode(VAR, type, walker, begin);
             break;
 

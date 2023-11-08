@@ -90,7 +90,7 @@ void parser::stringTokenizer(const string input){
     int i = 0;
     tokenId id = INVALID;
     string tempVar = emptyStr, character = emptyStr;
-
+    node* walker = nullptr;
 
     while(input[i] != '\0'){
         id = tokenSwitch(input[i]);
@@ -132,7 +132,8 @@ void parser::stringTokenizer(const string input){
     expr(list);
     list.printList();
     col = 0, row++;
-    
+    parseTree.makeTree(list, walker);
+    parseTree.printTree();
 }// stringTokenizer
 
 void parser::printExpression(const string input, tokenList & list){
