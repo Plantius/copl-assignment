@@ -10,8 +10,7 @@
 #define TREE_H
 #include <iostream>
 #include "../include/tokenId.h"
-#include "../include/parser.h"
-
+#include "../include/token.h"
 
 class node{
     public:
@@ -29,11 +28,11 @@ class tree{
         tree();
         ~tree();
         void deleteNode(node* & walker) const;
-        node* getBegin();
+        node* getBegin() const;
 
         bool isEmpty(node* leaf) const;
         bool isOperator(const node* node) const;
-        bool makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start);
+        bool makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start) const;
         void makeTree(tokenList & list,  node* & walker);
         void deleteNode() const;
 
