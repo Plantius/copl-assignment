@@ -122,7 +122,7 @@ void tree::makeTree(tokenList & list, node* & walker){
     int lparN = 0;
     int rparN = 0;
     string type = "$";
-    bool parSeen = false; 
+    //bool parSeen = false; 
 
     // rewriting makeNode so that it makes a node based on the type
     for (int i = 0; i < size; i++){
@@ -143,7 +143,7 @@ void tree::makeTree(tokenList & list, node* & walker){
             type = "\\";
             makeNode(LAMBDA, type, walker, begin);
             break;
-            
+
         case VAR:
             if (list.peekToken() == SPACE){
                 type = "@";
