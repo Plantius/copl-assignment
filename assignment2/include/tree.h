@@ -40,6 +40,8 @@ class tree{
         void printRecursion(node* & walker);
         void printTree();
 
+        bool treeFull(node * & walker);
+
 
     private:
         node* begin;

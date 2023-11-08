@@ -64,8 +64,40 @@ bool tree::isOperator(const node* node) const {
     return false;
 }// isOperator
 
+bool tree::treeFull(node* & walker){
+    if (walker == nullptr){
+        return false;
+    }
+    if ((walker->left == nullptr && isOperator(walker->left)) \
+        	|| (walker->right == nullptr && isOperator(walker->right))){
+        return false;
+    }
+
+    treeFull(walker->left);
+    treeFull(walker->right);
+
+    return true;
+} // treeFull
+
 bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start) const{
     bool var = false;
+
+    if (treeFull){
+        if (nodeChar == "$"){
+            return true;
+        }
+        else{
+            node* new_root = new node;
+            new_root->id = id;
+            new_root->tokenChar = nodeChar;
+            new_root->left = start;
+            new_root->right = nullptr;
+
+            walker = new_root;
+            return true;
+        }
+    }
+
 
     if (isEmpty(walker) && isEmpty(start)){
        // If the tree is empty, the tree makes the first element
