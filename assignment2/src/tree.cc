@@ -64,7 +64,7 @@ bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker
     bool var = false;
 
     if (isEmpty(walker) && isEmpty(start)){
-       // Als de boom leeg is, begint de boom met het eerste element
+       // If the tree is empty, the tree makes the first element
         start = new node;
         start->id = id;
         start->tokenChar = nodeChar;
@@ -123,13 +123,20 @@ void tree::makeTree(tokenList & list, node* & walker){
     int lparN = 0;
     int rparN = 0;
     string type = "$";
+    bool parSeen = false; 
+
     // rewriting makeNode so that it makes a node based on the type
     for (int i = 0; i < size; i++){
         switch (list.getToken(i)->id){
         case LPAR:
-            lparN++;
-            type = "@";
-            makeNode(SPACE, type, walker, begin);
+            if (!parSeen){
+                lparN++;
+                type = "@";
+                makeNode(LPAR, type, walker, begin);
+            }
+            else{
+                parSeen = false;
+            }
             break;
         case SPACE:
             break;
@@ -145,6 +152,13 @@ void tree::makeTree(tokenList & list, node* & walker){
                 type = "@";
                 makeNode(SPACE, type, walker, begin);
             }
+            if (list.peekToken() == LPAR){
+                lparN++;
+                type = "@";
+                parSeen = true;
+                makeNode(LPAR, type, walker, begin); // pas op met dubbele nodes
+            }
+
             type = "VAR";
             makeNode(VAR, type, walker, begin);
             break;
