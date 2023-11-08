@@ -128,37 +128,28 @@ void tree::makeTree(tokenList & list, node* & walker){
     for (int i = 0; i < list.getLength(); i++){
         switch (list.getToken(i)->id){
         case LPAR:
-            if (!parSeen){
-                lparN++;
-                type = "@";
-                makeNode(LPAR, type, walker, begin);
-            }
-            else{
-                parSeen = false;
-            }
+            lparN++;
+            type = "@";
+            makeNode(LPAR, type, walker, begin);
             break;
-        case SPACE:
-            break;
+
         case RPAR:
             rparN++;
+            type = "$";
+            makeNode(RPAR, type, walker, begin);
             break;
+
         case LAMBDA:
             type = "\\";
             makeNode(LAMBDA, type, walker, begin);
             break;
+            
         case VAR:
             if (list.peekToken() == SPACE){
                 type = "@";
                 makeNode(SPACE, type, walker, begin);
             }
-            if (list.peekToken() == LPAR){
-                lparN++;
-                type = "@";
-                parSeen = true;
-                makeNode(LPAR, type, walker, begin); // pas op met dubbele nodes
-            }
-
-            type = list.getToken(i)->tokenChar;
+            type = "VAR";
             makeNode(VAR, type, walker, begin);
             break;
 
