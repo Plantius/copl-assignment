@@ -103,9 +103,10 @@ void tree::printRecursion(node* & walker){
         return;
     }
 
-    cout << walker->tokenChar;
-
     printRecursion(walker->left);
+
+    cout << walker->tokenChar;
+    
     printRecursion(walker->right);
 }// printRecursion
 
@@ -118,14 +119,13 @@ void tree::printTree() {
 
 void tree::makeTree(tokenList & list, node* & walker){
     walker = begin;
-    int size = list.getLength();
     int lparN = 0;
     int rparN = 0;
     string type = "$";
     bool parSeen = false; 
 
     // rewriting makeNode so that it makes a node based on the type
-    for (int i = 0; i < size; i++){
+    for (int i = 0; i < list.getLength(); i++){
         switch (list.getToken(i)->id){
         case LPAR:
             if (!parSeen){
@@ -158,7 +158,7 @@ void tree::makeTree(tokenList & list, node* & walker){
                 makeNode(LPAR, type, walker, begin); // pas op met dubbele nodes
             }
 
-            type = "VAR";
+            type = list.getToken(i)->tokenChar;
             makeNode(VAR, type, walker, begin);
             break;
 
