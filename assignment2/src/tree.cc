@@ -64,6 +64,17 @@ bool tree::isOperator(const node* node) const {
     return false;
 }// isOperator
 
+void infixToPrefix(tokenList* &list){
+    list->printList();
+    
+}// infixToPrefix
+
+void reverseList(tokenList* &list){
+
+}// reverseList
+
+
+
 bool tree::treeFull(node* & walker){
     if (walker == nullptr){
         return false;
@@ -79,7 +90,7 @@ bool tree::treeFull(node* & walker){
     return true;
 } // treeFull
 
-bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start) const{
+bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start){
     bool var = false;
 
     if (treeFull(walker)){
