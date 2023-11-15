@@ -69,8 +69,8 @@ void tree::infixToPrefix(tokenList &list){
     tokenList prefix;
     token* temp = nullptr;
     stack<token*> tokenStack;
+
     list.reverseList();
-    list.printList();
     for(int i = 0; i < list.getLength(); i++){
         temp = list.getToken(i);
         if (temp->id == VAR){
@@ -99,7 +99,6 @@ void tree::infixToPrefix(tokenList &list){
     }
     prefix.reverseList();
     prefix.printList();
-
 }// infixToPrefix
 
 

@@ -10,6 +10,6 @@
 #define TOKENID_H
 
 // Enum for all possible tokens
-enum tokenId {LPAR, RPAR, VAR, DOT, SPACE, LAMBDA, EOL, INVALID};
+enum tokenId {LPAR, RPAR, VAR, DOT, LAMBDA, SPACE, EOL, INVALID};
 
 #endif
