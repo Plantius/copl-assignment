@@ -82,7 +82,7 @@ bool tree::treeFull(node* & walker){
 bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start) const{
     bool var = false;
 
-    if (treeFull){
+    if (treeFull(walker)){
         if (nodeChar == "$"){
             return true;
         }
