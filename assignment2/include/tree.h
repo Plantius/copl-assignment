@@ -33,7 +33,7 @@ class tree{
 
         bool isEmpty(node* leaf) const;
         bool isOperator(const node* node) const;
-        bool makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start) const;
+        bool makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start);
         void makeTree(tokenList & list,  node* & walker);
         void deleteNode() const;
 
@@ -41,7 +41,9 @@ class tree{
         void printTree();
 
         bool treeFull(node * & walker);
-
+        
+        void infixToPrefix(tokenList* &list);
+        void reverseList(tokenList* &list);
 
     private:
         node* begin;
