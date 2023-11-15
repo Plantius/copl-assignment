@@ -40,10 +40,9 @@ class tree{
         void printRecursion(node* & walker);
         void printTree();
 
-        bool treeFull(node * & walker);
+        bool treeFull(node* & walker);
         
-        void infixToPrefix(tokenList* &list);
-        void reverseList(tokenList* &list);
+        void infixToPrefix(tokenList &list);
 
     private:
         node* begin;

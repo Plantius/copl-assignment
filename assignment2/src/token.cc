@@ -71,6 +71,38 @@ int tokenList::getIndex() const{
 }// getIndex
 
 
+void tokenList::reverseList(){
+    token* temp = end;
+    token* walker = end;
+    while(temp != nullptr){
+        if(temp->id == LPAR){
+            temp->id = RPAR;
+            temp->tokenChar = ")";
+        }else if (temp->id == RPAR){
+            temp->id = LPAR;
+            temp->tokenChar = "(";
+        }
+        walker = walker->prev;
+        temp->prev = temp->next;
+        temp->next = walker;
+        temp = walker;
+    }
+    temp = end;
+    end = begin;
+    begin = temp;
+    if (begin->id == EOL){
+        addToken(EOL, "#");
+        temp = begin->next;
+        delete begin;
+        begin = temp;
+        length--;
+    }else {
+        addToken(EOL, "#");
+    }
+    
+
+}// reverseList
+
 // Returns the token type of the token at the given index
 tokenId tokenList::peekToken(){
     token* nextToken = getToken(index);

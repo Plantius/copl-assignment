@@ -9,6 +9,7 @@
 #include "../include/tree.h"
 #include "../include/error.h"
 #include "../include/standard.h"
+#include <stack>
 using namespace std;
 
 node::node(){
@@ -64,14 +65,42 @@ bool tree::isOperator(const node* node) const {
     return false;
 }// isOperator
 
-void infixToPrefix(tokenList* &list){
-    list->printList();
-    
+void tree::infixToPrefix(tokenList &list){
+    tokenList prefix;
+    token* temp = nullptr;
+    stack<token*> tokenStack;
+    list.reverseList();
+    list.printList();
+    for(int i = 0; i < list.getLength(); i++){
+        temp = list.getToken(i);
+        if (temp->id == VAR){
+            prefix.addToken(temp->id, temp->tokenChar);
+        }else if (temp->id == LPAR){
+            tokenStack.push(temp);
+        }else if (temp->id == RPAR){
+            while (tokenStack.top()->id != LPAR){
+                prefix.addToken(tokenStack.top()->id, tokenStack.top()->tokenChar);
+                tokenStack.pop();
+            }
+            tokenStack.pop();
+        }else{
+            while(!tokenStack.empty() && temp->id == SPACE && tokenStack.top()->id == LAMBDA){
+                prefix.addToken(tokenStack.top()->id, tokenStack.top()->tokenChar);
+                tokenStack.pop();
+            }
+            if (temp->id != EOL){
+                tokenStack.push(temp);
+            }
+        }
+    }
+    while(!tokenStack.empty()){
+        prefix.addToken(tokenStack.top()->id, tokenStack.top()->tokenChar);
+        tokenStack.pop();
+    }
+    prefix.reverseList();
+    prefix.printList();
+
 }// infixToPrefix
-
-void reverseList(tokenList* &list){
-
-}// reverseList
 
 
 
@@ -167,43 +196,44 @@ void tree::printTree() {
 
 void tree::makeTree(tokenList & list, node* & walker){
     clearTree();
-    walker = begin;
-    int lparN = 0;
-    int rparN = 0;
-    string type = "$";
+    // walker = begin;
+    // int lparN = 0;
+    // int rparN = 0;
+    // string type = "$";
     //bool parSeen = false; 
+    infixToPrefix(list);
 
-    // rewriting makeNode so that it makes a node based on the type
-    for (int i = 0; i < list.getLength(); i++){
-        switch (list.getToken(i)->id){
-        case LPAR:
-            lparN++;
-            type = "@";
-            makeNode(LPAR, type, walker, begin);
-            break;
+    // // rewriting makeNode so that it makes a node based on the type
+    // for (int i = 0; i < list.getLength(); i++){
+    //     switch (list.getToken(i)->id){
+    //     case LPAR:
+    //         lparN++;
+    //         type = "@";
+    //         makeNode(LPAR, type, walker, begin);
+    //         break;
 
-        case RPAR:
-            rparN++;
-            type = "$";
-            makeNode(RPAR, type, walker, begin);
-            break;
+    //     case RPAR:
+    //         rparN++;
+    //         type = "$";
+    //         makeNode(RPAR, type, walker, begin);
+    //         break;
 
-        case LAMBDA:
-            type = "\\";
-            makeNode(LAMBDA, type, walker, begin);
-            break;
+    //     case LAMBDA:
+    //         type = "\\";
+    //         makeNode(LAMBDA, type, walker, begin);
+    //         break;
 
-        case VAR:
-            if (list.peekToken() == SPACE){
-                type = "@";
-                makeNode(SPACE, type, walker, begin);
-            }
-            type = list.getToken(i)->tokenChar;
-            makeNode(VAR, type, walker, begin);
-            break;
+    //     case VAR:
+    //         if (list.peekToken() == SPACE){
+    //             type = "@";
+    //             makeNode(SPACE, type, walker, begin);
+    //         }
+    //         type = list.getToken(i)->tokenChar;
+    //         makeNode(VAR, type, walker, begin);
+    //         break;
 
-        default:
-            break;
-        }
-    }
+    //     default:
+    //         break;
+    //     }
+    // }
 } // makeTree 
