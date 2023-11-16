@@ -12,13 +12,6 @@
 #include <stack>
 using namespace std;
 
-node::node(){
-    left = nullptr;
-    right = nullptr;
-    id = INVALID;
-    tokenChar = invalidChar;
-}// Default constructor
-
 tree::tree(){
     begin = nullptr;
 }// Default constructor
@@ -56,17 +49,20 @@ bool tree::isEmpty(node* leaf) const{
     return false;
 }// isEmpty
 
-bool tree::isOperator(const node* node) const {
+bool tree::isOperator(node* node) const {
+    if (node == nullptr){
+        cout << "WA" << endl;
+    }
     if (node != nullptr){
-        if (node->id != VAR && node->id != EOL && node->id != INVALID){
+        if (node->id == LAMBDA || node->id == SPACE || node->id == LPAR || node->id == RPAR){
             return true;
         }
     }
     return false;
 }// isOperator
 
-void tree::infixToPrefix(tokenList &list){
-    tokenList prefix;
+tokenList* tree::infixToPrefix(tokenList &list){
+    tokenList* prefix = new tokenList;
     token* temp = nullptr;
     stack<token*> tokenStack;
 
@@ -74,18 +70,18 @@ void tree::infixToPrefix(tokenList &list){
     for(int i = 0; i < list.getLength(); i++){
         temp = list.getToken(i);
         if (temp->id == VAR){
-            prefix.addToken(temp->id, temp->tokenChar);
+            prefix->addToken(temp->id, temp->tokenChar);
         }else if (temp->id == LPAR){
             tokenStack.push(temp);
         }else if (temp->id == RPAR){
             while (tokenStack.top()->id != LPAR){
-                prefix.addToken(tokenStack.top()->id, tokenStack.top()->tokenChar);
+                prefix->addToken(tokenStack.top()->id, tokenStack.top()->tokenChar);
                 tokenStack.pop();
             }
             tokenStack.pop();
         }else{
             while(!tokenStack.empty() && temp->id == SPACE && tokenStack.top()->id == LAMBDA){
-                prefix.addToken(tokenStack.top()->id, tokenStack.top()->tokenChar);
+                prefix->addToken(tokenStack.top()->id, tokenStack.top()->tokenChar);
                 tokenStack.pop();
             }
             if (temp->id != EOL){
@@ -94,11 +90,11 @@ void tree::infixToPrefix(tokenList &list){
         }
     }
     while(!tokenStack.empty()){
-        prefix.addToken(tokenStack.top()->id, tokenStack.top()->tokenChar);
+        prefix->addToken(tokenStack.top()->id, tokenStack.top()->tokenChar);
         tokenStack.pop();
     }
-    prefix.reverseList();
-    prefix.printList();
+    prefix->reverseList();
+    return prefix;
 }// infixToPrefix
 
 
@@ -118,51 +114,83 @@ bool tree::treeFull(node* & walker){
     return true;
 } // treeFull
 
-bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start){
+// bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start){
+//     bool var = false;
+
+//     if (treeFull(walker)){
+//         if (nodeChar == "$"){
+//             return true;
+//         }
+//         else{
+//             node* new_root = new node;
+//             new_root->id = id;
+//             new_root->tokenChar = nodeChar;
+//             new_root->left = start;
+//             new_root->right = nullptr;
+
+//             walker = new_root;
+//             return true;
+//         }
+//     }
+
+
+//     if (isEmpty(walker) && isEmpty(start)){
+//        // If the tree is empty, the tree makes the first element
+//         start = new node;
+//         start->id = id;
+//         start->tokenChar = nodeChar;
+//         walker = begin;
+//         return true;
+//     }
+
+//     if (isOperator(walker)){
+//         if(walker->left != nullptr){
+//             var = makeNode(id, nodeChar, walker->left, start);
+//         }else{
+//             walker->left = new node;
+//             walker->left->id = id;
+//             walker->left->tokenChar = nodeChar;
+//             return true;
+//             }
+//         if(!var){
+//             if (walker->right != nullptr){
+//                 var = makeNode(id, nodeChar, walker->right, start);
+//             }else{
+//                 walker -> right = new node;
+//                 walker -> right -> id = id;
+//                 walker->right->tokenChar = nodeChar;
+//                 return true;
+//             }
+//             return var;
+//         }else {
+//             return true;
+//         }
+//     }
+//     return false;
+// }// makeNode
+
+
+bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker){
     bool var = false;
 
-    if (treeFull(walker)){
-        if (nodeChar == "$"){
-            return true;
-        }
-        else{
-            node* new_root = new node;
-            new_root->id = id;
-            new_root->tokenChar = nodeChar;
-            new_root->left = start;
-            new_root->right = nullptr;
-
-            walker = new_root;
-            return true;
-        }
-    }
-
-
-    if (isEmpty(walker) && isEmpty(start)){
+    if (isEmpty(walker) && isEmpty(begin)){
        // If the tree is empty, the tree makes the first element
-        start = new node;
-        start->id = id;
-        start->tokenChar = nodeChar;
+        begin = new node(id, tokenChar);
         walker = begin;
         return true;
     }
-
     if (isOperator(walker)){
         if(walker->left != nullptr){
-            var = makeNode(id, nodeChar, walker->left, start);
+            var = makeNode(id, tokenChar, walker->left);
         }else{
-            walker->left = new node;
-            walker->left->id = id;
-            walker->left->tokenChar = nodeChar;
+            walker->left = new node(id, tokenChar);
             return true;
             }
         if(!var){
             if (walker->right != nullptr){
-                var = makeNode(id, nodeChar, walker->right, start);
+                var = makeNode(id, tokenChar, walker->right);
             }else{
-                walker -> right = new node;
-                walker -> right -> id = id;
-                walker->right->tokenChar = nodeChar;
+                walker -> right = new node(id, tokenChar);
                 return true;
             }
             return var;
@@ -173,12 +201,10 @@ bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker
     return false;
 }// makeNode
 
-
 void tree::printRecursion(node* & walker){
     if (walker == nullptr){
         return;
     }
-
     printRecursion(walker->left);
 
     cout << walker->tokenChar;
@@ -188,20 +214,30 @@ void tree::printRecursion(node* & walker){
 
 void tree::printTree() {
     node* walker = begin;
-
     printRecursion(walker);
     cout << endl;
 }// printTree
 
-void tree::makeTree(tokenList & list, node* & walker){
+void tree::makeTree(tokenList &list){
+    tokenList* prefix = nullptr;
+    token* temp = nullptr;
+    node* walker = nullptr;
     clearTree();
-    // walker = begin;
-    // int lparN = 0;
-    // int rparN = 0;
-    // string type = "$";
-    //bool parSeen = false; 
-    infixToPrefix(list);
 
+    prefix = infixToPrefix(list);
+    prefix->printList();
+    for (int i = 0; i < prefix->getLength(); i++){
+        temp = prefix->getToken(i);
+        makeNode(temp->id, temp->tokenChar, walker);
+    }
+    delete prefix;
+    // prefix.printList();
+    // temp = prefix.getBegin();
+    // while (temp->next != nullptr){
+    //     // makeNode(temp, walker, begin);
+    //     cout << (temp == nullptr) << endl;
+    //     temp = temp->next;
+    // }
     // // rewriting makeNode so that it makes a node based on the type
     // for (int i = 0; i < list.getLength(); i++){
     //     switch (list.getToken(i)->id){

@@ -9,12 +9,15 @@
 #ifndef TREE_H
 #define TREE_H
 #include <iostream>
+#include "../include/standard.h"
 #include "../include/tokenId.h"
 #include "../include/token.h"
 
 class node{
     public:
-        node ();
+        node () : left(nullptr), right(nullptr), id(INVALID), tokenChar(emptyStr) {};
+        node (const tokenId id, const std::string tokenChar) : 
+            left(nullptr), right(nullptr), id(id), tokenChar(tokenChar){};
 
         node* left;
         node* right;
@@ -32,9 +35,9 @@ class tree{
         node* getBegin() const;
 
         bool isEmpty(node* leaf) const;
-        bool isOperator(const node* node) const;
-        bool makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start);
-        void makeTree(tokenList & list,  node* & walker);
+        bool isOperator(node* node) const;
+        bool makeNode(const tokenId id, const std::string tokenChar, node* &walker);
+        void makeTree(tokenList &list);
         void deleteNode() const;
 
         void printRecursion(node* & walker);
@@ -42,7 +45,7 @@ class tree{
 
         bool treeFull(node* & walker);
         
-        void infixToPrefix(tokenList &list);
+        tokenList* infixToPrefix(tokenList &list);
 
     private:
         node* begin;

@@ -62,6 +62,8 @@ class tokenList{
         // Prints the list
         void printList() const;
 
+        token* getBegin() const {return this->begin;};
+
     private:
         token* begin;
         token* end;
