@@ -42,7 +42,7 @@ node* tree::getBegin() const{
     return begin;
 }
 
-bool tree::isEmpty(node* leaf) const{
+bool tree::isEmpty(const node* leaf) const{
     if (leaf == nullptr){
         return true;
     }
@@ -50,9 +50,6 @@ bool tree::isEmpty(node* leaf) const{
 }// isEmpty
 
 bool tree::isOperator(node* node) const {
-    if (node == nullptr){
-        cout << "WA" << endl;
-    }
     if (node != nullptr){
         if (node->id == LAMBDA || node->id == SPACE || node->id == LPAR || node->id == RPAR){
             return true;
@@ -98,7 +95,6 @@ tokenList* tree::infixToPrefix(tokenList &list){
 }// infixToPrefix
 
 
-
 bool tree::treeFull(node* & walker){
     if (walker == nullptr){
         return false;
@@ -113,61 +109,6 @@ bool tree::treeFull(node* & walker){
 
     return true;
 } // treeFull
-
-// bool tree::makeNode(const tokenId id, const std::string nodeChar, node* & walker, node* & start){
-//     bool var = false;
-
-//     if (treeFull(walker)){
-//         if (nodeChar == "$"){
-//             return true;
-//         }
-//         else{
-//             node* new_root = new node;
-//             new_root->id = id;
-//             new_root->tokenChar = nodeChar;
-//             new_root->left = start;
-//             new_root->right = nullptr;
-
-//             walker = new_root;
-//             return true;
-//         }
-//     }
-
-
-//     if (isEmpty(walker) && isEmpty(start)){
-//        // If the tree is empty, the tree makes the first element
-//         start = new node;
-//         start->id = id;
-//         start->tokenChar = nodeChar;
-//         walker = begin;
-//         return true;
-//     }
-
-//     if (isOperator(walker)){
-//         if(walker->left != nullptr){
-//             var = makeNode(id, nodeChar, walker->left, start);
-//         }else{
-//             walker->left = new node;
-//             walker->left->id = id;
-//             walker->left->tokenChar = nodeChar;
-//             return true;
-//             }
-//         if(!var){
-//             if (walker->right != nullptr){
-//                 var = makeNode(id, nodeChar, walker->right, start);
-//             }else{
-//                 walker -> right = new node;
-//                 walker -> right -> id = id;
-//                 walker->right->tokenChar = nodeChar;
-//                 return true;
-//             }
-//             return var;
-//         }else {
-//             return true;
-//         }
-//     }
-//     return false;
-// }// makeNode
 
 
 bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker){
@@ -233,44 +174,4 @@ void tree::makeTree(tokenList &list){
         makeNode(temp->id, temp->tokenChar, walker);
     }
     delete prefix;
-    // prefix.printList();
-    // temp = prefix.getBegin();
-    // while (temp->next != nullptr){
-    //     // makeNode(temp, walker, begin);
-    //     cout << (temp == nullptr) << endl;
-    //     temp = temp->next;
-    // }
-    // // rewriting makeNode so that it makes a node based on the type
-    // for (int i = 0; i < list.getLength(); i++){
-    //     switch (list.getToken(i)->id){
-    //     case LPAR:
-    //         lparN++;
-    //         type = "@";
-    //         makeNode(LPAR, type, walker, begin);
-    //         break;
-
-    //     case RPAR:
-    //         rparN++;
-    //         type = "$";
-    //         makeNode(RPAR, type, walker, begin);
-    //         break;
-
-    //     case LAMBDA:
-    //         type = "\\";
-    //         makeNode(LAMBDA, type, walker, begin);
-    //         break;
-
-    //     case VAR:
-    //         if (list.peekToken() == SPACE){
-    //             type = "@";
-    //             makeNode(SPACE, type, walker, begin);
-    //         }
-    //         type = list.getToken(i)->tokenChar;
-    //         makeNode(VAR, type, walker, begin);
-    //         break;
-
-    //     default:
-    //         break;
-    //     }
-    // }
 } // makeTree 

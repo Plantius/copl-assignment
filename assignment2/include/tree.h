@@ -34,7 +34,7 @@ class tree{
         void deleteNode(node* & walker) const;
         node* getBegin() const;
 
-        bool isEmpty(node* leaf) const;
+        bool isEmpty(const node* leaf) const;
         bool isOperator(node* node) const;
         bool makeNode(const tokenId id, const std::string tokenChar, node* &walker);
         void makeTree(tokenList &list);
