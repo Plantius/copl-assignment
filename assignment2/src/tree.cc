@@ -205,11 +205,14 @@ void tree::printRecursion(node* & walker){
     if (walker == nullptr){
         return;
     }
-    printRecursion(walker->left);
-
-    cout << walker->tokenChar;
-    
-    printRecursion(walker->right);
+    if (walker->id == LAMBDA){
+        cout << walker->tokenChar << walker->left->tokenChar;
+        printRecursion(walker->right);
+    }else {
+        printRecursion(walker->left);
+        cout << walker->tokenChar;
+        printRecursion(walker->right);
+    }
 }// printRecursion
 
 void tree::printTree() {
@@ -225,7 +228,6 @@ void tree::makeTree(tokenList &list){
     clearTree();
 
     prefix = infixToPrefix(list);
-    prefix->printList();
     for (int i = 0; i < prefix->getLength(); i++){
         temp = prefix->getToken(i);
         makeNode(temp->id, temp->tokenChar, walker);
