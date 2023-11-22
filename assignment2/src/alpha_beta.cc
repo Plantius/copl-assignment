@@ -51,15 +51,18 @@ bool alpha_beta::needsBeta(node* begin, tokenList & L){
                 M.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
                 i++;
                 j++;
-            } // while M
+            } // while M'
+
             j = 0;
-        
-            while (i < L.getLength()){
-                N.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
-                i++;
-                j++;
-            } // while N
-            return true;
+
+            if (i < L.getLength()){
+                while (i < L.getLength()){
+                    N.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
+                    i++;
+                    j++;
+                } // while N
+                return true;
+            }
         }
     } // while L
 
