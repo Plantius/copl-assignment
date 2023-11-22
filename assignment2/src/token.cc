@@ -99,8 +99,6 @@ void tokenList::reverseList(){
     }else {
         addToken(EOL, "#");
     }
-    
-
 }// reverseList
 
 // Returns the token type of the token at the given index

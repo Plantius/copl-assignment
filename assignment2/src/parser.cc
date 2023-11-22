@@ -90,6 +90,10 @@ void parser::stringTokenizer(const string input){
 
     while(input[i] != '\0'){
         id = tokenSwitch(input[i]);
+        if ((id == SPACE && character == "\\") || (id == SPACE && character == "@")){
+            i++;
+            continue;
+        }
         character = input[i];
         // Checks if the input is a var, which can be of indefinite size
         if (id == VAR){ 
@@ -117,6 +121,7 @@ void parser::stringTokenizer(const string input){
             }
             list.addToken(id, character);
         }
+        
         i++;
         col++;
     }
@@ -130,6 +135,7 @@ void parser::stringTokenizer(const string input){
     col = 0, row++;
     parseTree.makeTree(list);
     parseTree.printTree();
+    parseTree.saveDOT("a");
 }// stringTokenizer
 
 void parser::printExpression(const string input, tokenList & list){

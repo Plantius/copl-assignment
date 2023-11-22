@@ -8,3 +8,6 @@ a b c
 \x ab
 \x(a b \a b)
 a b c d
+\x a b
+(\x x)(\y y)
+a (\x a (b c) \x d)
