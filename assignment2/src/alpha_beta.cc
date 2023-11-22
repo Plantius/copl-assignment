@@ -36,7 +36,10 @@ bool alpha_beta::needsBeta(node* begin, tokenList & L){
     tokenList M;
     tokenList N;
     L.setIndex(0);
+    M.setIndex(0);
+    N.setIndex(0);
     int i = 0;
+
     while( i < L.getLength()){
         if (L.getToken(i)->id == LAMBDA){
             x = L.peekToken();
@@ -48,19 +51,19 @@ bool alpha_beta::needsBeta(node* begin, tokenList & L){
                 M.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
                 i++;
                 j++;
-            }
+            } // while M
             j = 0;
         
             while (i < L.getLength()){
                 N.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
                 i++;
                 j++;
-            }
-
+            } // while N
+            return true;
         }
-    }
+    } // while L
 
-    return true;
+    return false;
 } // needsBeta
 
 
