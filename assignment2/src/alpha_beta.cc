@@ -47,8 +47,13 @@ bool alpha_beta::needsBeta(node* begin, tokenList & L){
             while ((L.getToken(i)->id != RPAR) && (i < L.getLength())){
                 M.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
                 j++;
-           }
-           
+            }
+            j = 0;
+            while ((L.getToken(i)->id != RPAR) && (i < L.getLength())){
+                N.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
+                j++;
+            }
+
         }
     }
 
