@@ -6,10 +6,7 @@
 * 04-10-2023
 **/ 
 
-#include "../include/standard.h"
 #include "../include/parser.h"
-#include "../include/token.h"
-#include "../include/tokenId.h"
 #include "../include/error.h"
 using namespace std;
 

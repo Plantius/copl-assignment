@@ -1,4 +1,10 @@
-.vscode
 *.pdf
-*/bin/*
-*/obj/*
+*.vscode
+lambda
+main.o
+standard.o
+parser.o
+token.o
+error.o
+tree.o
+alpha_beta.o

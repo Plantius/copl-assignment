@@ -8,7 +8,6 @@
 
 #include "../include/standard.h"
 #include "../include/parser.h"
-#include "../include/token.h"
 #include "../include/error.h"
 #include <fstream>
 using namespace std;
