@@ -22,6 +22,9 @@ class alpha_beta{
 
     private:
         tree T;
+        tokenList M;
+        tokenList N;
+        std::string x;
 
 
 };
