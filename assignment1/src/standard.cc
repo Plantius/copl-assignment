@@ -12,19 +12,6 @@
 #include <sstream>
 using namespace std;
 
-// Reads an istream from a file, and reads it into a stringstream 
-string readFile(const string filepath){
-    ifstream file(filepath);
-    string input;
-    if(!file.good() || !file.is_open()){
-        throw inputError("File does not exist or is corrupted");
-    }
-    while (getline(file, input)){
-        
-    }
-    return input;
-}// readFile
-
 
 // Checks if the given string contains only ASCII-characters
 void validInput(const string input){

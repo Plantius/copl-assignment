@@ -14,7 +14,6 @@ using namespace std;
 
 // Tokenizes a given string, and parses it
 int main(int argc, char* argv[]){
-    clock_t t1, t2;
     tree T;
     parser* parse = new parser(T); 
     string input = emptyStr, filepath = "NULL";
@@ -32,12 +31,9 @@ int main(int argc, char* argv[]){
         }
         while (getline(file, input)){
             validInput(input);
-            t1 = clock();
             // Checks if any errors are thrown from the stringTokenizer function
             parse->stringTokenizer(input);
             input.clear();
-            t2 = clock();
-            cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
         }
     }
     catch(memoryError & error){

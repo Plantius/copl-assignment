@@ -71,8 +71,40 @@ int tokenList::getIndex() const{
 }// getIndex
 
 
+void tokenList::reverseList(){
+    token* temp = end;
+    token* walker = end;
+    while(temp != nullptr){
+        if(temp->id == LPAR){
+            temp->id = RPAR;
+            temp->tokenChar = ")";
+        }else if (temp->id == RPAR){
+            temp->id = LPAR;
+            temp->tokenChar = "(";
+        }
+        walker = walker->prev;
+        temp->prev = temp->next;
+        temp->next = walker;
+        temp = walker;
+    }
+    temp = end;
+    end = begin;
+    begin = temp;
+    if (begin->id == EOL){
+        addToken(EOL, "#");
+        temp = begin->next;
+        delete begin;
+        begin = temp;
+        length--;
+    }else {
+        addToken(EOL, "#");
+    }
+    
+
+}// reverseList
+
 // Returns the token type of the token at the given index
-int tokenList::peekToken(){
+tokenId tokenList::peekToken(){
     token* nextToken = getToken(index);
     if (nextToken != nullptr){
         while(nextToken->next != nullptr && (nextToken->id == SPACE || nextToken->id == RPAR)){
@@ -133,7 +165,7 @@ token* tokenList::getToken(const int index) const{
 
 
 // Adds a token-object at the back of the tokenList
-bool tokenList::addToken(const tokenId id, const string tokenChar){
+void tokenList::addToken(const tokenId id, const string tokenChar){
     if(isEmpty()){
         token* newToken = new token(id, nullptr, nullptr, tokenChar);
         if (newToken == nullptr){
@@ -142,8 +174,6 @@ bool tokenList::addToken(const tokenId id, const string tokenChar){
         begin = newToken;
         end = newToken;
         length++;
-
-        return true;
     }else {
         token* temp = end;
         token* newToken = new token(id, nullptr, end, tokenChar);
@@ -153,11 +183,7 @@ bool tokenList::addToken(const tokenId id, const string tokenChar){
         temp->next = newToken;
         end = newToken;
         length++;
-
-        return true;
     }
-
-    return false;
 }// addToken
 
 // Adds a token-object at the back of the tokenList

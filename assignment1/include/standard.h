@@ -13,9 +13,6 @@
 const char invalidChar = '$';
 const std::string emptyStr = "";
 
-// Reads input from a file
-std::string readFile(const std::string filepath);
-
 // Reads a constant string and checks if it is valid, e.i. if
 // it only contains ASCII-characters
 void validInput(const std::string input);
