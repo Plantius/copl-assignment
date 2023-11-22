@@ -43,9 +43,12 @@ bool alpha_beta::needsBeta(node* begin, tokenList & L){
             i++;
         }
         else if (x != '$' ){
-           while (L.getToken(i)->id != RPAR){
-             M.addToken(L.getToken(i)->id, L.getToken(i)->tokenChar);
+            int j=0;
+            while ((L.getToken(i)->id != RPAR) && (i < L.getLength())){
+                M.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
+                j++;
            }
+           
         }
     }
 
