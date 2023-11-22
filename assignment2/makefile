@@ -11,19 +11,32 @@ INCLUDES = $(INC_DIR)/standard.h \
 		   $(INC_DIR)/token.h \
 		   $(INC_DIR)/tokenId.h \
 		   $(INC_DIR)/error.h \
+		   $(INC_DIR)/tree.h \
 		   $(INC_DIR)/alpha_beta.h
 OBJECTS = main.o \
 		  standard.o \
 		  parser.o \
 		  token.o \
 		  error.o \
+		  tree.o \
 		  alpha_beta.o
+
+all: $(TARGET) ../.gitignore
 
 %.o: $(SRC_DIR)/%.cc $(INCLUDES)
 	$(CC) $(PARAMETERS) -c -o $@ $<
 
 $(TARGET): $(OBJECTS)
 	$(CC) -o $@ $^
+
+../.gitignore: $(OBJECTS)
+	rm ../.gitignore;
+	echo "*.pdf" >> ../.gitignore;
+	echo "*.vscode" >> ../.gitignore;
+	echo $(TARGET) >> ../.gitignore;
+	for file in $(OBJECTS); do \
+		echo $$file >> ../.gitignore;\
+	done
 
 clean:
 	rm -f *.o $(TARGET)
