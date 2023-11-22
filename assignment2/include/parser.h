@@ -41,6 +41,8 @@ class parser{
         // Parantheses expression
         void varExpr(tokenList & list) const;
 
+        void debugTree(const std::string filename) const;
+
         // Prints the expression
         void printExpression(const std::string input, tokenList & list);
 

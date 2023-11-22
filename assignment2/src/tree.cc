@@ -39,6 +39,8 @@ void tree::deleteNode(node* & walker) const{
     delete walker;
 }// verwijderTak
 
+
+
 node* tree::getBegin() const{
     return begin;
 }
@@ -62,6 +64,7 @@ bool tree::isOperator(node* node) const {
 tokenList* tree::infixToPrefix(tokenList &list){
     tokenList* prefix = new tokenList;
     token* temp = nullptr;
+    token* help = nullptr;
     stack<token*> tokenStack;
 
     list.reverseList();
@@ -175,10 +178,45 @@ void tree::makeTree(tokenList &list){
     prefix = infixToPrefix(list);
     for (int i = 0; i < prefix->getLength(); i++){
         temp = prefix->getToken(i);
+        if (temp->id == EOL){
+            continue;
+        }
         makeNode(temp->id, temp->tokenChar, walker, i);
     }
+    correctTree();
     delete prefix;
 } // makeTree 
+
+
+void tree::recursionCorrectTree(node* &walker){
+    if (walker == nullptr){
+        return;
+    }
+    recursionCorrectTree(walker->left);
+    recursionCorrectTree(walker->right);
+    if ((walker->id == LAMBDA || walker->id == SPACE) && 
+        (walker->left == nullptr || walker->right == nullptr)){
+        node* temp = nullptr;
+        node* help = nullptr;
+        if (walker->right != nullptr){
+            help = walker->right;
+            walker->left = help->left;
+            walker->right = help->right;
+            delete help;
+        }else if (walker->left != nullptr){
+            help = walker->left;
+            walker->left = help->left;
+            walker->right = help->right;
+            delete help;
+        }
+    }
+}// recursionCorrectTree
+
+
+void tree::correctTree(){
+    node* walker = begin;
+    recursionCorrectTree(walker);
+}// correctTree
 
 
 void tree::recursionDOT(node* &walker, std::ofstream &file) const{

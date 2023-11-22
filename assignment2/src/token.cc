@@ -49,6 +49,25 @@ void tokenList::clear(){
     index = 0;
 }
 
+void tokenList::deleteToken(const int index) const{
+    token* temp = begin;
+    token* after = nullptr;
+    token* prev = nullptr;
+    for(int i = 0; i < index; i++){
+        if (temp != nullptr){
+            temp = temp->next;
+        }else {
+            throw inputError("Index out of bounds");
+        }           
+    }
+    after = temp->next;
+    prev = temp->prev;
+    delete temp;
+    if (prev != nullptr && after != nullptr){
+        prev->next = after;
+        after->prev = prev;
+    }
+}// deleteToken
 
 // Checks if the tokenList is empty
 bool tokenList::isEmpty() const{

@@ -30,6 +30,7 @@ class tokenList{
         tokenList() : begin(nullptr), end(nullptr), length(0), index(0) {};
         ~tokenList();
 
+        void deleteToken(const int index) const;
         void reverseList();
 
         // Adds a token to the list

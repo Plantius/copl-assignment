@@ -135,8 +135,12 @@ void parser::stringTokenizer(const string input){
     col = 0, row++;
     parseTree.makeTree(list);
     parseTree.printTree();
-    parseTree.saveDOT("a");
 }// stringTokenizer
+
+
+void parser::debugTree(const std::string filename) const {
+    parseTree.saveDOT(filename);
+}// debugTree
 
 void parser::printExpression(const string input, tokenList & list){
     int length = list.getLength();

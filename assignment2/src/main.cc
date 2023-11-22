@@ -17,14 +17,21 @@ int main(int argc, char* argv[]){
     tree T;
     parser* parse = new parser(T); 
     string input = emptyStr, filepath = "NULL";
-    
+    bool debug = false;
+
     if(argc < 2){
         delete parse;
         return 2;
+    }if (argc >= 3 && std::string(argv[1]) == "d"){
+        debug = true;
     }
 
     try{
-        filepath = string(argv[1]);
+        if (debug){
+            filepath = std::string(argv[2]);
+        }else {
+            filepath = std::string(argv[1]);
+        }
         ifstream file(filepath);
         if(!file.good() || !file.is_open()){
             throw inputError("File does not exist or is corrupted");
@@ -33,6 +40,9 @@ int main(int argc, char* argv[]){
             validInput(input);
             // Checks if any errors are thrown from the stringTokenizer function
             parse->stringTokenizer(input);
+            if (debug){
+                parse->debugTree(std::string(argv[3]));
+            }
             input.clear();
         }
     }
