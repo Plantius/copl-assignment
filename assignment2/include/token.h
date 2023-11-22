@@ -64,6 +64,8 @@ class tokenList{
 
         token* getBegin() const {return this->begin;};
 
+        void setIndex(const int number);
+
     private:
         token* begin;
         token* end;

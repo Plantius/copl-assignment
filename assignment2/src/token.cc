@@ -225,3 +225,7 @@ void tokenList::printList() const{
         temp = temp->next;
     }cout << endl;
 }// printList
+
+void tokenList::setIndex(const int number){
+    index = number;
+} // setIndex
