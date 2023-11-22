@@ -32,9 +32,7 @@ void alpha_beta::makeAbstract(node* begin,  tokenList & L){
 } // makeAbstract
 
 bool alpha_beta::needsBeta(node* begin, tokenList & L){
-    char x = '$';
-    tokenList M;
-    tokenList N;
+    x = '$';
     L.setIndex(0);
     M.setIndex(0);
     N.setIndex(0);
@@ -71,8 +69,15 @@ bool alpha_beta::needsBeta(node* begin, tokenList & L){
 
 
 bool alpha_beta::needsAlpha(node* begin, tokenList & L){
+    if (needsBeta(begin, L)){
+        for (int i = 0; i < N.getLength(); i++){
+            if (x == N.getToken(i)->tokenChar){
+                return true;
+            }
+        }
+    }
 
-    return true;
+    return false;
 
 } // needsAlpha
 
