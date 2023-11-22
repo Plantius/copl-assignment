@@ -30,6 +30,8 @@ class tokenList{
         tokenList() : begin(nullptr), end(nullptr), length(0), index(0) {};
         ~tokenList();
 
+        void reverseList();
+
         // Adds a token to the list
         void addToken(const tokenId id, const std::string tokenChar);
         
@@ -59,6 +61,8 @@ class tokenList{
         
         // Prints the list
         void printList() const;
+
+        token* getBegin() const {return this->begin;};
 
     private:
         token* begin;
