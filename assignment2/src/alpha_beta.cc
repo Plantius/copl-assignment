@@ -32,14 +32,20 @@ void alpha_beta::makeAbstract(node* begin,  tokenList & L){
 } // makeAbstract
 
 bool alpha_beta::needsBeta(node* begin, tokenList & L){
-    char x;
-    int M;
-    int N;
+    char x = '$';
+    tokenList M;
+    tokenList N;
     L.setIndex(0);
-    for(int i=0; i < L.getLength(); i++){
+    int i = 0;
+    while( i < L.getLength()){
         if (L.getToken(i)->id == LAMBDA){
             x = L.peekToken();
-
+            i++;
+        }
+        else if (x != '$' ){
+           while (L.getToken(i)->id != RPAR){
+             M.addToken(L.getToken(i)->id, L.getToken(i)->tokenChar);
+           }
         }
     }
 
