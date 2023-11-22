@@ -71,8 +71,12 @@ bool alpha_beta::needsBeta(node* begin, tokenList & L){
 
 
 bool alpha_beta::needsAlpha(node* begin, tokenList & L){
+    if (needsBeta(begin, L)){
 
-    return true;
+        return true;
+    }
+
+    return false;
 
 } // needsAlpha
 
