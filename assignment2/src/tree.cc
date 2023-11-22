@@ -10,6 +10,7 @@
 #include "../include/error.h"
 #include "../include/standard.h"
 #include <stack>
+#include <fstream>
 using namespace std;
 
 tree::tree(){
@@ -111,27 +112,30 @@ bool tree::treeFull(node* & walker){
 } // treeFull
 
 
-bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker){
+bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker, const int index){
     bool var = false;
 
     if (isEmpty(walker) && isEmpty(begin)){
        // If the tree is empty, the tree makes the first element
         begin = new node(id, tokenChar);
+        begin->index = index;
         walker = begin;
         return true;
     }
     if (isOperator(walker)){
         if(walker->left != nullptr){
-            var = makeNode(id, tokenChar, walker->left);
+            var = makeNode(id, tokenChar, walker->left, index);
         }else{
             walker->left = new node(id, tokenChar);
+            walker->left->index = index;
             return true;
             }
         if(!var){
             if (walker->right != nullptr){
-                var = makeNode(id, tokenChar, walker->right);
+                var = makeNode(id, tokenChar, walker->right, index);
             }else{
-                walker -> right = new node(id, tokenChar);
+                walker->right = new node(id, tokenChar);
+                walker->right->index = index;
                 return true;
             }
             return var;
@@ -171,7 +175,74 @@ void tree::makeTree(tokenList &list){
     prefix = infixToPrefix(list);
     for (int i = 0; i < prefix->getLength(); i++){
         temp = prefix->getToken(i);
-        makeNode(temp->id, temp->tokenChar, walker);
+        makeNode(temp->id, temp->tokenChar, walker, i);
     }
     delete prefix;
 } // makeTree 
+
+
+void tree::recursionDOT(node* &walker, std::ofstream &file) const{
+    // Als het node een binaire operator is word left en right verder doorgelopen,  
+    // anders is er een unaire operator bereikt, en dus een eind-node
+    if (walker->id == LAMBDA || walker->id == SPACE){
+        // Als het node een gonio operator is, heeft deze maar 1 rechter kind, dus
+        // word alleen right doorgelopen
+    
+    if(walker->left != nullptr){
+        if(!walker->seen){
+            file << walker->index << " -> ";
+        }
+        walker->seen = true;
+        recursionDOT(walker->left, file);
+    }
+    file << walker->index << " -> ";
+    if (walker->right != nullptr){
+        if(!walker->seen){
+            file << walker->index << ";\n\t";
+        }
+        walker->seen = true;
+        recursionDOT(walker->right, file);
+    }
+
+    }else {
+        if (!walker->seen){
+            file << walker->index << ";\n\t";
+        }
+        walker->seen = true;
+    }
+}// loopBoom
+
+
+void tree::labelTree(node* &walker, std::ofstream &file) const{
+    if(walker == nullptr){
+        return;
+    }
+    if (walker->id == LAMBDA){
+        file << "\t" << walker->index << " [label = " << "\"\\" << walker->tokenChar << "\"];\n"; 
+    }else {
+        file << "\t" << walker->index << " [label = " << "\"" << walker->tokenChar << "\"];\n";
+    }
+    
+    labelTree(walker->left, file);
+    labelTree(walker->right, file);
+}// labelBlad
+
+
+void tree::saveDOT(const std::string filenaam) const{
+    node* walker = begin;
+    int count = 0;
+    if (begin != nullptr){
+        std::ofstream file(filenaam);
+        if(file.is_open()){
+            file << "digraph tree{\n";
+            labelTree(walker, file); 
+            file << "\t";
+            walker = begin;
+            recursionDOT(walker, file);
+            file << "}";
+            file.close();
+        }
+    }else {
+        throw inputError("The tree is empty.");
+    }
+}// opslaanDOT

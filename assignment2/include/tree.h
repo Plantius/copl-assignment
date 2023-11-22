@@ -15,15 +15,19 @@
 
 class node{
     public:
-        node () : left(nullptr), right(nullptr), id(INVALID), tokenChar(emptyStr) {};
+        node () : left(nullptr), right(nullptr), id(INVALID), tokenChar(emptyStr), 
+        index(0), seen(false) {};
         node (const tokenId id, const std::string tokenChar) : 
-            left(nullptr), right(nullptr), id(id), tokenChar(tokenChar){};
+            left(nullptr), right(nullptr), id(id), tokenChar(tokenChar), 
+            index(0), seen(false) {};
 
         node* left;
         node* right;
 
         tokenId id;
         std::string tokenChar;
+        int index;
+        bool seen;
 };
 
 class tree{
@@ -36,9 +40,8 @@ class tree{
 
         bool isEmpty(const node* leaf) const;
         bool isOperator(node* node) const;
-        bool makeNode(const tokenId id, const std::string tokenChar, node* &walker);
+        bool makeNode(const tokenId id, const std::string tokenChar, node* &walker, const int index);
         void makeTree(tokenList &list);
-        void deleteNode() const;
 
         void printRecursion(node* & walker);
         void printTree();
@@ -46,7 +49,9 @@ class tree{
         bool treeFull(node* & walker);
         
         tokenList* infixToPrefix(tokenList &list);
-
+        void saveDOT(const std::string file) const;
+        void labelTree(node* &walker, std::ofstream &file) const;
+        void recursionDOT(node* &walker, std::ofstream &file) const;
     private:
         node* begin;
 };
