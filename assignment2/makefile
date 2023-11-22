@@ -44,4 +44,4 @@ clean:
 build: $(TARGET)
 	
 run: build
-	$(TARGET) ./positives.txt
+	./$(TARGET) ./positives.txt
