@@ -17,7 +17,7 @@ alpha_beta::alpha_beta(){
 
 } // constructor
 
-void alpha_beta::makeAbstract(node* begin,  tokenList & L){
+void alpha_beta::makeAbstract(node* begin, tokenList &L){
     bool done = false;
     if(needsBeta(begin, L)){
         if(needsAlpha(begin, L)){
@@ -31,14 +31,14 @@ void alpha_beta::makeAbstract(node* begin,  tokenList & L){
 
 } // makeAbstract
 
-bool alpha_beta::needsBeta(node* begin, tokenList & L){
+bool alpha_beta::needsBeta(node* begin, tokenList &L){
     x = "$";
     L.setIndex(0);
     M.setIndex(0);
     N.setIndex(0);
     int i = 0;
 
-    while( i < L.getLength()){
+    while(i < L.getLength()){
         if (L.getToken(i)->id == LAMBDA){
             x = L.peekToken();
             i++;
@@ -61,14 +61,15 @@ bool alpha_beta::needsBeta(node* begin, tokenList & L){
                 } // while N
                 return true;
             }
+        }else {
+            i++;
         }
     } // while L
-
     return false;
 } // needsBeta
 
 
-bool alpha_beta::needsAlpha(node* begin, tokenList & L){
+bool alpha_beta::needsAlpha(node* begin, tokenList &L){
     if (needsBeta(begin, L)){
         for (int i = 0; i < N.getLength(); i++){
             if (x == N.getToken(i)->tokenChar){

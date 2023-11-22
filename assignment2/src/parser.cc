@@ -8,6 +8,7 @@
 
 #include "../include/parser.h"
 #include "../include/error.h"
+#include "../include/alpha_beta.h"
 using namespace std;
 
 // Checks what id the given inputChar has in tokenId
@@ -82,6 +83,7 @@ void parser::varExpr(tokenList & list) const{
 // Tokenizes the given string, and adds them to the given token list
 void parser::stringTokenizer(const string input){
     tokenList list;
+    alpha_beta ab;
     int lparCounter = 0, rparCounter = 0;
     int size = input.length();
     int i = 0;
@@ -135,6 +137,9 @@ void parser::stringTokenizer(const string input){
     col = 0, row++;
     parseTree.makeTree(list);
     parseTree.printTree();
+    
+    // ab.makeAbstract(parseTree.getBegin(), list);
+    // parseTree.printTree();
 }// stringTokenizer
 
 
