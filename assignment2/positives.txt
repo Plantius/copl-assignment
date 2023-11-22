@@ -11,3 +11,6 @@ a b c d
 \x a b
 (\x x)(\y y)
 a (\x a (b c) \x d)
+a                   b
+\ x a b
+(\x y)((\x (x x))(\x (x x)))

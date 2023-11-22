@@ -220,28 +220,22 @@ void tree::correctTree(){
 
 
 void tree::recursionDOT(node* &walker, std::ofstream &file) const{
-    // Als het node een binaire operator is word left en right verder doorgelopen,  
-    // anders is er een unaire operator bereikt, en dus een eind-node
     if (walker->id == LAMBDA || walker->id == SPACE){
-        // Als het node een gonio operator is, heeft deze maar 1 rechter kind, dus
-        // word alleen right doorgelopen
-    
-    if(walker->left != nullptr){
-        if(!walker->seen){
-            file << walker->index << " -> ";
+        if(walker->left != nullptr){
+            if(!walker->seen){
+                file << walker->index << " -> ";
+            }
+            walker->seen = true;
+            recursionDOT(walker->left, file);
         }
-        walker->seen = true;
-        recursionDOT(walker->left, file);
-    }
-    file << walker->index << " -> ";
-    if (walker->right != nullptr){
-        if(!walker->seen){
-            file << walker->index << ";\n\t";
+        file << walker->index << " -> ";
+        if (walker->right != nullptr){
+            if(!walker->seen){
+                file << walker->index << ";\n\t";
+            }
+            walker->seen = true;
+            recursionDOT(walker->right, file);
         }
-        walker->seen = true;
-        recursionDOT(walker->right, file);
-    }
-
     }else {
         if (!walker->seen){
             file << walker->index << ";\n\t";
@@ -256,7 +250,7 @@ void tree::labelTree(node* &walker, std::ofstream &file) const{
         return;
     }
     if (walker->id == LAMBDA){
-        file << "\t" << walker->index << " [label = " << "\"\\" << walker->tokenChar << "\"];\n"; 
+        file << "\t" << walker->index << " [label = " << "\"\u03bb\"];\n"; 
     }else {
         file << "\t" << walker->index << " [label = " << "\"" << walker->tokenChar << "\"];\n";
     }
@@ -277,7 +271,7 @@ void tree::saveDOT(const std::string filenaam) const{
             file << "\t";
             walker = begin;
             recursionDOT(walker, file);
-            file << "}";
+            file << "\n}";
             file.close();
         }
     }else {
