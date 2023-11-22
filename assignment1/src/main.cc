@@ -8,15 +8,14 @@
 
 #include "../include/standard.h"
 #include "../include/parser.h"
-#include "../include/token.h"
 #include "../include/error.h"
 #include <fstream>
 using namespace std;
 
 // Tokenizes a given string, and parses it
 int main(int argc, char* argv[]){
-    clock_t t1, t2;
-    parser* parse = new parser; 
+    tree T;
+    parser* parse = new parser(T); 
     string input = emptyStr, filepath = "NULL";
     
     if(argc < 2){
@@ -25,20 +24,17 @@ int main(int argc, char* argv[]){
     }
 
     try{
-            filepath = string(argv[1]);
-            ifstream file(filepath);
-            if(!file.good() || !file.is_open()){
-                throw inputError("File does not exist or is corrupted");
-            }
-            while (getline(file, input)){
-                validInput(input);
-                t1 = clock();
-                // Checks if any errors are thrown from the stringTokenizer function
-                parse->stringTokenizer(input);
-                input.clear();
-                t2 = clock();
-                cout << "Tokenizer " << (((double)(t2-t1))/CLOCKS_PER_SEC) << " in " << (t2-t1) << " ticks"<< endl; 
-            }
+        filepath = string(argv[1]);
+        ifstream file(filepath);
+        if(!file.good() || !file.is_open()){
+            throw inputError("File does not exist or is corrupted");
+        }
+        while (getline(file, input)){
+            validInput(input);
+            // Checks if any errors are thrown from the stringTokenizer function
+            parse->stringTokenizer(input);
+            input.clear();
+        }
     }
     catch(memoryError & error){
         printError<memoryError>(error, filepath);

@@ -17,7 +17,7 @@ class errorHandler{
         errorHandler(const std::string err) : error(err) {};
         std::string getError() const {
             return error;};
-        int getRow() const {
+        int getRow() const { 
             return row;};
         int getCol() const {
             return col;};

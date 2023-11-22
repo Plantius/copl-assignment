@@ -6,17 +6,9 @@
 * 04-10-2023
 **/ 
 
-#include "../include/standard.h"
 #include "../include/parser.h"
-#include "../include/token.h"
-#include "../include/tokenId.h"
 #include "../include/error.h"
 using namespace std;
-
-parser::parser(){
-    row = 1, col = 1;
-}// Default constructor
-
 
 // Checks what id the given inputChar has in tokenId
 tokenId parser::tokenSwitch(const char inputChar) const{
@@ -63,6 +55,7 @@ void parser::lambdaExpr(tokenList & list) const{
                 throw syntaxError("No expression after lambda.", row, col);
             }
             lambdaExpr(list);
+
         }else{
             throw syntaxError("No variable after lambda.", row, col);
         }
@@ -76,6 +69,7 @@ void parser::lambdaExpr(tokenList & list) const{
 void parser::varExpr(tokenList & list) const{
     if (list.peekToken() == VAR){
         list.consumeToken();
+        
     }else if ((list.peekToken() == LPAR)){
         list.consumeToken();  
         expr(list);
@@ -92,11 +86,11 @@ void parser::stringTokenizer(const string input){
     int size = input.length();
     int i = 0;
     tokenId id = INVALID;
-    string tempVar = emptyStr;
-
+    string tempVar = emptyStr, character = emptyStr;
 
     while(input[i] != '\0'){
         id = tokenSwitch(input[i]);
+        character = input[i];
         // Checks if the input is a var, which can be of indefinite size
         if (id == VAR){ 
             if (tempVar.empty() && (int(input[i]) >= 48 && int(input[i]) <= 57)){
@@ -108,9 +102,7 @@ void parser::stringTokenizer(const string input){
                     tempVar += input[i];
                 }else {
                     tempVar += input[i];
-                    if(!list.addToken(id, tempVar)){
-                        throw tokenError("Failed to add token to the list.", row, col);
-                    }
+                    list.addToken(id, tempVar);
                     tempVar.clear();
                 }
             }
@@ -120,24 +112,23 @@ void parser::stringTokenizer(const string input){
             }if (id == RPAR){
                 rparCounter++;
             }
-            if(!(list.addToken(id, string(1, input[i])))){
-                throw tokenError("Failed to add token to the list.", row, col);
+            if (id == SPACE){
+                character = "@";
             }
+            list.addToken(id, character);
         }
         i++;
         col++;
     }
-    if(!(list.addToken(EOL, "#"))){
-        throw tokenError("Failed to add token to the list.", row, col);
-    }
+    list.addToken(EOL, "#");
             
     if (lparCounter != rparCounter){
         throw syntaxError("Number of beginning and closing parantheses do not match.", row, col);
     }
     expr(list);
-    list.printList();
     col = 0, row++;
-
+    parseTree.makeTree(list);
+    parseTree.printTree();
 }// stringTokenizer
 
 void parser::printExpression(const string input, tokenList & list){
@@ -157,40 +148,4 @@ void parser::printExpression(const string input, tokenList & list){
     else{
         cout << " " << endl;
     }
-    
-}
-
-node::node(){
-    left = nullptr;
-    right = nullptr;
-}
-
-tree::tree(){
-    begin = nullptr;
-}
-
-tree::~tree(){
-
-}
-
-bool tree::isEmpty(){
-    if (begin == nullptr){
-        return true;
-    }
-    return false;
-}
-
-bool tree::makeNode(tokenId id, node* & index){
-    if (isEmpty()){
-       // Als de boom leeg is, begint de boom met het eerste element
-        begin = new node;
-        begin->id = id;
-        index = begin;
-        return true;
-    }
-
-    else{
-        
-    }
-    return false;
 }

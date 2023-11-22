@@ -30,14 +30,16 @@ class tokenList{
         tokenList() : begin(nullptr), end(nullptr), length(0), index(0) {};
         ~tokenList();
 
+        void reverseList();
+
         // Adds a token to the list
-        bool addToken(const tokenId id, const std::string tokenChar);
+        void addToken(const tokenId id, const std::string tokenChar);
         
         // Inserts a token in the list
         bool insertToken(const tokenId id, const std::string tokenChar, const int index);
         
         // Returns the type of the token at the current index
-        int peekToken();
+        tokenId peekToken();
         
         // Consumes the current token
         void consumeToken();
@@ -59,6 +61,8 @@ class tokenList{
         
         // Prints the list
         void printList() const;
+
+        token* getBegin() const {return this->begin;};
 
     private:
         token* begin;

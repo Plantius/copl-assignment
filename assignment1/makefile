@@ -6,8 +6,20 @@ TARGET = lambda
 SRC_DIR = ./src
 INC_DIR = ./include
 
-INCLUDES = $(INC_DIR)/standard.h $(INC_DIR)/parser.h $(INC_DIR)/token.h $(INC_DIR)/tokenId.h $(INC_DIR)/error.h
-OBJECTS = main.o standard.o parser.o token.o error.o
+INCLUDES = $(INC_DIR)/standard.h \
+		   $(INC_DIR)/parser.h \
+		   $(INC_DIR)/token.h \
+		   $(INC_DIR)/tokenId.h \
+		   $(INC_DIR)/error.h \
+		   $(INC_DIR)/tree.h 
+OBJECTS = main.o \
+		  standard.o \
+		  parser.o \
+		  token.o \
+		  error.o \
+		  tree.o 
+		  
+all: $(TARGET) ../.gitignore
 
 %.o: $(SRC_DIR)/%.cc $(INCLUDES)
 	$(CC) $(PARAMETERS) -c -o $@ $<
@@ -15,10 +27,19 @@ OBJECTS = main.o standard.o parser.o token.o error.o
 $(TARGET): $(OBJECTS)
 	$(CC) -o $@ $^
 
+../.gitignore: $(OBJECTS)
+	rm ../.gitignore;
+	echo "*.pdf" >> ../.gitignore;
+	echo "*.vscode" >> ../.gitignore;
+	echo $(TARGET) >> ../.gitignore;
+	for file in $(OBJECTS); do \
+		echo $$file >> ../.gitignore;\
+	done
+
 clean:
 	rm -f *.o $(TARGET)
 
 build: $(TARGET)
 	
 run: build
-	$(TARGET) ./positives.txt
+	./$(TARGET) ./positives.txt
