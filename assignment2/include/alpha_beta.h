@@ -25,8 +25,6 @@ class alpha_beta{
         tokenList M;
         tokenList N;
         std::string x;
-
-
 };
 
 #endif
