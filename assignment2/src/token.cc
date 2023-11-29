@@ -12,28 +12,6 @@
 #include "../include/error.h"
 using std::cout, std::endl;
 
-// Default constructor
-token::token(){
-    next = nullptr;
-    prev = nullptr;
-    id = INVALID;
-    tokenChar = emptyStr;
-}// default constructor
-
-
-// Default constructor
-token::token(const tokenId idToken, token* nextToken, token* prevToken, const std::string c){
-    next = nextToken;
-    prev = prevToken;
-    id = idToken;
-    tokenChar = c;
-}// default constructor
-
-
-// Deletes the list of tokens
-tokenList::~tokenList(){
-    clear();
-}// destructor
 
 void tokenList::clear(){
     token* temp = begin;
@@ -47,7 +25,7 @@ void tokenList::clear(){
     begin = nullptr;
     end = nullptr;
     index = 0;
-}
+}// clear
 
 void tokenList::deleteToken(const int index) const{
     token* temp = begin;

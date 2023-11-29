@@ -77,7 +77,6 @@ void tree::makeTree(tokenList &list){
 tokenList* tree::infixToPrefix(tokenList &list){
     tokenList* prefix = new tokenList;
     token* temp = nullptr;
-    token* help = nullptr;
     std::stack<token*> tokenStack;
 
     list.reverseList();
@@ -196,6 +195,7 @@ void tree::printTree() {
 
 
 void tree::recursionCorrectTree(node* &walker){
+    node* help = nullptr;
     if (walker == nullptr){
         return;
     }
@@ -203,25 +203,20 @@ void tree::recursionCorrectTree(node* &walker){
     recursionCorrectTree(walker->right);
     if ((walker->id == LAMBDA || walker->id == SPACE) && 
         (walker->left == nullptr || walker->right == nullptr)){
-        node* temp = nullptr;
-        node* help = nullptr;
+        
         if (walker->right != nullptr){
             help = walker->right;
             walker->left = help->left;
             walker->right = help->right;
-            walker->id = help->id;
-            walker->index = help->index;
-            walker->tokenChar = help->tokenChar;
-            delete help;
         }else if (walker->left != nullptr){
             help = walker->left;
             walker->left = help->left;
             walker->right = help->right;
-            walker->id = help->id;
-            walker->index = help->index;
-            walker->tokenChar = help->tokenChar;
-            delete help;
         }
+        walker->id = help->id;
+        walker->index = help->index;
+        walker->tokenChar = help->tokenChar;
+        delete help;
     }
 }// recursionCorrectTree
 
@@ -282,7 +277,6 @@ void tree::labelTree(node* &walker, std::ofstream &file) const{
 
 void tree::saveDOT(const std::string filenaam) const{
     node* walker = begin;
-    int count = 0;
     if (begin != nullptr){
         std::ofstream file(filenaam);
         if(file.is_open()){
