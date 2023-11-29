@@ -31,6 +31,14 @@ tokenId parser::tokenSwitch(const char inputChar) const{
     return INVALID;
 }// tokenSwitch
 
+
+/* 
+===========================================================
+                      PARSE EXPRESSION
+===========================================================
+*/
+
+
 void parser::expr(tokenList & list) const{
     lambdaExpr(list);
     expr1(list);
@@ -78,6 +86,13 @@ void parser::varExpr(tokenList & list) const{
         throw syntaxError("No variable or opening paranthesis.", row, col);
     }
 }// parexpr
+
+
+/* 
+===========================================================
+                      TOKENIZE STRING
+===========================================================
+*/
 
 
 // Tokenizes the given std::string, and adds them to the given token list
@@ -135,6 +150,7 @@ void parser::stringTokenizer(const std::string input){
     expr(list);
     list.printList();
     col = 0, row++;
+
     parseTree.makeTree(list);
     parseTree.printTree();
     
@@ -146,6 +162,7 @@ void parser::stringTokenizer(const std::string input){
 void parser::debugTree(const std::string filename) const {
     parseTree.saveDOT(filename);
 }// debugTree
+
 
 void parser::printExpression(const std::string input, tokenList & list){
     int length = list.getLength();
