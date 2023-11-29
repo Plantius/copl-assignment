@@ -153,8 +153,8 @@ void parser::stringTokenizer(const std::string input){
     parseTree.makeTree(list);
     parseTree.printTree();
     
-    ab.makeAbstract(list);
-    parseTree.printTree();
+    // ab.makeAbstract(list);
+    // parseTree.printTree();
 }// stringTokenizer
 
 

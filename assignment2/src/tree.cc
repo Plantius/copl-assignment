@@ -153,37 +153,39 @@ bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker
 */
 
 
-void tree::printRecursion(node* & walker){
+void tree::printRecursion(node* & walker, std::string &output){
     if (walker == nullptr){
         return;
     }
-    if (walker->id == SPACE){
-        cout << "(";
+    if (walker->id == SPACE || walker->id == LAMBDA){
+        output += "(";
     }
 
     if (walker->id == LAMBDA){
-        cout << walker->tokenChar << walker->left->tokenChar << " ";
-        printRecursion(walker->right);
+        output += walker->tokenChar + walker->left->tokenChar + " ";
+        printRecursion(walker->right, output);
     }else {
-        printRecursion(walker->left);
+        printRecursion(walker->left, output);
 
         if (walker->id != SPACE){
-            cout << walker->tokenChar;
+            output += walker->tokenChar;
         }else {
-            cout << " ";
+            output += " ";
         }
-        printRecursion(walker->right);
+        printRecursion(walker->right, output);
     }
-    if (walker->id == SPACE){
-        cout << ")";
+    if (walker->id == SPACE || walker->id == LAMBDA){
+        output += ")";
     }
 }// printRecursion
 
 
 void tree::printTree() {
     node* walker = begin;
-    printRecursion(walker);
-    cout << endl;
+    std::string output = emptyStr;
+    printRecursion(walker, output);
+    output.pop_back(), output.erase(0, 1);
+    cout << output << endl;
 }// printTree
 
 

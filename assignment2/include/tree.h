@@ -47,7 +47,7 @@ class tree{
         bool makeNode(const tokenId id, const std::string tokenChar, node* &walker, const int index);
         void makeTree(tokenList &list);
 
-        void printRecursion(node* & walker);
+        void printRecursion(node* & walker, std::string &output);
         void printTree();
 
         tokenList* infixToPrefix(tokenList &list);
