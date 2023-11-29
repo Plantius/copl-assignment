@@ -18,10 +18,12 @@ tree::~tree(){
     begin = nullptr;
 }// Destructor
 
+
 void tree::clearTree(){
     deleteNode(begin);
     begin = nullptr;
 }// clearTree
+
 
 // Verwijdert recursief alle takken
 void tree::deleteNode(node* & walker) const{
@@ -156,15 +158,28 @@ void tree::printRecursion(node* & walker){
     if (walker == nullptr){
         return;
     }
+    if (walker->id == SPACE){
+        cout << "(";
+    }
+
     if (walker->id == LAMBDA){
-        cout << walker->tokenChar << walker->left->tokenChar;
+        cout << walker->tokenChar << walker->left->tokenChar << " ";
         printRecursion(walker->right);
     }else {
         printRecursion(walker->left);
-        cout << walker->tokenChar;
+
+        if (walker->id != SPACE){
+            cout << walker->tokenChar;
+        }else {
+            cout << " ";
+        }
         printRecursion(walker->right);
     }
+    if (walker->id == SPACE){
+        cout << ")";
+    }
 }// printRecursion
+
 
 void tree::printTree() {
     node* walker = begin;
@@ -194,11 +209,17 @@ void tree::recursionCorrectTree(node* &walker){
             help = walker->right;
             walker->left = help->left;
             walker->right = help->right;
+            walker->id = help->id;
+            walker->index = help->index;
+            walker->tokenChar = help->tokenChar;
             delete help;
         }else if (walker->left != nullptr){
             help = walker->left;
             walker->left = help->left;
             walker->right = help->right;
+            walker->id = help->id;
+            walker->index = help->index;
+            walker->tokenChar = help->tokenChar;
             delete help;
         }
     }
@@ -216,6 +237,7 @@ void tree::correctTree(){
                         DOT NOTATION
 ===========================================================
 */
+
 
 void tree::recursionDOT(node* &walker, std::ofstream &file) const{
     if (walker->id == LAMBDA || walker->id == SPACE){
