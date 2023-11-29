@@ -11,11 +11,7 @@
 #include "../include/standard.h"
 #include <stack>
 #include <fstream>
-using namespace std;
-
-tree::tree(){
-    begin = nullptr;
-}// Default constructor
+using std::cout, std::endl;
 
 tree::~tree(){
     deleteNode(begin);
@@ -40,18 +36,6 @@ void tree::deleteNode(node* & walker) const{
 }// verwijderTak
 
 
-
-node* tree::getBegin() const{
-    return begin;
-}
-
-bool tree::isEmpty(const node* leaf) const{
-    if (leaf == nullptr){
-        return true;
-    }
-    return false;
-}// isEmpty
-
 bool tree::isOperator(node* node) const {
     if (node != nullptr){
         if (node->id == LAMBDA || node->id == SPACE || node->id == LPAR || node->id == RPAR){
@@ -61,11 +45,38 @@ bool tree::isOperator(node* node) const {
     return false;
 }// isOperator
 
+
+/* 
+===========================================================
+                        MAKE TREE
+===========================================================
+*/
+
+
+void tree::makeTree(tokenList &list){
+    tokenList* prefix = nullptr;
+    token* temp = nullptr;
+    node* walker = nullptr;
+    clearTree();
+
+    prefix = infixToPrefix(list);
+    for (int i = 0; i < prefix->getLength(); i++){
+        temp = prefix->getToken(i);
+        if (temp->id == EOL){
+            continue;
+        }
+        makeNode(temp->id, temp->tokenChar, walker, i);
+    }
+    correctTree();
+    delete prefix;
+} // makeTree 
+
+
 tokenList* tree::infixToPrefix(tokenList &list){
     tokenList* prefix = new tokenList;
     token* temp = nullptr;
     token* help = nullptr;
-    stack<token*> tokenStack;
+    std::stack<token*> tokenStack;
 
     list.reverseList();
     for(int i = 0; i < list.getLength(); i++){
@@ -97,22 +108,6 @@ tokenList* tree::infixToPrefix(tokenList &list){
     prefix->reverseList();
     return prefix;
 }// infixToPrefix
-
-
-bool tree::treeFull(node* & walker){
-    if (walker == nullptr){
-        return false;
-    }
-    if ((walker->left == nullptr && isOperator(walker->left)) \
-        	|| (walker->right == nullptr && isOperator(walker->right))){
-        return false;
-    }
-
-    treeFull(walker->left);
-    treeFull(walker->right);
-
-    return true;
-} // treeFull
 
 
 bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker, const int index){
@@ -149,6 +144,14 @@ bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker
     return false;
 }// makeNode
 
+
+/* 
+===========================================================
+                        PRINT TREE
+===========================================================
+*/
+
+
 void tree::printRecursion(node* & walker){
     if (walker == nullptr){
         return;
@@ -169,23 +172,12 @@ void tree::printTree() {
     cout << endl;
 }// printTree
 
-void tree::makeTree(tokenList &list){
-    tokenList* prefix = nullptr;
-    token* temp = nullptr;
-    node* walker = nullptr;
-    clearTree();
 
-    prefix = infixToPrefix(list);
-    for (int i = 0; i < prefix->getLength(); i++){
-        temp = prefix->getToken(i);
-        if (temp->id == EOL){
-            continue;
-        }
-        makeNode(temp->id, temp->tokenChar, walker, i);
-    }
-    correctTree();
-    delete prefix;
-} // makeTree 
+/* 
+===========================================================
+                        CORRECT TREE
+===========================================================
+*/
 
 
 void tree::recursionCorrectTree(node* &walker){
@@ -218,6 +210,12 @@ void tree::correctTree(){
     recursionCorrectTree(walker);
 }// correctTree
 
+
+/* 
+===========================================================
+                        DOT NOTATION
+===========================================================
+*/
 
 void tree::recursionDOT(node* &walker, std::ofstream &file) const{
     if (walker->id == LAMBDA || walker->id == SPACE){

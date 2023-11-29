@@ -10,7 +10,7 @@
 #include "../include/token.h"
 #include "../include/tokenId.h"
 #include "../include/error.h"
-using namespace std;
+using std::cout, std::endl;
 
 // Default constructor
 token::token(){
@@ -182,7 +182,7 @@ token* tokenList::getToken(const int index) const{
 
 
 // Adds a token-object at the back of the tokenList
-void tokenList::addToken(const tokenId id, const string tokenChar){
+void tokenList::addToken(const tokenId id, const std::string tokenChar){
     if(isEmpty()){
         token* newToken = new token(id, nullptr, nullptr, tokenChar);
         if (newToken == nullptr){
@@ -204,7 +204,7 @@ void tokenList::addToken(const tokenId id, const string tokenChar){
 }// addToken
 
 // Adds a token-object at the back of the tokenList
-bool tokenList::insertToken(const tokenId id, const string tokenChar, const int index){
+bool tokenList::insertToken(const tokenId id, const std::string tokenChar, const int index){
     if(!isEmpty()){
         token* temp = getToken(index);
 

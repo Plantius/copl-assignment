@@ -11,7 +11,7 @@
 #include "../include/error.h"
 #include "../include/alpha_beta.h"
 #include <fstream>
-using namespace std;
+using std::cout, std::endl;
 
 alpha_beta::alpha_beta(){
 
