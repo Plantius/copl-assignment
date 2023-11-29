@@ -35,13 +35,13 @@ class node{
 
 class tree{
     public:
-        tree();
+        tree() : begin(nullptr) {};
         ~tree();
         void clearTree();
         void deleteNode(node* & walker) const;
-        node* getBegin() const;
+        node* getBegin() const {return this->begin;};
 
-        bool isEmpty(const node* leaf) const;
+        bool isEmpty(const node* leaf) const {return (leaf == nullptr);};
         bool isOperator(node* node) const;
         bool makeNode(const tokenId id, const std::string tokenChar, node* &walker, const int index);
         void makeTree(tokenList &list);
@@ -49,8 +49,6 @@ class tree{
         void printRecursion(node* & walker);
         void printTree();
 
-        bool treeFull(node* & walker);
-        
         tokenList* infixToPrefix(tokenList &list);
 
         void recursionCorrectTree(node* &walker);

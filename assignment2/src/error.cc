@@ -7,28 +7,27 @@
 **/
 
 #include "../include/error.h"
-using namespace std;
 
-memoryError::memoryError(const string err){
+memoryError::memoryError(const std::string err){
     error = err;
     type = "Memory Error";
 }// default memory error constructor
 
-syntaxError::syntaxError(const string err, const int newRow, const int newCol){
+syntaxError::syntaxError(const std::string err, const int newRow, const int newCol){
     error = err;
     row = newRow;
     col = newCol;
     type = "Syntax Error";
 }// default syntax error constructor
 
-tokenError::tokenError(const string err, const int newRow, const int newCol){
+tokenError::tokenError(const std::string err, const int newRow, const int newCol){
     error = err;
     row = newRow;
     col = newCol;
     type = "Token Error";
 }// default token error constructor
 
-inputError::inputError(const string err){
+inputError::inputError(const std::string err){
     error = err;
     type = "Input Error";
 }// default token error constructor
