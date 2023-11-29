@@ -27,6 +27,8 @@ void alpha_beta::makeAbstract(tokenList &L){
                 performConversion();
             }
             done = performReduction(L);
+            M.clear();
+            N.clear();
             times ++;
         }
         if (times >= MAX_IT){
