@@ -18,14 +18,19 @@ alpha_beta::alpha_beta(){
 } // constructor
 
 void alpha_beta::makeAbstract(node* begin, tokenList &L){
-    bool done = false;
-    if(needsBeta(begin, L)){
-        if(needsAlpha(begin, L)){
-            performConversion(begin);
+    bool done = true;
+    int times = 0;
+    while(done){
+        done = false;
+        if(needsBeta(begin, L)){
+            if(needsAlpha(begin, L)){
+                performConversion(begin);
+            }
+            done = performReduction(begin, L);
+            times ++;
         }
-        done = performReduction(begin);
-        if(!done){
-            cout << "There went something wrong." << endl;
+        if (times >= MAX_IT){
+            done = false;
         }
     }
 
@@ -82,10 +87,23 @@ bool alpha_beta::needsAlpha(node* begin, tokenList &L){
 
 } // needsAlpha
 
-bool alpha_beta::performReduction(node* begin){
+bool alpha_beta::performReduction(node* begin, tokenList & L){
+
+    for (int i = 0; i < M.getLength(); i++){
+        if (M.getToken(i)->tokenChar == x){
+            for (int j = 0; j < N.getLength(); j++){
+                M.insertToken(N.getToken(i)->id, N.getToken(i)->tokenChar, i);
+            }
+            M.deleteToken(i);
+        }
+    }
+
+    L.clear();
+    for (int k = 0; k < M.getLength(); k++){
+        L.addToken(M.getToken(k)->id, M.getToken(k)->tokenChar);
+    }
 
     return true;
-
 } // performReduction
 
 bool alpha_beta::performConversion(node* begin){

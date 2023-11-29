@@ -15,7 +15,7 @@ class alpha_beta{
     public:
         alpha_beta();
         bool performConversion(node* begin);
-        bool performReduction(node* begin);
+        bool performReduction(node* begin, tokenList & L);
         bool needsAlpha(node* begin, tokenList & L);
         bool needsBeta(node* begin, tokenList & L);
         void makeAbstract(node* begin, tokenList & L);
