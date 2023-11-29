@@ -31,9 +31,7 @@ $(TARGET): $(OBJECTS)
 
 ../.gitignore: $(OBJECTS)
 	rm ../.gitignore;
-	echo "*.pdf" >> ../.gitignore;
-	echo "*.vscode" >> ../.gitignore;
-	echo $(TARGET) >> ../.gitignore;
+	echo "*.pdf\n*.vscode\n$(TARGET)" >> ../.gitignore;
 	for file in $(OBJECTS); do \
 		echo $$file >> ../.gitignore;\
 	done
