@@ -15,12 +15,12 @@
 
 class node{
     public:
-        node () : left(nullptr), right(nullptr), id(INVALID), 
-                tokenChar(emptyStr), 
+        node () : left(nullptr), right(nullptr), 
+                id(INVALID), tokenChar(emptyStr), 
                 index(0), seen(false) {};
         node (const tokenId id, const std::string tokenChar) : 
-                left(nullptr), right(nullptr), id(id), 
-                tokenChar(tokenChar), 
+                left(nullptr), right(nullptr), 
+                id(id), tokenChar(tokenChar), 
                 index(0), seen(false) {};
 
         node* left;
@@ -37,6 +37,7 @@ class tree{
     public:
         tree() : begin(nullptr) {};
         ~tree();
+
         void clearTree();
         void deleteNode(node* & walker) const;
         node* getBegin() const {return this->begin;};

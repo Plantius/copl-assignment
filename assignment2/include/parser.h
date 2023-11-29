@@ -22,7 +22,7 @@ class parser{
     public:
         parser(tree &parseTree) : row(1), col(1), 
                parseTree(parseTree), begin(parseTree.getBegin()) {};
-        ~parser() {};
+
         // Adds a token to the list according to inputChar
         tokenId tokenSwitch(const char inputChar) const;
 
@@ -45,8 +45,6 @@ class parser{
 
         // Prints the expression
         void printExpression(const std::string input, tokenList & list);
-
-    
 };
 
 #endif
