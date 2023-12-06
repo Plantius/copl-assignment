@@ -162,7 +162,7 @@ token* tokenList::getToken(const int index) const{
 // Adds a token-object at the back of the tokenList
 void tokenList::addToken(const tokenId id, const std::string tokenChar){
     if(isEmpty()){
-        token* newToken = new token(id, nullptr, nullptr, tokenChar);
+        token* newToken = new token(nullptr, nullptr, id, tokenChar);
         if (newToken == nullptr){
             throw memoryError("Memory allocation failed");
         }
@@ -171,7 +171,7 @@ void tokenList::addToken(const tokenId id, const std::string tokenChar){
         length++;
     }else {
         token* temp = end;
-        token* newToken = new token(id, nullptr, end, tokenChar);
+        token* newToken = new token(nullptr, end, id, tokenChar);
         if (newToken == nullptr){
             throw memoryError("Memory allocation failed");
         }
@@ -186,7 +186,7 @@ bool tokenList::insertToken(const tokenId id, const std::string tokenChar, const
     if(!isEmpty()){
         token* temp = getToken(index);
 
-        token* newToken = new token(id, temp->next, temp, tokenChar);
+        token* newToken = new token(temp->next, temp, id, tokenChar);
         
         if (newToken == nullptr){
             throw memoryError("Memory allocation failed");
