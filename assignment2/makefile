@@ -6,6 +6,8 @@ TARGET = lambda
 SRC_DIR = ./src
 INC_DIR = ./include
 
+OUT_FILE = out
+
 INCLUDES = $(INC_DIR)/standard.h \
 		   $(INC_DIR)/parser.h \
 		   $(INC_DIR)/token.h \
@@ -36,3 +38,6 @@ build: $(TARGET)
 	
 run: build
 	./$(TARGET) ./positives.txt
+
+debug: build
+	valgrind ./$(TARGET) d ./positives.txt $(OUT_FILE)
