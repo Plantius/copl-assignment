@@ -1,6 +1,6 @@
 CC = g++
 
-PARAMETERS = -Wall -Wextra -Wpedantic -Weffc++ -g
+PARAMETERS = -Wall -Wextra -Wpedantic -g
 
 TARGET = lambda
 SRC_DIR = ./src
@@ -40,4 +40,4 @@ run: build
 	./$(TARGET) < positives.txt
 
 debug: build
-	valgrind ./$(TARGET) d $(OUT_FILE) < positives.txt
+	valgrind --leak-check=full ./$(TARGET) d $(OUT_FILE) < positives.txt

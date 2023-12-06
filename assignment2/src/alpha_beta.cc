@@ -13,10 +13,6 @@
 #include <fstream>
 using std::cout, std::endl;
 
-alpha_beta::alpha_beta(){
-
-} // constructor
-
 void alpha_beta::makeAbstract(tokenList &L){
     bool done = true;
     int times = 0;
@@ -115,8 +111,6 @@ bool alpha_beta::needsAlpha(node* leaf){
      }
 
     return false;
-
-
 } // needsAlpha
 
 

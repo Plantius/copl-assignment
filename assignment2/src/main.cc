@@ -9,13 +9,17 @@
 #include "../include/standard.h"
 #include "../include/parser.h"
 #include "../include/error.h"
+#include "../include/alpha_beta.h"
 #include <fstream>
+#include <memory>
 using std::cout, std::endl;
 
 // Tokenizes a given string, and parses it
 int main(int argc, char* argv[]){
-    tree T;
-    parser parse(T); 
+    tree parseTree;
+    
+    alpha_beta ab(parseTree);
+    parser parse(parseTree, ab); 
     std::string input = emptyStr, filepath = "NULL";
     bool debug = false;
 
