@@ -96,6 +96,8 @@ void parser::varExpr(tokenList & list) const{
 // Tokenizes the given std::string, and adds them to the given token list
 void parser::stringTokenizer(const std::string input){
     tokenList list;
+    alpha_beta ab;
+
     int lparCounter = 0, rparCounter = 0;
     tokenId id = INVALID, tempId = INVALID;
     std::string tempVar = emptyStr, character = emptyStr;
@@ -143,8 +145,8 @@ void parser::stringTokenizer(const std::string input){
     parseTree.makeTree(list);
     parseTree.printTree();
     
-    // ab.makeAbstract(list);
-    // parseTree.printTree();
+    ab.makeAbstract(list, parseTree);
+    parseTree.printTree();
 }// stringTokenizer
 
 

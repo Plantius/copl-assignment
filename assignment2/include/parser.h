@@ -23,9 +23,9 @@ class parser{
         int row = 1, col = 1;
         
     public:
-        parser(tree &parseTree, alpha_beta &ab) : 
+        parser(tree &parseTree) : 
                 parseTree(parseTree), begin(parseTree.getBegin()), 
-                ab(ab), row(1), col(1) {};
+                row(1), col(1) {};
 
         // Adds a token to the list according to inputChar
         tokenId tokenSwitch(const char inputChar) const;

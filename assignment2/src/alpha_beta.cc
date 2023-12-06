@@ -13,27 +13,28 @@
 #include <fstream>
 using std::cout, std::endl;
 
-void alpha_beta::makeAbstract(tokenList &L){
+void alpha_beta::makeAbstract(tokenList &L, tree &T){
+    node* start = T.getBegin();
     bool done = true;
     int times = 0;
+    needsAlpha(start);
 
-    while(done){
-        done = false;
-        if(needsBeta(L)){
-            needsAlpha(T.getBegin());
-            done = performReduction(L);
-            M.clear();
-            N.clear();
-            times ++;
-        }
-        if (times >= MAX_IT){
-            done = false;
-        }
-    }
+    // while(done){
+    //     done = false;
+    //     // if(needsBeta(L)){
+    //         // done = performReduction(L);
+    //         // M.clear();
+    //         // N.clear();
+    //         times ++;
+    //     // }
+    //     if (times >= MAX_IT){
+    //         done = false;
+    //     }
+    // }
 
 } // makeAbstract
 
-bool alpha_beta::needsBeta(tokenList &L){
+bool alpha_beta::needsBeta(tokenList &L, tree &T){
     x = "$";
     L.setIndex(0);
     M.setIndex(0);
@@ -75,44 +76,42 @@ bool alpha_beta::needsBeta(tokenList &L){
 } // needsBeta
 
 
-void alpha_beta::needsAlpha(node* leaf){
-   
-    node* temp = leaf;
-    if (temp->tokenChar=="@"){
+void alpha_beta::needsAlpha(node* &start){
+    if (start == nullptr){
+        return;
+    }
+    std::set<std::string> varList, allVar;
+    node* temp = start;
 
+    if (temp->tokenChar == "@"){
         if(temp->left->id == LAMBDA){
             temp = temp->left;
 
             // situation 1:\y (\x y) x
             if(temp->right->id == LAMBDA){
                 temp = temp->right;
-                std::set<std::string> varList;
-
-                findVar(leaf->right, varList);
-                for (auto i:varList){
-                    if(temp->left->tokenChar == i){
-                        std::set<std::string> allVar;
-                        std::string replace = chooseVar(allVar);
-                        temp->left->tokenChar = replace;
-                        return;
-                    } 
+                findVar(start->right, varList);
+                findVar(temp->left, varList);
+                if (varList.find(temp->left->tokenChar) != varList.end()){
+                    temp->left->tokenChar = chooseVar(allVar);
+                    return;
                 }
             }
             
             // situation 2: \x (\w w z (\z y))
-            if(leaf->right->id == LAMBDA && temp->right->tokenChar == "@"){
-                temp = temp->right;
-                std::set<std::string> varList;
-                findVar(temp, varList);
-                for (auto i:varList){
-                    if(leaf->right->right->tokenChar == i){
-                        std::set<std::string> allVar;
-                        std::string replace = chooseVar(allVar);
-                        leaf->right->right->tokenChar = replace;
-                        return;
-                    }
-                } 
-            }
+            // if(start->right->id == LAMBDA && temp->right->tokenChar == "@"){
+            //     temp = temp->right;
+            //     std::set<std::string> varList;
+            //     findVar(temp, varList);
+            //     for (auto i : varList){
+            //         if(start->right->right->tokenChar == i){
+            //             std::set<std::string> allVar;
+            //             std::string replace = chooseVar(allVar);
+            //             start->right->right->tokenChar = replace;
+            //             return;
+            //         }
+            //     } 
+            // }
         }
      }
 } // needsAlpha
