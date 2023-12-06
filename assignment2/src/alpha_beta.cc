@@ -93,10 +93,12 @@ bool alpha_beta::needsAlpha(node* leaf){
                 findVar(leaf->right, varList);
                 for (auto i:varList){
                     if(temp->left->tokenChar == i){
+                        std::set<std::string> allVar;
+                        std::string replace = chooseVar(allVar);
+                        temp->left->tokenChar = replace;
                         return true;
                     } 
                 }
-              
             }
             
             // situation 2: \x (\w w z (\z y))
@@ -106,12 +108,13 @@ bool alpha_beta::needsAlpha(node* leaf){
                 findVar(temp, varList);
                 for (auto i:varList){
                     if(leaf->right->right->tokenChar == i){
+                        std::set<std::string> allVar;
+                        std::string replace = chooseVar(allVar);
+                        leaf->right->right->tokenChar = replace;
                         return true;
                     }
-                }
-               
+                } 
             }
-
         }
      }
 
