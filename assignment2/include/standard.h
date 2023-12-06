@@ -9,13 +9,18 @@
 #ifndef STANDARD_H
 #define STANDARD_H
 #include <iostream>
+#include <set>
 
 const char invalidChar = '$';
 const std::string emptyStr = "";
 const int MAX_IT = 100;
 
+const std::string alphabet = "abcdefghijklmnopqestuvwxyz";
+
 // Reads a constant string and checks if it is valid, e.i. if
 // it only contains ASCII-characters
 bool validInput(const std::string input);
+
+std::string chooseVar(const std::set<std::string> varList);
 
 #endif
