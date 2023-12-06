@@ -1,6 +1,6 @@
 CC = g++
 
-PARAMETERS = -Wall -Wextra -Wpedantic -g
+PARAMETERS = -Wall -Wextra -Wpedantic -Weffc++ -g
 
 TARGET = lambda
 SRC_DIR = ./src
@@ -37,7 +37,7 @@ clean:
 build: $(TARGET)
 	
 run: build
-	./$(TARGET) ./positives.txt
+	./$(TARGET) < positives.txt
 
 debug: build
-	valgrind ./$(TARGET) d ./positives.txt $(OUT_FILE)
+	valgrind ./$(TARGET) d $(OUT_FILE) < positives.txt

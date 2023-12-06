@@ -1,10 +1,12 @@
 CC = g++
 
-PARAMETERS = -Wall -Wextra -Wpedantic -g
+PARAMETERS = -Wall -Wextra -Wpedantic -Weffc++ -g
 
 TARGET = lambda
 SRC_DIR = ./src
 INC_DIR = ./include
+
+OUT_FILE = out
 
 INCLUDES = $(INC_DIR)/standard.h \
 		   $(INC_DIR)/parser.h \
@@ -18,8 +20,8 @@ OBJECTS = main.o \
 		  token.o \
 		  error.o \
 		  tree.o 
-		  
-all: $(TARGET) 
+
+all: $(TARGET)
 
 %.o: $(SRC_DIR)/%.cc $(INCLUDES)
 	$(CC) $(PARAMETERS) -c -o $@ $<
@@ -33,4 +35,7 @@ clean:
 build: $(TARGET)
 	
 run: build
-	./$(TARGET) ./positives.txt
+	./$(TARGET) < positives.txt
+
+debug: build
+	valgrind ./$(TARGET) d $(OUT_FILE) < positives.txt

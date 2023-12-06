@@ -114,6 +114,20 @@ bool alpha_beta::needsAlpha(node* leaf){
 
 } // needsAlpha
 
+
+void alpha_beta::findVar(node* &start, std::set<std::string> &varList) const{
+    if (start  == nullptr){
+        return;
+    }
+
+    if (start->id == VAR){
+        varList.insert(start->tokenChar);
+    }
+    findVar(start->left, varList);
+    findVar(start->right, varList);
+}// findVar
+
+
 bool alpha_beta::performReduction(tokenList & L){
 
     for (int i = 0; i < M.getLength(); i++){

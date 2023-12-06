@@ -9,6 +9,7 @@
 #ifndef ALPHA_BETA_H
 #define ALPHA_BETA_H    
 #include <iostream>
+#include <set>
 #include "../include/tree.h"
 
 class alpha_beta{
@@ -19,6 +20,8 @@ class alpha_beta{
         bool needsAlpha(node* leaf);
         bool needsBeta(tokenList & L);
         void makeAbstract(tokenList & L);
+
+        void findVar(node* &start, std::set<std::string> &varList) const;
 
     private:
         tree T;

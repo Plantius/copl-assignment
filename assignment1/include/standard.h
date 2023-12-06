@@ -12,10 +12,9 @@
 
 const char invalidChar = '$';
 const std::string emptyStr = "";
-const int MAX_IT = 100;
 
 // Reads a constant string and checks if it is valid, e.i. if
 // it only contains ASCII-characters
-void validInput(const std::string input);
+bool validInput(const std::string input);
 
 #endif

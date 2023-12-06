@@ -14,11 +14,12 @@ using namespace std;
 
 
 // Checks if the given string contains only ASCII-characters
-void validInput(const string input){
+bool validInput(const string input){
     for (auto c : input) {
         if (!isascii(c)){
-            throw inputError("Contains non-standard ASCII characters");
+            return false;
         }
     }
+    return true;
 }// valid_input
 
