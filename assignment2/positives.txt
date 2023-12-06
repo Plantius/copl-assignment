@@ -11,3 +11,4 @@ a b c d
 \x a b
 (\x x)(\y y)
 a (\x a (b c) \x d)
+(\x \y x)(\z y)
