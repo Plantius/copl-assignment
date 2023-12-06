@@ -100,7 +100,6 @@ bool alpha_beta::needsAlpha(node* leaf){
                         return true;
                     } 
                 }
-              
             }
             
             // situation 2: \x (\w w z (\z y))
@@ -112,16 +111,12 @@ bool alpha_beta::needsAlpha(node* leaf){
                     if(leaf->right->right->tokenChar == i){
                         return true;
                     }
-                }
-               
+                } 
             }
-
         }
      }
 
     return false;
-
-
 } // needsAlpha
 
 
