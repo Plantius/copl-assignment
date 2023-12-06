@@ -1,10 +1,4 @@
 *.pdf
 *.vscode
 lambda
-main.o
-standard.o
-parser.o
-token.o
-error.o
-tree.o
-alpha_beta.o
+*.o

@@ -21,20 +21,13 @@ OBJECTS = main.o \
 		  tree.o \
 		  alpha_beta.o
 
-all: $(TARGET) ../.gitignore
+all: $(TARGET)
 
 %.o: $(SRC_DIR)/%.cc $(INCLUDES)
 	$(CC) $(PARAMETERS) -c -o $@ $<
 
 $(TARGET): $(OBJECTS)
 	$(CC) -o $@ $^
-
-../.gitignore: $(OBJECTS)
-	rm ../.gitignore;
-	echo "*.pdf\n*.vscode\n$(TARGET)" >> ../.gitignore;
-	for file in $(OBJECTS); do \
-		echo $$file >> ../.gitignore;\
-	done
 
 clean:
 	rm -f *.o $(TARGET)
