@@ -106,9 +106,14 @@ bool alpha_beta::needsAlpha(node* leaf){
             // situation 2: \x (\w w z (\z y))
             if(leaf->right->id == LAMBDA && temp->right->tokenChar == "@"){
                 temp = temp->right;
-                if(temp->left->tokenChar == leaf->right->right->tokenChar){
-                    return true;
+                std::set<std::string> varList;
+                findVar(temp, varList);
+                for (auto i:varList){
+                    if(leaf->right->right->tokenChar == i){
+                        return true;
+                    }
                 }
+               
             }
 
         }
