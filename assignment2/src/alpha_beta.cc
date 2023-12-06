@@ -92,10 +92,15 @@ bool alpha_beta::needsAlpha(node* leaf){
             // situation 1:\y (\x y) x
             if(temp->right->id == LAMBDA){
                 temp = temp->right;
-                std::set vars = findVar();
-                if(temp->left->tokenChar == vars[i]){
-                    return true;
+                std::set<std::string> varList;
+
+                findVar(leaf->right, varList);
+                for (auto i:varList){
+                    if(temp->left->tokenChar == i){
+                        return true;
+                    } 
                 }
+              
             }
             
             // situation 2: \x (\w w z (\z y))
