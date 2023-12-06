@@ -11,8 +11,6 @@
 #include "../include/error.h"
 #include "../include/alpha_beta.h"
 #include <fstream>
-#include <memory>
-using std::cout, std::endl;
 
 // Tokenizes a given string, and parses it
 int main(int argc, char* argv[]){
@@ -24,24 +22,24 @@ int main(int argc, char* argv[]){
     bool debug = false;
 
     if (argc >= 2 && std::string(argv[1]) == "d"){
+        filepath = std::string(argv[2]);
         debug = true;
     }
 
     try{
-        if (debug){
-            filepath = std::string(argv[2]);
-        }
-       
         while (getline(std::cin >> std::ws, input)){
             try
             {
-                validInput(input) ? true : throw inputError("Contains non-standard ASCII characters");
-                // Checks if any errors are thrown from the stringTokenizer function
-                parse.stringTokenizer(input);
-                if (debug){
-                    parse.debugTree((validInput(filepath) ? filepath : "NULL"));
+                if (validInput(input)){
+                    // Checks if any errors are thrown from the stringTokenizer function
+                    parse.stringTokenizer(input);
+                    if (debug){
+                        parse.debugTree((validInput(filepath) ? filepath : "NULL"));
+                    }
+                    input.clear();
+                }else {
+                    throw inputError("Contains non-standard ASCII characters");
                 }
-                input.clear();
             }
             catch(const parseError error){
                 error.printError();
