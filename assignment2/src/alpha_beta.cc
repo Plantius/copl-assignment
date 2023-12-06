@@ -20,10 +20,11 @@ alpha_beta::alpha_beta(){
 void alpha_beta::makeAbstract(tokenList &L){
     bool done = true;
     int times = 0;
+
     while(done){
         done = false;
         if(needsBeta(L)){
-            if(needsAlpha(L)){
+            if(needsAlpha(T.getBegin() )){
                 performConversion();
             }
             done = performReduction(L);
@@ -44,6 +45,10 @@ bool alpha_beta::needsBeta(tokenList &L){
     M.setIndex(0);
     N.setIndex(0);
     int i = 0;
+
+    if(T.isEmpty(T.getBegin())){
+        return false;
+    }
 
     while(i < L.getLength()){
         if (L.getToken(i)->id == LAMBDA){
@@ -76,16 +81,30 @@ bool alpha_beta::needsBeta(tokenList &L){
 } // needsBeta
 
 
-bool alpha_beta::needsAlpha(tokenList &L){
-    if (needsBeta(L)){
-        for (int i = 0; i < N.getLength(); i++){
-            if (x == N.getToken(i)->tokenChar){
-                return true;
+bool alpha_beta::needsAlpha(node* leaf){
+   
+    node* temp = leaf;
+    if (temp->tokenChar=="@"){
+
+        if(temp->left->id == LAMBDA){
+            temp = temp->left;
+
+            // if rechter subboom een lambda heeft 
+            // situation 1:\y (\x y) x
+            if(temp->right->id == LAMBDA){
+
             }
+            
+            // situation 2: \x (\w w z (\z y))
+            if(leaf->right->id == LAMBDA){
+
+            }
+
         }
-    }
+     }
 
     return false;
+
 
 } // needsAlpha
 

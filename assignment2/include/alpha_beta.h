@@ -16,7 +16,7 @@ class alpha_beta{
         alpha_beta();
         bool performConversion();
         bool performReduction(tokenList & L);
-        bool needsAlpha(tokenList & L);
+        bool needsAlpha(node* leaf);
         bool needsBeta(tokenList & L);
         void makeAbstract(tokenList & L);
 
