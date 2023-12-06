@@ -14,12 +14,14 @@
 
 class alpha_beta{
     public:
-        alpha_beta();
+        alpha_beta() : T(), M(), N(), x(emptyStr) {};
+        alpha_beta(tree &T) : T(T), M(), N(), x(emptyStr) {};
+
         bool performConversion();
-        bool performReduction(tokenList & L);
+        bool performReduction(tokenList &L);
         bool needsAlpha(node* leaf);
-        bool needsBeta(tokenList & L);
-        void makeAbstract(tokenList & L);
+        bool needsBeta(tokenList &L);
+        void makeAbstract(tokenList &L);
 
         void findVar(node* &start, std::set<std::string> &varList) const;
 

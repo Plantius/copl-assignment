@@ -19,12 +19,6 @@ class token{
                   id(INVALID), tokenChar(emptyStr) {};
         token(token* next, token* prev, const tokenId newId, const std::string newTokenChar) : 
               next(next), prev(prev), id(newId), tokenChar(newTokenChar) {};
-        
-        token(const token&) = delete;
-        token(token&&) = delete;
-        token& operator=(const token&) = delete;
-        token& operator=(token&&) = delete;
-    	~token() {delete[] next; delete[] prev;};
 
         token* next;
         token* prev;

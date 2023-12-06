@@ -10,11 +10,10 @@
 #include "../include/error.h"
 #include <fstream>
 #include <sstream>
-using namespace std;
 
 
 // Checks if the given string contains only ASCII-characters
-bool validInput(const string input){
+bool validInput(const std::string input){
     for (auto c : input) {
         if (!isascii(c)){
             return false;
@@ -22,4 +21,15 @@ bool validInput(const string input){
     }
     return true;
 }// valid_input
+
+std::string chooseVar(const std::set<std::string> varList){
+    std::string temp;
+    for (auto letter : alphabet){
+        temp = letter;
+        if (varList.find(temp) == varList.end()){
+            return temp;
+        }
+    }
+    return (temp+temp);
+}
 

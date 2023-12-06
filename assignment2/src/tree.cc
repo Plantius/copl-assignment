@@ -14,7 +14,7 @@
 using std::cout, std::endl;
 
 tree::~tree(){
-    deleteNode(begin);
+    deleteNode(this->begin);
     begin = nullptr;
 }// Destructor
 
