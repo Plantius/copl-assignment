@@ -6,6 +6,8 @@ TARGET = lambda
 SRC_DIR = ./src
 INC_DIR = ./include
 
+OUT_FILE = out
+
 INCLUDES = $(INC_DIR)/standard.h \
 		   $(INC_DIR)/parser.h \
 		   $(INC_DIR)/token.h \
@@ -21,20 +23,13 @@ OBJECTS = main.o \
 		  tree.o \
 		  alpha_beta.o
 
-all: $(TARGET) ../.gitignore
+all: $(TARGET)
 
 %.o: $(SRC_DIR)/%.cc $(INCLUDES)
 	$(CC) $(PARAMETERS) -c -o $@ $<
 
 $(TARGET): $(OBJECTS)
 	$(CC) -o $@ $^
-
-../.gitignore: $(OBJECTS)
-	rm ../.gitignore;
-	echo "*.pdf\n*.vscode\n$(TARGET)" >> ../.gitignore;
-	for file in $(OBJECTS); do \
-		echo $$file >> ../.gitignore;\
-	done
 
 clean:
 	rm -f *.o $(TARGET)
@@ -43,3 +38,6 @@ build: $(TARGET)
 	
 run: build
 	./$(TARGET) ./positives.txt
+
+debug: build
+	valgrind ./$(TARGET) d ./positives.txt $(OUT_FILE)

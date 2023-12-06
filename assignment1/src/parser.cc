@@ -8,7 +8,7 @@
 
 #include "../include/parser.h"
 #include "../include/error.h"
-using namespace std;
+using std::cout, std::endl;
 
 // Checks what id the given inputChar has in tokenId
 tokenId parser::tokenSwitch(const char inputChar) const{
@@ -29,6 +29,14 @@ tokenId parser::tokenSwitch(const char inputChar) const{
     }
     return INVALID;
 }// tokenSwitch
+
+
+/* 
+===========================================================
+                      PARSE EXPRESSION
+===========================================================
+*/
+
 
 void parser::expr(tokenList & list) const{
     lambdaExpr(list);
@@ -52,12 +60,12 @@ void parser::lambdaExpr(tokenList & list) const{
         if (list.peekToken() == VAR){
             list.consumeToken();
             if(list.peekToken() == EOL){
-                throw syntaxError("No expression after lambda.", row, col);
+                throw parseError("No expression after lambda.", row, col);
             }
             lambdaExpr(list);
 
         }else{
-            throw syntaxError("No variable after lambda.", row, col);
+            throw parseError("No variable after lambda.", row, col);
         }
     }else{
         varExpr(list);
@@ -74,22 +82,33 @@ void parser::varExpr(tokenList & list) const{
         list.consumeToken();  
         expr(list);
     }else {
-        throw syntaxError("No variable or opening paranthesis.", row, col);
+        throw parseError("No variable or opening paranthesis.", row, col);
     }
 }// parexpr
 
 
-// Tokenizes the given string, and adds them to the given token list
-void parser::stringTokenizer(const string input){
+/* 
+===========================================================
+                      TOKENIZE STRING
+===========================================================
+*/
+
+
+// Tokenizes the given std::string, and adds them to the given token list
+void parser::stringTokenizer(const std::string input){
     tokenList list;
     int lparCounter = 0, rparCounter = 0;
     int size = input.length();
     int i = 0;
     tokenId id = INVALID;
-    string tempVar = emptyStr, character = emptyStr;
+    std::string tempVar = emptyStr, character = emptyStr;
 
     while(input[i] != '\0'){
         id = tokenSwitch(input[i]);
+        if ((id == SPACE && character == "\\") || (id == SPACE && character == "@")){
+            i++;
+            continue;
+        }
         character = input[i];
         // Checks if the input is a var, which can be of indefinite size
         if (id == VAR){ 
@@ -117,21 +136,30 @@ void parser::stringTokenizer(const string input){
             }
             list.addToken(id, character);
         }
+        
         i++;
         col++;
     }
     list.addToken(EOL, "#");
             
     if (lparCounter != rparCounter){
-        throw syntaxError("Number of beginning and closing parantheses do not match.", row, col);
+        throw parseError("Number of beginning and closing parantheses do not match.", row, col);
     }
     expr(list);
     col = 0, row++;
+
     parseTree.makeTree(list);
     parseTree.printTree();
+    
 }// stringTokenizer
 
-void parser::printExpression(const string input, tokenList & list){
+
+void parser::debugTree(const std::string filename) const {
+    parseTree.saveDOT(filename);
+}// debugTree
+
+
+void parser::printExpression(const std::string input, tokenList & list){
     int length = list.getLength();
     int linkerhaakje = 0;
     if (!(list.isEmpty())){

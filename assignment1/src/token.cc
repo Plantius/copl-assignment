@@ -10,30 +10,8 @@
 #include "../include/token.h"
 #include "../include/tokenId.h"
 #include "../include/error.h"
-using namespace std;
+using std::cout, std::endl;
 
-// Default constructor
-token::token(){
-    next = nullptr;
-    prev = nullptr;
-    id = INVALID;
-    tokenChar = emptyStr;
-}// default constructor
-
-
-// Default constructor
-token::token(const tokenId idToken, token* nextToken, token* prevToken, const std::string c){
-    next = nextToken;
-    prev = prevToken;
-    id = idToken;
-    tokenChar = c;
-}// default constructor
-
-
-// Deletes the list of tokens
-tokenList::~tokenList(){
-    clear();
-}// destructor
 
 void tokenList::clear(){
     token* temp = begin;
@@ -47,8 +25,27 @@ void tokenList::clear(){
     begin = nullptr;
     end = nullptr;
     index = 0;
-}
+}// clear
 
+void tokenList::deleteToken(const int index) const{
+    token* temp = begin;
+    token* after = nullptr;
+    token* prev = nullptr;
+    for(int i = 0; i < index; i++){
+        if (temp != nullptr){
+            temp = temp->next;
+        }else {
+            throw inputError("Index out of bounds");
+        }           
+    }
+    after = temp->next;
+    prev = temp->prev;
+    delete temp;
+    if (prev != nullptr && after != nullptr){
+        prev->next = after;
+        after->prev = prev;
+    }
+}// deleteToken
 
 // Checks if the tokenList is empty
 bool tokenList::isEmpty() const{
@@ -99,8 +96,6 @@ void tokenList::reverseList(){
     }else {
         addToken(EOL, "#");
     }
-    
-
 }// reverseList
 
 // Returns the token type of the token at the given index
@@ -165,7 +160,7 @@ token* tokenList::getToken(const int index) const{
 
 
 // Adds a token-object at the back of the tokenList
-void tokenList::addToken(const tokenId id, const string tokenChar){
+void tokenList::addToken(const tokenId id, const std::string tokenChar){
     if(isEmpty()){
         token* newToken = new token(id, nullptr, nullptr, tokenChar);
         if (newToken == nullptr){
@@ -187,7 +182,7 @@ void tokenList::addToken(const tokenId id, const string tokenChar){
 }// addToken
 
 // Adds a token-object at the back of the tokenList
-bool tokenList::insertToken(const tokenId id, const string tokenChar, const int index){
+bool tokenList::insertToken(const tokenId id, const std::string tokenChar, const int index){
     if(!isEmpty()){
         token* temp = getToken(index);
 
@@ -225,3 +220,7 @@ void tokenList::printList() const{
         temp = temp->next;
     }cout << endl;
 }// printList
+
+void tokenList::setIndex(const int number){
+    index = number;
+} // setIndex

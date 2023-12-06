@@ -10,21 +10,20 @@
 #include "../include/error.h"
 #include "../include/standard.h"
 #include <stack>
-using namespace std;
-
-tree::tree(){
-    begin = nullptr;
-}// Default constructor
+#include <fstream>
+using std::cout, std::endl;
 
 tree::~tree(){
     deleteNode(begin);
     begin = nullptr;
 }// Destructor
 
+
 void tree::clearTree(){
     deleteNode(begin);
     begin = nullptr;
 }// clearTree
+
 
 // Verwijdert recursief alle takken
 void tree::deleteNode(node* & walker) const{
@@ -38,16 +37,6 @@ void tree::deleteNode(node* & walker) const{
     delete walker;
 }// verwijderTak
 
-node* tree::getBegin() const{
-    return begin;
-}
-
-bool tree::isEmpty(const node* leaf) const{
-    if (leaf == nullptr){
-        return true;
-    }
-    return false;
-}// isEmpty
 
 bool tree::isOperator(node* node) const {
     if (node != nullptr){
@@ -58,10 +47,37 @@ bool tree::isOperator(node* node) const {
     return false;
 }// isOperator
 
+
+/* 
+===========================================================
+                        MAKE TREE
+===========================================================
+*/
+
+
+void tree::makeTree(tokenList &list){
+    tokenList* prefix = nullptr;
+    token* temp = nullptr;
+    node* walker = nullptr;
+    clearTree();
+
+    prefix = infixToPrefix(list);
+    for (int i = 0; i < prefix->getLength(); i++){
+        temp = prefix->getToken(i);
+        if (temp->id == EOL){
+            continue;
+        }
+        makeNode(temp->id, temp->tokenChar, walker, i);
+    }
+    correctTree();
+    delete prefix;
+} // makeTree 
+
+
 tokenList* tree::infixToPrefix(tokenList &list){
     tokenList* prefix = new tokenList;
     token* temp = nullptr;
-    stack<token*> tokenStack;
+    std::stack<token*> tokenStack;
 
     list.reverseList();
     for(int i = 0; i < list.getLength(); i++){
@@ -95,43 +111,30 @@ tokenList* tree::infixToPrefix(tokenList &list){
 }// infixToPrefix
 
 
-bool tree::treeFull(node* & walker){
-    if (walker == nullptr){
-        return false;
-    }
-    if ((walker->left == nullptr && isOperator(walker->left)) \
-        	|| (walker->right == nullptr && isOperator(walker->right))){
-        return false;
-    }
-
-    treeFull(walker->left);
-    treeFull(walker->right);
-
-    return true;
-} // treeFull
-
-
-bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker){
+bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker, const int index){
     bool var = false;
 
     if (isEmpty(walker) && isEmpty(begin)){
        // If the tree is empty, the tree makes the first element
         begin = new node(id, tokenChar);
+        begin->index = index;
         walker = begin;
         return true;
     }
     if (isOperator(walker)){
         if(walker->left != nullptr){
-            var = makeNode(id, tokenChar, walker->left);
+            var = makeNode(id, tokenChar, walker->left, index);
         }else{
             walker->left = new node(id, tokenChar);
+            walker->left->index = index;
             return true;
             }
         if(!var){
             if (walker->right != nullptr){
-                var = makeNode(id, tokenChar, walker->right);
+                var = makeNode(id, tokenChar, walker->right, index);
             }else{
-                walker -> right = new node(id, tokenChar);
+                walker->right = new node(id, tokenChar);
+                walker->right->index = index;
                 return true;
             }
             return var;
@@ -142,36 +145,152 @@ bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker
     return false;
 }// makeNode
 
-void tree::printRecursion(node* & walker){
+
+/* 
+===========================================================
+                        PRINT TREE
+===========================================================
+*/
+
+
+void tree::printRecursion(node* & walker, std::string &output){
     if (walker == nullptr){
         return;
     }
+    if (walker->id == SPACE || walker->id == LAMBDA){
+        output += "(";
+    }
+
     if (walker->id == LAMBDA){
-        cout << walker->tokenChar << walker->left->tokenChar;
-        printRecursion(walker->right);
+        output += walker->tokenChar + walker->left->tokenChar + " ";
+        printRecursion(walker->right, output);
     }else {
-        printRecursion(walker->left);
-        cout << walker->tokenChar;
-        printRecursion(walker->right);
+        printRecursion(walker->left, output);
+
+        if (walker->id != SPACE){
+            output += walker->tokenChar;
+        }else {
+            output += " ";
+        }
+        printRecursion(walker->right, output);
+    }
+    if (walker->id == SPACE || walker->id == LAMBDA){
+        output += ")";
     }
 }// printRecursion
 
+
 void tree::printTree() {
     node* walker = begin;
-    printRecursion(walker);
-    cout << endl;
+    std::string output = emptyStr;
+    printRecursion(walker, output);
+    output.pop_back(), output.erase(0, 1);
+    cout << output << endl;
 }// printTree
 
-void tree::makeTree(tokenList &list){
-    tokenList* prefix = nullptr;
-    token* temp = nullptr;
-    node* walker = nullptr;
-    clearTree();
 
-    prefix = infixToPrefix(list);
-    for (int i = 0; i < prefix->getLength(); i++){
-        temp = prefix->getToken(i);
-        makeNode(temp->id, temp->tokenChar, walker);
+/* 
+===========================================================
+                        CORRECT TREE
+===========================================================
+*/
+
+
+void tree::recursionCorrectTree(node* &walker){
+    node* help = nullptr;
+    if (walker == nullptr){
+        return;
     }
-    delete prefix;
-} // makeTree 
+    recursionCorrectTree(walker->left);
+    recursionCorrectTree(walker->right);
+    if ((walker->id == LAMBDA || walker->id == SPACE) && 
+        (walker->left == nullptr || walker->right == nullptr)){
+        
+        if (walker->right != nullptr){
+            help = walker->right;
+            walker->left = help->left;
+            walker->right = help->right;
+        }else if (walker->left != nullptr){
+            help = walker->left;
+            walker->left = help->left;
+            walker->right = help->right;
+        }
+        walker->id = help->id;
+        walker->index = help->index;
+        walker->tokenChar = help->tokenChar;
+        delete help;
+    }
+}// recursionCorrectTree
+
+
+void tree::correctTree(){
+    node* walker = begin;
+    recursionCorrectTree(walker);
+}// correctTree
+
+
+/* 
+===========================================================
+                        DOT NOTATION
+===========================================================
+*/
+
+
+void tree::recursionDOT(node* &walker, std::ofstream &file) const{
+    if (walker->id == LAMBDA || walker->id == SPACE){
+        if(walker->left != nullptr){
+            if(!walker->seen){
+                file << walker->index << " -> ";
+            }
+            walker->seen = true;
+            recursionDOT(walker->left, file);
+        }
+        file << walker->index << " -> ";
+        if (walker->right != nullptr){
+            if(!walker->seen){
+                file << walker->index << ";\n\t";
+            }
+            walker->seen = true;
+            recursionDOT(walker->right, file);
+        }
+    }else {
+        if (!walker->seen){
+            file << walker->index << ";\n\t";
+        }
+        walker->seen = true;
+    }
+}// loopBoom
+
+
+void tree::labelTree(node* &walker, std::ofstream &file) const{
+    if(walker == nullptr){
+        return;
+    }
+    if (walker->id == LAMBDA){
+        file << "\t" << walker->index << " [label = " << "\"\u03bb\"];\n"; 
+    }else {
+        file << "\t" << walker->index << " [label = " << "\"" << walker->tokenChar << "\"];\n";
+    }
+    
+    labelTree(walker->left, file);
+    labelTree(walker->right, file);
+}// labelBlad
+
+
+void tree::saveDOT(const std::string filenaam) const{
+    node* walker = begin;
+    if (begin != nullptr){
+        std::ofstream file(filenaam);
+        if(file.is_open()){
+            file << "digraph tree{\n";
+            labelTree(walker, file); 
+            file << "\t";
+            walker = begin;
+            recursionDOT(walker, file);
+            file << "\n}";
+            file.close();
+        }
+    }else {
+        throw inputError("The tree is empty.");
+    }
+}// opslaanDOT

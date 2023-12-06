@@ -61,12 +61,12 @@ void parser::lambdaExpr(tokenList & list) const{
         if (list.peekToken() == VAR){
             list.consumeToken();
             if(list.peekToken() == EOL){
-                throw syntaxError("No expression after lambda.", row, col);
+                throw parseError("No expression after lambda.", row, col);
             }
             lambdaExpr(list);
 
         }else{
-            throw syntaxError("No variable after lambda.", row, col);
+            throw parseError("No variable after lambda.", row, col);
         }
     }else{
         varExpr(list);
@@ -83,7 +83,7 @@ void parser::varExpr(tokenList & list) const{
         list.consumeToken();  
         expr(list);
     }else {
-        throw syntaxError("No variable or opening paranthesis.", row, col);
+        throw parseError("No variable or opening paranthesis.", row, col);
     }
 }// parexpr
 
@@ -145,10 +145,10 @@ void parser::stringTokenizer(const std::string input){
     list.addToken(EOL, "#");
             
     if (lparCounter != rparCounter){
-        throw syntaxError("Number of beginning and closing parantheses do not match.", row, col);
+        throw parseError("Number of beginning and closing parantheses do not match.", row, col);
     }
     expr(list);
-    col = 0, row++;
+    col = 1, row++;
 
     parseTree.makeTree(list);
     parseTree.printTree();

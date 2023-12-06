@@ -10,12 +10,14 @@
 #define TOKEN_H
 #include <iostream>
 #include "../include/tokenId.h"
+#include "../include/standard.h"
 
 // Token class
 class token{
     public:
-        token();
-        token(const tokenId newId, token* newNext, token* newPrev, const std::string newTokenChar);
+        token() : next(nullptr), prev(nullptr), id(INVALID), tokenChar(emptyStr) {};
+        token(const tokenId newId, token* newNext, token* newPrev, const std::string newTokenChar) : 
+              next(newNext), prev(newPrev), id(newId), tokenChar(newTokenChar) {};
         token* next;
         token* prev;
 
@@ -28,8 +30,9 @@ class token{
 class tokenList{
     public:
         tokenList() : begin(nullptr), end(nullptr), length(0), index(0) {};
-        ~tokenList();
+        ~tokenList() {clear();};
 
+        void deleteToken(const int index) const;
         void reverseList();
 
         // Adds a token to the list
@@ -63,6 +66,8 @@ class tokenList{
         void printList() const;
 
         token* getBegin() const {return this->begin;};
+
+        void setIndex(const int number);
 
     private:
         token* begin;
