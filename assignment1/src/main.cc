@@ -19,30 +19,23 @@ int main(int argc, char* argv[]){
     std::string input = emptyStr, filepath = "NULL";
     bool debug = false;
 
-    if(argc < 2){
-        return 2;
-    }if (argc >= 3 && std::string(argv[1]) == "d"){
+    if (argc >= 2 && std::string(argv[1]) == "d"){
         debug = true;
     }
 
     try{
         if (debug){
             filepath = std::string(argv[2]);
-        }else {
-            filepath = std::string(argv[1]);
         }
-        std::ifstream file(filepath);
-        if(!file.good() || !file.is_open()){
-            throw inputError("File does not exist or is corrupted");
-        }
-        while (getline(file, input)){
+       
+        while (getline(std::cin >> std::ws, input)){
             try
             {
-                validInput(input);
+                validInput(input) ? true : throw inputError("Contains non-standard ASCII characters");
                 // Checks if any errors are thrown from the stringTokenizer function
                 parse.stringTokenizer(input);
                 if (debug){
-                    parse.debugTree(std::string(argv[3]));
+                    parse.debugTree((validInput(filepath) ? filepath : "NULL"));
                 }
                 input.clear();
             }
