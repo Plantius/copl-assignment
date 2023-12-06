@@ -148,7 +148,7 @@ void parser::stringTokenizer(const std::string input){
         throw parseError("Number of beginning and closing parantheses do not match.", row, col);
     }
     expr(list);
-    col = 0, row++;
+    col = 1, row++;
 
     parseTree.makeTree(list);
     parseTree.printTree();
