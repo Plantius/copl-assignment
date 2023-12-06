@@ -89,15 +89,21 @@ bool alpha_beta::needsAlpha(node* leaf){
         if(temp->left->id == LAMBDA){
             temp = temp->left;
 
-            // if rechter subboom een lambda heeft 
             // situation 1:\y (\x y) x
             if(temp->right->id == LAMBDA){
-
+                temp = temp->right;
+                std::set vars = findVar();
+                if(temp->left->tokenChar == vars[i]){
+                    return true;
+                }
             }
             
             // situation 2: \x (\w w z (\z y))
-            if(leaf->right->id == LAMBDA){
-
+            if(leaf->right->id == LAMBDA && temp->right->tokenChar == "@"){
+                temp = temp->right;
+                if(temp->left->tokenChar == leaf->right->right->tokenChar){
+                    return true;
+                }
             }
 
         }
