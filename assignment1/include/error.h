@@ -16,13 +16,13 @@ class errorHandler{
         errorHandler() : error(""), row(0), col(0) {};
         errorHandler(const std::string err) : error(err) {};
         std::string getError() const {
-            return error;};
+            return this->error;};
         int getRow() const { 
-            return row;};
+            return this->row;};
         int getCol() const {
-            return col;};
+            return this->col;};
         std::string getType() const 
-            {return type;};
+            {return this->type;};
 
     protected:
         std::string error;
