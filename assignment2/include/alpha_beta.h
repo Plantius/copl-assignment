@@ -17,9 +17,8 @@ class alpha_beta{
         alpha_beta() : T(), M(), N(), x(emptyStr) {};
         alpha_beta(tree &T) : T(T), M(), N(), x(emptyStr) {};
 
-        bool performConversion();
         bool performReduction(tokenList &L);
-        bool needsAlpha(node* leaf);
+        void needsAlpha(node* leaf);
         bool needsBeta(tokenList &L);
         void makeAbstract(tokenList &L);
 
