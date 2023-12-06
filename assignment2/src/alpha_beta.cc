@@ -20,9 +20,7 @@ void alpha_beta::makeAbstract(tokenList &L){
     while(done){
         done = false;
         if(needsBeta(L)){
-            if(needsAlpha(T.getBegin() )){
-                performConversion();
-            }
+            needsAlpha(T.getBegin());
             done = performReduction(L);
             M.clear();
             N.clear();
@@ -77,7 +75,7 @@ bool alpha_beta::needsBeta(tokenList &L){
 } // needsBeta
 
 
-bool alpha_beta::needsAlpha(node* leaf){
+void alpha_beta::needsAlpha(node* leaf){
    
     node* temp = leaf;
     if (temp->tokenChar=="@"){
@@ -96,7 +94,7 @@ bool alpha_beta::needsAlpha(node* leaf){
                         std::set<std::string> allVar;
                         std::string replace = chooseVar(allVar);
                         temp->left->tokenChar = replace;
-                        return true;
+                        return;
                     } 
                 }
             }
@@ -111,14 +109,12 @@ bool alpha_beta::needsAlpha(node* leaf){
                         std::set<std::string> allVar;
                         std::string replace = chooseVar(allVar);
                         leaf->right->right->tokenChar = replace;
-                        return true;
+                        return;
                     }
                 } 
             }
         }
      }
-
-    return false;
 } // needsAlpha
 
 
@@ -153,9 +149,3 @@ bool alpha_beta::performReduction(tokenList & L){
 
     return true;
 } // performReduction
-
-bool alpha_beta::performConversion(){
-
-    return true;
-    
-} //performConversion
