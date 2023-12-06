@@ -1,7 +1,7 @@
 (a b)
 abc
 a b c
-(a (b c)) da\
+(a (b c)) d
 (\ x a b)
 (\x((a) (b)))
 \ a b c
@@ -12,3 +12,4 @@ a b c d
 (\x x)(\y y)
 a (\x a (b c) \x d)
 (\x \y x)(\z y)
+\x(\w (w z)(\z y))

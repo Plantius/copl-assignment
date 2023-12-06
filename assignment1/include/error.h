@@ -1,9 +1,9 @@
 /**
-* Declaration of the error handler
-* Niels Versteeg (s3322637)
-* Lana van Sprang (s3272192)
-* error.h
-* 05-10-2023
+* Declaratie van de error handler
+* @author Niels Versteeg (s3322637)
+* @author Lana van Sprang (s3272192)
+* @file error.h
+* @date 15-11-2023
 **/
 
 #ifndef ERROR_H
@@ -13,55 +13,84 @@
 // Base error class
 class errorHandler{
     public:
-        errorHandler() : error(""), row(0), col(0) {};
-        errorHandler(const std::string err) : error(err) {};
-        std::string getError() const {
-            return this->error;};
-        int getRow() const { 
-            return this->row;};
-        int getCol() const {
-            return this->col;};
-        std::string getType() const 
-            {return this->type;};
+        // Constructor
+        errorHandler() : error(), type(), row(1), col(1) {};
 
+        /**
+        * @function: getError
+        * @abstract: Geeft de error string terug.
+        **/
+        std::string getError() const {return this->error;};
+        
+        /**
+        * @function: getType
+        * @abstract: Geeft de error type string terug.
+        **/
+        std::string getType() const {return this->type;};
+
+        int getRow() const {return this->row;};
+        
+        int getCol() const {return this->col;};
+
+        /**
+        * @function: printError
+        * @abstract: Print de gegeven error naar cout
+        **/
+        void printError() const;
     protected:
-        std::string error;
-        std::string type;
+        std::string error;      // Error message
+        std::string type;       // Error type
         int row, col;
-};// errorHandler
+        const std::string MEMORY = "Memory Error";
+        const std::string INPUT = "Input Error";
+        const std::string PARSE = "Parse Error";
+        const std::string TOKEN = "Token Error";
+}; // errorHandler
 
 // Handles memory errors
 class memoryError : public errorHandler{
     public:
+        /**
+        * @function: memoryError
+        * @abstract: Constructor
+        * @param err: set error to err 
+        **/
         memoryError(const std::string err);
-};// memoryError
-
-// Handles syntax errors
-class syntaxError : public errorHandler{
-    public:
-        syntaxError(const std::string err, 
-                    const int r, const int c);
-};// syntaxError
-
-// Handles tokenization errors
-class tokenError : public errorHandler{
-    public:
-        tokenError(const std::string err, 
-                    const int r, const int c);
-};// tokenError
+}; // memoryError
 
 // Handles input errors
 class inputError : public errorHandler{
     public:
+        /**
+        * @function: inputError
+        * @abstract: Constructor
+        * @param err: set error to err 
+        **/
         inputError(const std::string err);
-};// inputError
+}; // inputError
 
-// Prints the given error to cerr
-template<class C>
-void printError(C error, const std::string filepath){
-    std::cerr << std::string((error.getError()).length(), '-') << std::endl 
-         << filepath << ": "<< error.getRow() << ":" << error.getCol() <<": " << error.getType() 
-         << "\n\t " << error.getError() << std::endl << std::string((error.getError()).length(), '-') << std::endl;
-}// printError
+// Handles input errors
+class parseError : public errorHandler{
+    public:
+        /**
+        * @function: parseError
+        * @abstract: Constructor
+        * @param err: set error to err 
+        **/
+        parseError(const std::string err, 
+                   const int row, const int col);
+}; // inputError
+
+// Handles input errors
+class tokenError : public errorHandler{
+    public:
+        /**
+        * @function: tokenError
+        * @abstract: Constructor
+        * @param err: set error to err 
+        **/
+        tokenError(const std::string err,
+                   const int row, const int col);
+}; // inputError
 
 #endif
