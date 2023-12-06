@@ -15,12 +15,10 @@ using namespace std;
 
 // Checks if the given string contains only ASCII-characters
 void validInput(const string input){
-    int i = 0;
-    while(input[i] != '\0'){
-        if ((u_char)input[i] > 127){
+    for (auto c : input) {
+        if (!isascii(c)){
             throw inputError("Contains non-standard ASCII characters");
         }
-        i++;
     }
 }// valid_input
 
