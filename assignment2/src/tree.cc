@@ -70,6 +70,7 @@ void tree::makeTree(tokenList &list){
         makeNode(temp->id, temp->tokenChar, walker, i);
     }
     correctTree();
+
     delete prefix;
 } // makeTree 
 
@@ -185,7 +186,6 @@ void tree::printTree() {
     std::string output = emptyStr;
 
     printRecursion(walker, output);
-    output.pop_back(), output.erase(0, 1);
     cout << output << endl;
 }// printTree
 

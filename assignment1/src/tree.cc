@@ -183,8 +183,8 @@ void tree::printRecursion(node* & walker, std::string &output){
 void tree::printTree() {
     node* walker = begin;
     std::string output = emptyStr;
+    
     printRecursion(walker, output);
-    output.pop_back(), output.erase(0, 1);
     cout << output << endl;
 }// printTree
 
