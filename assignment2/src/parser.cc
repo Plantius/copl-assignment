@@ -23,9 +23,7 @@ tokenId parser::tokenSwitch(const char inputChar) const{
         
         default: break;
     }
-    if ((int(inputChar) >= 65 && int(inputChar) <= 90) || 
-            (int(inputChar) >=97 && int(inputChar) <= 122) || 
-                (int(inputChar) >=48 && int(inputChar) <= 57)){
+    if (islower(inputChar) || isupper(inputChar) || isdigit(inputChar)){
         return VAR;
     }
     return INVALID;
