@@ -42,23 +42,47 @@ void alphaBeta::makeAbstract(tokenList &L, tree &T){
 
 bool alphaBeta::needsBeta(node* & start, tree &T){
     x = "$";
+    bool needsBeta = false;
     node* walker = nullptr;
+    node* whereWalker = nullptr;
+    node* copy = nullptr;
+
     if(start->id == APPLICATION){
         if(start->left->id == LAMBDA){
+            // LINKER BOOM VAN APP
             x = start->left->left->tokenChar;
             walker = start->left->right;
             // maar enkele variabele
             if (walker == nullptr){
                 if(walker->tokenChar == x){
-
+                    whereWalker = walker;
+                    needsBeta = true;
                 }
             }
             // door subboom kijken
             else{
+                needsBeta = isInTree(walker, x, true, whereWalker);
+              
+            }
+
+            if(needsBeta){
+                T.copyTree(copy, start->right);
+                whereWalker->id = copy->id;
+                whereWalker->tokenChar = copy->tokenChar;
+                if (copy!=nullptr){
+                    whereWalker->left = copy->left;
+                    whereWalker->right = copy->right;
+                }
+                delete copy;
+                copy = nullptr;
                 
             }
         }
     }
+    walker = nullptr;
+    whereWalker = nullptr;
+
+    return false;
    
    // ***********************************************************
    
