@@ -209,7 +209,7 @@ void tree::recursionCopy(node* &walker, node* &copyWalker, node* &copyStart){
     
     recursionCopy(walker->left, copyWalker, copyStart);
     recursionCopy(walker->right, copyWalker, copyStart);
-}
+} // recursionCopy
 
 void tree::copyTree(node* &copyStart, node* beginLeaf){
     node* walker = beginLeaf;
@@ -220,7 +220,7 @@ void tree::copyTree(node* &copyStart, node* beginLeaf){
     copyWalker = copyStart;
     correctTree();
     copyWalker = nullptr;
-}// kopieerBoom
+} // copyTree
 
 
 /* 
