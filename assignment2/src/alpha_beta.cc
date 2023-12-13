@@ -141,7 +141,7 @@ void alphaBeta::replaceFreeVar(node* &start, std::set<std::string> &varList){
         return;
     }
 
-    if (start->id == LAMBDA && isInTree(start->right, start->left->tokenChar)){
+    if (start->id == LAMBDA && isInTree(start->right, start->left->tokenChar, false, start)){
         for (auto i : varList){
             if (start->left->tokenChar == i){
                 start->left->tokenChar = (i+i);
@@ -173,17 +173,21 @@ void alphaBeta::findVar(node* &start, std::set<std::string> &varList) const{
 }// findVar
 
 
-bool alphaBeta::isInTree(node* &walker, const std::string letter) const{
+bool alphaBeta::isInTree(node* &walker, const std::string letter, bool where, node* & whereVar) const{
     if (walker == nullptr){
         return false;
     }
     if (walker->id == VAR && walker->tokenChar == letter){
+        if (where){
+            whereVar = walker;
+            where = false;
+        }
         return true;
     }
-    if (isInTree(walker->left, letter)){
+    if (isInTree(walker->left, letter, where, whereVar)){
         return true;
     }
-    if (isInTree(walker->right, letter)){
+    if (isInTree(walker->right, letter, where, whereVar)){
         return true;
     }
     return false;

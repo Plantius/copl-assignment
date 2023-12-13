@@ -25,7 +25,7 @@ class alphaBeta{
         void findVar(node* &start, std::set<std::string> &varList) const;
         void replaceFreeVar(node* &start, std::set<std::string> &varList);
 
-        bool isInTree(node* &walker, const std::string letter) const;
+        bool isInTree(node* &walker, const std::string letter, bool where, node* & whereVar) const;
     private:
         tokenList M;
         tokenList N;
