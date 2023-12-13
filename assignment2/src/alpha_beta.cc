@@ -3,7 +3,7 @@
   and beta reduction.
 * Niels Versteeg (s3322637)
 * Lana van Sprang (s3272192)
-* alpha_beta.cc
+* alphaBeta.cc
 * 15-11-2023
 **/ 
 
@@ -13,11 +13,11 @@
 #include <fstream>
 using std::cout, std::endl;
 
-void alpha_beta::makeAbstract(tokenList &L, tree &T){
+void alphaBeta::makeAbstract(tokenList &L, tree &T){
     node* start = T.getBegin();
     bool done = true;
     int times = 0;
-    needsAlpha(start);
+    alphaConversion(start);
     // beta
     // Find var of left lambda
     // Copy right subtree of application
@@ -40,7 +40,7 @@ void alpha_beta::makeAbstract(tokenList &L, tree &T){
 
 } // makeAbstract
 
-bool alpha_beta::needsBeta(tokenList &L, tree &T){
+bool alphaBeta::needsBeta(tokenList &L, tree &T){
     x = "$";
     L.setIndex(0);
     M.setIndex(0);
@@ -82,7 +82,7 @@ bool alpha_beta::needsBeta(tokenList &L, tree &T){
 } // needsBeta
 
 // NOG NIET GOED    
-void alpha_beta::needsAlpha(node* &start){
+void alphaBeta::alphaConversion(node* &start){
     if (start == nullptr){
         return;
     }
@@ -90,60 +90,88 @@ void alpha_beta::needsAlpha(node* &start){
     node* temp = start;
 
     // find @ lambda
-    if (temp->tokenChar == "@"){
+    findAlpha(temp);
+    if (temp->id == APPLICATION){
         if(temp->left->id == LAMBDA){
             findVar(temp->right, varList);
-            // findfreevar
-            // For every lambda right of application, 
-            // if lambda var in set, remove from set
-            // replacefreevar
-            // For every var in set, if applicatoon left lambda right 
-            // replace with new var 
-            temp = temp->left;
-            // situation 1:\y (\x y) x
-            if(temp->right->id == LAMBDA){
-                temp = temp->right;
-                findVar(start->right, varList);
-                findVar(temp->left, varList);
-                if (varList.find(temp->left->tokenChar) != varList.end()){
-                    temp->left->tokenChar = chooseVar(allVar);
-                    return;
-                }
-            }
+            for (auto i : varList){
+                cout << i;
+            }cout << endl;
             
-            // situation 2: \x (\w w z (\z y))
-            // if(start->right->id == LAMBDA && temp->right->tokenChar == "@"){
-            //     temp = temp->right;
-            //     std::set<std::string> varList;
-            //     findVar(temp, varList);
-            //     for (auto i : varList){
-            //         if(start->right->right->tokenChar == i){
-            //             std::set<std::string> allVar;
-            //             std::string replace = chooseVar(allVar);
-            //             start->right->right->tokenChar = replace;
-            //             return;
-            //         }
-            //     } 
-            // }
+            replaceFreeVar(temp, varList);
+            // // findfreevar
+            // // For every lambda right of application, 
+            // // if lambda var in set, remove from set
+            // // replacefreevar
+            // // For every var in set, if applicatoon left lambda right 
+            // // replace with new var 
+          
         }
      }
-} // needsAlpha
+} // alphaConversion
 
 
-void alpha_beta::findVar(node* &start, std::set<std::string> &varList) const{
-    if (start  == nullptr){
+void alphaBeta::findAlpha(node* &walker) {
+
+}// findAlpha
+
+
+void alphaBeta::replaceFreeVar(node* &start, std::set<std::string> &varList){
+    if (start == nullptr){
         return;
     }
 
+    if (start->id == LAMBDA && isInTree(start->right, start->left->tokenChar)){
+        for (auto i : varList){
+            if (start->left->tokenChar == i){
+                start->left->tokenChar = (i+i);
+            }
+        }
+    }
+    replaceFreeVar(start->left, varList);
+    replaceFreeVar(start->right, varList);
+
+}
+
+
+void alphaBeta::findVar(node* &start, std::set<std::string> &varList) const{
+    if (start  == nullptr){
+        return;
+    }
+    
     if (start->id == VAR){
         varList.insert(start->tokenChar);
     }
+    
     findVar(start->left, varList);
     findVar(start->right, varList);
+    if (start->id == LAMBDA){
+        if (varList.find(start->left->tokenChar) != varList.end()){
+            varList.erase(start->left->tokenChar);
+        }
+    }
 }// findVar
 
 
-bool alpha_beta::performReduction(tokenList & L){
+bool alphaBeta::isInTree(node* &walker, const std::string letter) const{
+    if (walker == nullptr){
+        return false;
+    }
+    if (walker->id == VAR && walker->tokenChar == letter){
+        return true;
+    }
+    if (isInTree(walker->left, letter)){
+        return true;
+    }
+    if (isInTree(walker->right, letter)){
+        return true;
+    }
+    return false;
+    
+}
+
+
+bool alphaBeta::performReduction(tokenList & L){
 
     for (int i = 0; i < M.getLength(); i++){
         if (M.getToken(i)->tokenChar == x){

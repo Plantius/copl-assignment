@@ -18,7 +18,7 @@ class parser{
     private:
         tree parseTree;
         node* begin;
-        alpha_beta ab;
+        alphaBeta ab;
 
         int row = 1, col = 1;
         

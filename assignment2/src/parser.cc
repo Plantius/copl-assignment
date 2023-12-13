@@ -19,7 +19,7 @@ tokenId parser::tokenSwitch(const char inputChar) const{
         case ')': return RPAR;
         case '\\': return LAMBDA;
         case '.': return DOT;
-        case ' ': return SPACE;
+        case ' ': return APPLICATION;
         
         default: break;
     }
@@ -96,7 +96,7 @@ void parser::varExpr(tokenList & list) const{
 // Tokenizes the given std::string, and adds them to the given token list
 void parser::stringTokenizer(const std::string input){
     tokenList list;
-    alpha_beta ab;
+    alphaBeta ab;
 
     int lparCounter = 0, rparCounter = 0;
     tokenId id = INVALID, tempId = INVALID;
@@ -104,7 +104,7 @@ void parser::stringTokenizer(const std::string input){
 
     for (size_t i = 0; i < input.size(); i++){
         id = tokenSwitch(input[i]);
-        if ((id == SPACE && character == "\\") || (id == SPACE && character == "@")){
+        if ((id == APPLICATION && character == "\\") || (id == APPLICATION && character == "@")){
             continue;
         }
         character = input[i];
@@ -127,7 +127,7 @@ void parser::stringTokenizer(const std::string input){
             lparCounter += (id == LPAR) ? 1 : 0;
             rparCounter += (id == RPAR) ? 1 : 0;
            
-            if (id == SPACE){
+            if (id == APPLICATION){
                 character = "@";
             }
             list.addToken(id, character);

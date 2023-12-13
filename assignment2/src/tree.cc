@@ -40,7 +40,7 @@ void tree::deleteNode(node* & walker) const{
 
 bool tree::isOperator(node* node) const {
     if (node != nullptr){
-        if (node->id == LAMBDA || node->id == SPACE || node->id == LPAR || node->id == RPAR){
+        if (node->id == LAMBDA || node->id == APPLICATION || node->id == LPAR || node->id == RPAR){
             return true;
         }
     }
@@ -94,7 +94,7 @@ tokenList* tree::infixToPrefix(tokenList &list){
             }
             tokenStack.pop();
         }else{
-            while(!tokenStack.empty() && temp->id == SPACE && tokenStack.top()->id == LAMBDA){
+            while(!tokenStack.empty() && temp->id == APPLICATION && tokenStack.top()->id == LAMBDA){
                 prefix->addToken(tokenStack.top()->id, tokenStack.top()->tokenChar);
                 tokenStack.pop();
             }
@@ -158,7 +158,7 @@ void tree::printRecursion(node* & walker, std::string &output){
     if (walker == nullptr){
         return;
     }
-    if (walker->id == SPACE || walker->id == LAMBDA){
+    if (walker->id == APPLICATION || walker->id == LAMBDA){
         output += "(";
     }
 
@@ -168,14 +168,14 @@ void tree::printRecursion(node* & walker, std::string &output){
     }else {
         printRecursion(walker->left, output);
 
-        if (walker->id != SPACE){
+        if (walker->id != APPLICATION){
             output += walker->tokenChar;
         }else {
             output += " ";
         }
         printRecursion(walker->right, output);
     }
-    if (walker->id == SPACE || walker->id == LAMBDA){
+    if (walker->id == APPLICATION || walker->id == LAMBDA){
         output += ")";
     }
 }// printRecursion
@@ -209,7 +209,7 @@ void tree::recursionCorrectTree(node* &walker){
     }
     recursionCorrectTree(walker->left);
     recursionCorrectTree(walker->right);
-    if ((walker->id == LAMBDA || walker->id == SPACE) && 
+    if ((walker->id == LAMBDA || walker->id == APPLICATION) && 
         (walker->left == nullptr || walker->right == nullptr)){
         
         if (walker->right != nullptr){
@@ -243,7 +243,7 @@ void tree::correctTree(){
 
 
 void tree::recursionDOT(node* &walker, std::ofstream &file) const{
-    if (walker->id == LAMBDA || walker->id == SPACE){
+    if (walker->id == LAMBDA || walker->id == APPLICATION){
         if(walker->left != nullptr){
             if(!walker->seen){
                 file << walker->index << " -> ";

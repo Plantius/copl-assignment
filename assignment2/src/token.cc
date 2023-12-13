@@ -102,7 +102,7 @@ void tokenList::reverseList(){
 tokenId tokenList::peekToken(){
     token* nextToken = getToken(index);
     if (nextToken != nullptr){
-        while(nextToken->next != nullptr && (nextToken->id == SPACE || nextToken->id == RPAR)){
+        while(nextToken->next != nullptr && (nextToken->id == APPLICATION || nextToken->id == RPAR)){
             nextToken = nextToken->next;
             index++;
         }

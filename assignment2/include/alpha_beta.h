@@ -12,17 +12,20 @@
 #include <set>
 #include "../include/tree.h"
 
-class alpha_beta{
+class alphaBeta{
     public:
-        alpha_beta() : M(), N(), x(emptyStr) {};
+        alphaBeta() : M(), N(), x(emptyStr) {};
 
         bool performReduction(tokenList &L);
-        void needsAlpha(node* &start);
+        void alphaConversion(node* &start);
         bool needsBeta(tokenList &L, tree &T);
         void makeAbstract(tokenList &L, tree &T);
 
+        void findAlpha(node* &walker);
         void findVar(node* &start, std::set<std::string> &varList) const;
+        void replaceFreeVar(node* &start, std::set<std::string> &varList);
 
+        bool isInTree(node* &walker, const std::string letter) const;
     private:
         tokenList M;
         tokenList N;
