@@ -13,5 +13,4 @@ a b c d
 a (\x a (b c) \x d)
 (\x \y x)(\z y)
 \x(\w (w z)(\z y))
-(\y (\x y)) (x)
-\x \x x (\y x)
+(\x \y y) (\z y)
