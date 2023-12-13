@@ -110,7 +110,7 @@ void alphaBeta::alphaConversion(node* &start){
     node* temp = start;
 
     // find @ lambda
-    findAlpha(temp);
+    // findAlpha(temp);
     if (temp->id == APPLICATION){
         if(temp->left->id == LAMBDA){
             findVar(temp->right, varList);
@@ -118,7 +118,7 @@ void alphaBeta::alphaConversion(node* &start){
                 cout << i;
             }cout << endl;
             
-            replaceFreeVar(temp, varList);
+            replaceFreeVar(temp->left->right, varList);
             // // findfreevar
             // // For every lambda right of application, 
             // // if lambda var in set, remove from set
