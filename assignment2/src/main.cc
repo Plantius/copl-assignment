@@ -16,8 +16,7 @@
 int main(int argc, char* argv[]){
     tree parseTree;
     
-    alpha_beta ab(parseTree);
-    parser parse(parseTree, ab); 
+    parser parse(parseTree); 
     std::string input = emptyStr, filepath = "NULL";
     bool debug = false;
 
