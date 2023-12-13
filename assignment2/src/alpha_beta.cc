@@ -81,7 +81,7 @@ bool alpha_beta::needsBeta(tokenList &L, tree &T){
     return false;
 } // needsBeta
 
-
+// NOG NIET GOED    
 void alpha_beta::needsAlpha(node* &start){
     if (start == nullptr){
         return;
