@@ -40,8 +40,31 @@ void alphaBeta::makeAbstract(tokenList &L, tree &T){
 
 } // makeAbstract
 
-bool alphaBeta::needsBeta(tokenList &L, tree &T){
+bool alpha_beta::needsBeta(node* & start, tree &T){
     x = "$";
+    node* walker = nullptr;
+    if(start->id == APPLICATION){
+        if(start->left->id == LAMBDA){
+            x = start->left->left->tokenChar;
+            walker = start->left->right;
+            // maar enkele variabele
+            if (walker == nullptr){
+                if(walker->tokenChar == x){
+
+                }
+            }
+            // door subboom kijken
+            else{
+                
+            }
+        }
+    }
+   
+   
+   
+   
+   // ***********************************************************
+   
     L.setIndex(0);
     M.setIndex(0);
     N.setIndex(0);

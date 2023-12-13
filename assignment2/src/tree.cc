@@ -197,6 +197,34 @@ void tree::printTree() {
 
 /* 
 ===========================================================
+                        COPY TREE
+===========================================================
+*/
+
+void tree::recursionCopy(node* &walker, node* &copyWalker, node* &copyStart){
+    if (walker == nullptr){
+        return;
+    }
+    makeNode(walker->id, walker->tokenChar, copyWalker, walker->index);
+    
+    recursionCopy(walker->left, copyWalker, copyStart);
+    recursionCopy(walker->right, copyWalker, copyStart);
+} // recursionCopy
+
+void tree::copyTree(node* &copyStart, node* beginLeaf){
+    node* walker = beginLeaf;
+    node* copyWalker = copyStart;
+    
+    recursionCopy(walker, copyWalker, copyStart);
+    
+    copyWalker = copyStart;
+    correctTree();
+    copyWalker = nullptr;
+} // copyTree
+
+
+/* 
+===========================================================
                         CORRECT TREE
 ===========================================================
 */
@@ -280,7 +308,7 @@ void tree::labelTree(node* &walker, std::ofstream &file) const{
     
     labelTree(walker->left, file);
     labelTree(walker->right, file);
-}// labelBlad
+}// labelnode
 
 
 void tree::saveDOT(const std::string filenaam) const{
