@@ -54,6 +54,9 @@ class tree{
 
         void recursionCorrectTree(node* &walker);
         void correctTree();
+        
+        void recursionCopy(node* &walker, node* &copyWalker, node* &copyStart);
+        void copyTree(node* &copyStart, node* beginLeaf);
 
         void saveDOT(const std::string file) const;
         void labelTree(node* &walker, std::ofstream &file) const;
