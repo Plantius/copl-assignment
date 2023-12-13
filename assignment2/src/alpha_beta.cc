@@ -40,8 +40,17 @@ bool alpha_beta::needsBeta(node* & start, tree &T){
     if(start->id == APPLICATION){
         if(start->left->id == LAMBDA){
             x = start->left->left->tokenChar;
-            walker = start->left->left;
+            walker = start->left->right;
+            // maar enkele variabele
+            if (walker == nullptr){
+                if(walker->tokenChar == x){
+
+                }
+            }
             // door subboom kijken
+            else{
+                
+            }
         }
     }
    
