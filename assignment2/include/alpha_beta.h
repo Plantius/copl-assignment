@@ -18,7 +18,7 @@ class alpha_beta{
 
         bool performReduction(tokenList &L);
         void needsAlpha(node* &start);
-        bool needsBeta(tokenList &L, tree &T);
+        bool needsBeta(node* &start, tree &T);
         void makeAbstract(tokenList &L, tree &T);
 
         void findVar(node* &start, std::set<std::string> &varList) const;
