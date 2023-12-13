@@ -18,6 +18,12 @@ void alpha_beta::makeAbstract(tokenList &L, tree &T){
     bool done = true;
     int times = 0;
     needsAlpha(start);
+    // beta
+    // Find var of left lambda
+    // Copy right subtree of application
+    // Walk through right side of left lambda, replace all lambda
+    // var with subtree
+    // 
 
     // while(done){
     //     done = false;
@@ -83,10 +89,17 @@ void alpha_beta::needsAlpha(node* &start){
     std::set<std::string> varList, allVar;
     node* temp = start;
 
+    // find @ lambda
     if (temp->tokenChar == "@"){
         if(temp->left->id == LAMBDA){
+            findVar(temp->right, varList);
+            // findfreevar
+            // For every lambda right of application, 
+            // if lambda var in set, remove from set
+            // replacefreevar
+            // For every var in set, if applicatoon left lambda right 
+            // replace with new var 
             temp = temp->left;
-
             // situation 1:\y (\x y) x
             if(temp->right->id == LAMBDA){
                 temp = temp->right;
