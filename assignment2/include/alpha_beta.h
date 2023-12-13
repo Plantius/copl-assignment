@@ -16,9 +16,8 @@ class alphaBeta{
     public:
         alphaBeta() : M(), N(), x(emptyStr) {};
 
-        bool performReduction(tokenList &L);
         void alphaConversion(node* &start);
-        bool needsBeta(node* &start, tree &T);
+        bool betaReduction(node* &start, tree &T);
         void makeAbstract(tokenList &L, tree &T);
 
         void findAlpha(node* &walker);

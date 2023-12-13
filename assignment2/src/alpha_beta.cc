@@ -40,8 +40,8 @@ void alphaBeta::makeAbstract(tokenList &L, tree &T){
 
 } // makeAbstract
 
-bool alphaBeta::needsBeta(node* & start, tree &T){
-    x = "$";
+bool alphaBeta::betaReduction(node* & start, tree &T){
+    std::string x = "$";
     bool needsBeta = false;
     node* walker = nullptr;
     node* whereWalker = nullptr;
@@ -83,49 +83,8 @@ bool alphaBeta::needsBeta(node* & start, tree &T){
     whereWalker = nullptr;
 
     return false;
-   
-   // ***********************************************************
-   
-    // L.setIndex(0);
-    // M.setIndex(0);
-    // N.setIndex(0);
-    // int i = 0;
+} // betaReduction
 
-    // if(T.isEmpty(T.getBegin())){
-    //     return false;
-    // }
-
-    // while(i < L.getLength()){
-    //     if (L.getToken(i)->id == LAMBDA){
-    //         x = L.peekToken();
-    //         i++;
-    //     }
-    //     else if (x != "$" ){
-    //         int j=0;
-    //         while ((L.getToken(i)->id != RPAR) && (i < L.getLength())){
-    //             M.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
-    //             i++;
-    //             j++;
-    //         } // while M'
-
-    //         j = 0;
-
-    //         if (i < L.getLength()){
-    //             while (i < L.getLength()){
-    //                 N.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
-    //                 i++;
-    //                 j++;
-    //             } // while N
-    //             return true;
-    //         }
-    //     }else {
-    //         i++;
-    //     }
-    // } // while L
-    // return false;
-} // needsBeta
-
-// NOG NIET GOED    
 void alphaBeta::alphaConversion(node* &start){
     if (start == nullptr){
         return;
@@ -217,23 +176,3 @@ bool alphaBeta::isInTree(node* &walker, const std::string letter, bool where, no
     return false;
     
 }
-
-
-bool alphaBeta::performReduction(tokenList & L){
-
-    for (int i = 0; i < M.getLength(); i++){
-        if (M.getToken(i)->tokenChar == x){
-            for (int j = 0; j < N.getLength(); j++){
-                M.insertToken(N.getToken(i)->id, N.getToken(i)->tokenChar, i);
-            }
-            M.deleteToken(i);
-        }
-    }
-
-    L.clear();
-    for (int k = 0; k < M.getLength(); k++){
-        L.addToken(M.getToken(k)->id, M.getToken(k)->tokenChar);
-    }
-
-    return true;
-} // performReduction
