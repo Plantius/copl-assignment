@@ -74,7 +74,7 @@ bool alpha_beta::needsBeta(tokenList &L){
     return false;
 } // needsBeta
 
-
+// NOG NIET GOED    
 void alpha_beta::needsAlpha(node* leaf){
    
     node* temp = leaf;
