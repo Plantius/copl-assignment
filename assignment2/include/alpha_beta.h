@@ -18,7 +18,7 @@ class alphaBeta{
 
         bool performReduction(tokenList &L);
         void alphaConversion(node* &start);
-        bool needsBeta(tokenList &L, tree &T);
+        bool needsBeta(node* &start, tree &T);
         void makeAbstract(tokenList &L, tree &T);
 
         void findAlpha(node* &walker);

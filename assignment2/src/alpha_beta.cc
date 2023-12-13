@@ -40,7 +40,7 @@ void alphaBeta::makeAbstract(tokenList &L, tree &T){
 
 } // makeAbstract
 
-bool alpha_beta::needsBeta(node* & start, tree &T){
+bool alphaBeta::needsBeta(node* & start, tree &T){
     x = "$";
     node* walker = nullptr;
     if(start->id == APPLICATION){
@@ -60,48 +60,45 @@ bool alpha_beta::needsBeta(node* & start, tree &T){
         }
     }
    
-   
-   
-   
    // ***********************************************************
    
-    L.setIndex(0);
-    M.setIndex(0);
-    N.setIndex(0);
-    int i = 0;
+    // L.setIndex(0);
+    // M.setIndex(0);
+    // N.setIndex(0);
+    // int i = 0;
 
-    if(T.isEmpty(T.getBegin())){
-        return false;
-    }
+    // if(T.isEmpty(T.getBegin())){
+    //     return false;
+    // }
 
-    while(i < L.getLength()){
-        if (L.getToken(i)->id == LAMBDA){
-            x = L.peekToken();
-            i++;
-        }
-        else if (x != "$" ){
-            int j=0;
-            while ((L.getToken(i)->id != RPAR) && (i < L.getLength())){
-                M.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
-                i++;
-                j++;
-            } // while M'
+    // while(i < L.getLength()){
+    //     if (L.getToken(i)->id == LAMBDA){
+    //         x = L.peekToken();
+    //         i++;
+    //     }
+    //     else if (x != "$" ){
+    //         int j=0;
+    //         while ((L.getToken(i)->id != RPAR) && (i < L.getLength())){
+    //             M.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
+    //             i++;
+    //             j++;
+    //         } // while M'
 
-            j = 0;
+    //         j = 0;
 
-            if (i < L.getLength()){
-                while (i < L.getLength()){
-                    N.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
-                    i++;
-                    j++;
-                } // while N
-                return true;
-            }
-        }else {
-            i++;
-        }
-    } // while L
-    return false;
+    //         if (i < L.getLength()){
+    //             while (i < L.getLength()){
+    //                 N.insertToken(L.getToken(i)->id, L.getToken(i)->tokenChar, j);
+    //                 i++;
+    //                 j++;
+    //             } // while N
+    //             return true;
+    //         }
+    //     }else {
+    //         i++;
+    //     }
+    // } // while L
+    // return false;
 } // needsBeta
 
 // NOG NIET GOED    
