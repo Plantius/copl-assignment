@@ -53,14 +53,6 @@ bool alphaBeta::betaReduction(node* & start, tree &T){
             // LINKER BOOM VAN APP
             x = start->left->left->tokenChar;
             walker = start->left->right;
-            // maar enkele variabele
-            // if (walker == nullptr){
-            //     if(walker->tokenChar == x){
-            //         whereWalker = walker;
-            //         needsBeta = true;
-            //     }
-            // }
-            // door subboom kijken
 
             if(isInTree(walker, x, true, whereWalker)){
                 // Replacing 'x' with subtree
@@ -75,8 +67,10 @@ bool alphaBeta::betaReduction(node* & start, tree &T){
                 // zipping lambda->right to application
                 node* temp = start->left->right;
                 delete start->left->left; // deleting 'x'
+
                 start->left->left = nullptr;
                 delete start->left; // deleting lambda
+                
                 start->left = nullptr;
                 start->left = temp;
                 temp = nullptr;
