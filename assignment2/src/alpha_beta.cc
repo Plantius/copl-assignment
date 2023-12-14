@@ -63,6 +63,7 @@ bool alphaBeta::betaReduction(node* & start, tree &T){
             // door subboom kijken
 
             if(isInTree(walker, x, true, whereWalker)){
+                // Replacing 'x' with subtree
                 T.copyTree(copy, start->right);
                 whereWalker->id = copy->id;
                 whereWalker->tokenChar = copy->tokenChar;
@@ -70,6 +71,16 @@ bool alphaBeta::betaReduction(node* & start, tree &T){
                     whereWalker->left = copy->left;
                     whereWalker->right = copy->right;
                 }
+
+                // zipping lambda->right to application
+                node* temp = start->left->right;
+                delete start->left->left; // deleting 'x'
+                start->left->left = nullptr;
+                delete start->left; // deleting lambda
+                start->left = nullptr;
+                start->left = temp;
+                temp = nullptr;
+
                 delete copy;
                 copy = nullptr;
                 
