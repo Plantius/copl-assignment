@@ -72,16 +72,31 @@ bool alphaBeta::betaReduction(node* & start, tree &T){
                     whereWalker->right = copy->right;
                 }
 
-                // zipping lambda->right to application
-                node* temp = start->left->right;
+                // Zipping lambda->right to application
+                T.deleteNode(start->right); // deleting right sub tree 
+                start->id = start->left->right->id; // renaming start
+                start->tokenChar = start->left->right->tokenChar;
+
+                node* copy_right = nullptr;
+                node* copy_left = nullptr;
+                T.copyTree(copy_right, start->left->right->right);
+                T.copyTree(copy_right, start->left->right->left);
+
                 delete start->left->left; // deleting 'x'
                 start->left->left = nullptr;
+
                 delete start->left; // deleting lambda
                 start->left = nullptr;
-                start->left = temp;
-                temp = nullptr;
 
-                delete copy;
+                start->left = copy_left;
+                start->right = copy_right;
+
+                T.deleteNode(copy_right);
+                T.deleteNode(copy_left);
+                copy_right = nullptr;
+                copy_left = nullptr;
+
+                T.deleteNode(copy);
                 copy = nullptr;
                 
             }
