@@ -67,7 +67,7 @@ void tree::makeTree(tokenList &list){
         if (temp->id == EOL){
             continue;
         }
-        makeNode(temp->id, temp->tokenChar, walker, i);
+        makeNode(temp->id, temp->tokenChar, walker, begin, i);
     }
     correctTree();
 
@@ -112,19 +112,19 @@ tokenList* tree::infixToPrefix(tokenList &list){
 }// infixToPrefix
 
 
-bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker, const int index){
+bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker, node* &start, const int index){
     bool var = false;
 
-    if (isEmpty(walker) && isEmpty(begin)){
+    if (isEmpty(walker) && isEmpty(start)){
        // If the tree is empty, the tree makes the first element
-        begin = new node(id, tokenChar);
-        begin->index = index;
-        walker = begin;
+        start = new node(id, tokenChar);
+        start->index = index;
+        walker = start;
         return true;
     }
     if (isOperator(walker)){
         if(walker->left != nullptr){
-            var = makeNode(id, tokenChar, walker->left, index);
+            var = makeNode(id, tokenChar, walker->left, start, index);
         }else{
             walker->left = new node(id, tokenChar);
             walker->left->index = index;
@@ -132,7 +132,7 @@ bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker
             }
         if(!var){
             if (walker->right != nullptr){
-                var = makeNode(id, tokenChar, walker->right, index);
+                var = makeNode(id, tokenChar, walker->right, start, index);
             }else{
                 walker->right = new node(id, tokenChar);
                 walker->right->index = index;
@@ -205,21 +205,18 @@ void tree::recursionCopy(node* &walker, node* &copyWalker, node* &copyStart){
     if (walker == nullptr){
         return;
     }
-    makeNode(walker->id, walker->tokenChar, copyWalker, walker->index);
+    makeNode(walker->id, walker->tokenChar, 
+             copyWalker, copyStart, walker->index);
     
     recursionCopy(walker->left, copyWalker, copyStart);
     recursionCopy(walker->right, copyWalker, copyStart);
 } // recursionCopy
 
-void tree::copyTree(node* &copyStart, node* beginLeaf){
-    node* walker = beginLeaf;
+void tree::copyTree(node* &copyStart, node* start){
+    node* walker = start;
     node* copyWalker = copyStart;
     
     recursionCopy(walker, copyWalker, copyStart);
-    
-    copyWalker = copyStart;
-    correctTree();
-    copyWalker = nullptr;
 } // copyTree
 
 
