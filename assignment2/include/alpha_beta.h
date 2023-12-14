@@ -22,7 +22,7 @@ class alphaBeta{
 
         void findAlpha(node* &walker);
         void findVar(node* &start, std::set<std::string> &varList) const;
-        void replaceFreeVar(node* &start, std::set<std::string> &varList);
+        void replaceFreeVar(node* &start, std::set<std::string> &varList, const std::string replaceVar);
 
         bool isInTree(node* &walker, const std::string letter, bool where, node* & whereVar) const;
 

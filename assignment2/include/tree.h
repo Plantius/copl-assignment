@@ -44,7 +44,7 @@ class tree{
 
         bool isEmpty(const node* leaf) const {return (leaf == nullptr);};
         bool isOperator(node* node) const;
-        bool makeNode(const tokenId id, const std::string tokenChar, node* &walker, const int index);
+        bool makeNode(const tokenId id, const std::string tokenChar, node* &walker, node* &start, const int index);
         void makeTree(tokenList &list);
 
         void printRecursion(node* &walker, std::string &output);

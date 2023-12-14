@@ -40,4 +40,4 @@ run: build
 	./$(TARGET) < positives.txt
 
 debug: build
-	valgrind --leak-check=full ./$(TARGET) d $(OUT_FILE) < positives.txt
+	valgrind --leak-check=full --track-origins=yes ./$(TARGET) d $(OUT_FILE) < positives.txt

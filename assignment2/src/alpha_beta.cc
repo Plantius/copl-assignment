@@ -18,6 +18,7 @@ void alphaBeta::makeAbstract(tokenList &L, tree &T){
     bool done = true;
     int times = 0;
     alphaConversion(start);
+    betaReduction(start, T);
     // beta
     // Find var of left lambda
     // Copy right subtree of application
@@ -53,19 +54,15 @@ bool alphaBeta::betaReduction(node* & start, tree &T){
             x = start->left->left->tokenChar;
             walker = start->left->right;
             // maar enkele variabele
-            if (walker == nullptr){
-                if(walker->tokenChar == x){
-                    whereWalker = walker;
-                    needsBeta = true;
-                }
-            }
+            // if (walker == nullptr){
+            //     if(walker->tokenChar == x){
+            //         whereWalker = walker;
+            //         needsBeta = true;
+            //     }
+            // }
             // door subboom kijken
-            else{
-                needsBeta = isInTree(walker, x, true, whereWalker);
-              
-            }
 
-            if(needsBeta){
+            if(isInTree(walker, x, true, whereWalker)){
                 T.copyTree(copy, start->right);
                 whereWalker->id = copy->id;
                 whereWalker->tokenChar = copy->tokenChar;
@@ -101,7 +98,7 @@ void alphaBeta::alphaConversion(node* &start){
                 cout << i;
             }cout << endl;
             
-            replaceFreeVar(temp->left->right, varList);
+            replaceFreeVar(temp->left, varList, temp->left->left->tokenChar);
             // // findfreevar
             // // For every lambda right of application, 
             // // if lambda var in set, remove from set
@@ -119,21 +116,21 @@ void alphaBeta::findAlpha(node* &walker) {
 }// findAlpha
 
 
-void alphaBeta::replaceFreeVar(node* &start, std::set<std::string> &varList){
+void alphaBeta::replaceFreeVar(node* &start, std::set<std::string> &varList, const std::string replaceVar){
     if (start == nullptr){
         return;
     }
 
-    if (start->id == LAMBDA && isInTree(start->right, start->left->tokenChar, false, start)){
+    if (start->id == LAMBDA && isInTree(start->right, replaceVar, false, start)){
         for (auto i : varList){
             if (start->left->tokenChar == i){
                 start->left->tokenChar = (i+i);
+                break;
             }
         }
     }
-    replaceFreeVar(start->left, varList);
-    replaceFreeVar(start->right, varList);
-
+    replaceFreeVar(start->left, varList, replaceVar);
+    replaceFreeVar(start->right, varList, replaceVar);
 }
 
 
