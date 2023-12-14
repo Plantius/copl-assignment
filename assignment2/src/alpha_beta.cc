@@ -57,42 +57,29 @@ bool alphaBeta::betaReduction(node* & start, tree &T){
             if(isInTree(walker, x, true, whereWalker)){
                 // Replacing 'x' with subtree
                 T.copyTree(copy, start->right);
-                whereWalker->id = copy->id;
-                whereWalker->tokenChar = copy->tokenChar;
                 if (copy!=nullptr){
+                    whereWalker->id = copy->id;
+                    whereWalker->tokenChar = copy->tokenChar;
                     whereWalker->left = copy->left;
                     whereWalker->right = copy->right;
                 }
-
                 // Zipping lambda->right to application
-                T.deleteNode(start->right); // deleting right sub tree 
+                 
                 start->id = start->left->right->id; // renaming start
                 start->tokenChar = start->left->right->tokenChar;
 
-                node* copy_right = nullptr;
-                node* copy_left = nullptr;
+                node *copy_right = nullptr, *copy_left = nullptr;
+                T.copyTree(copy_left, start->left->right->left);
                 T.copyTree(copy_right, start->left->right->right);
-                T.copyTree(copy_right, start->left->right->left);
 
-                delete start->left->left; // deleting 'x'
+                T.deleteNode(start->left); // deleting left sub-tree
+                T.deleteNode(start->right); // deleting right sub-tree
 
-                start->left->left = nullptr;
-
-                delete start->left; // deleting lambda
-                
-                start->left = nullptr;
 
                 start->left = copy_left;
                 start->right = copy_right;
-
-                T.deleteNode(copy_right);
-                T.deleteNode(copy_left);
-                copy_right = nullptr;
-                copy_left = nullptr;
-
-                T.deleteNode(copy);
+                delete copy;
                 copy = nullptr;
-                
             }
         }
     }

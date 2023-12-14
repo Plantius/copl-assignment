@@ -1,14 +1,8 @@
 digraph tree{
-	0 [label = "@"];
-	3 [label = "λ"];
+	0 [label = "λ"];
 	6 [label = "y"];
 	7 [label = "y"];
-	5 [label = "λ"];
-	6 [label = "y"];
-	7 [label = "y"];
-	0 -> 3 -> 6;
-	3 -> 7;
-	0 -> 5 -> 6;
-	5 -> 7;
+	0 -> 6;
+	0 -> 7;
 	
 }
