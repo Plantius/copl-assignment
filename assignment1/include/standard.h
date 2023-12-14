@@ -9,6 +9,7 @@
 #ifndef STANDARD_H
 #define STANDARD_H
 #include <iostream>
+#include <set>
 
 const char invalidChar = '$';
 const std::string emptyStr = "";

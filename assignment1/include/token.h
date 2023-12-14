@@ -15,9 +15,11 @@
 // Token class
 class token{
     public:
-        token() : next(nullptr), prev(nullptr), id(INVALID), tokenChar(emptyStr) {};
-        token(const tokenId newId, token* newNext, token* newPrev, const std::string newTokenChar) : 
-              next(newNext), prev(newPrev), id(newId), tokenChar(newTokenChar) {};
+        token() : next(nullptr), prev(nullptr), 
+                  id(INVALID), tokenChar(emptyStr) {};
+        token(token* next, token* prev, const tokenId newId, const std::string newTokenChar) : 
+              next(next), prev(prev), id(newId), tokenChar(newTokenChar) {};
+
         token* next;
         token* prev;
 

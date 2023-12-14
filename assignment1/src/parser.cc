@@ -18,13 +18,11 @@ tokenId parser::tokenSwitch(const char inputChar) const{
         case ')': return RPAR;
         case '\\': return LAMBDA;
         case '.': return DOT;
-        case ' ': return SPACE;
+        case ' ': return APPLICATION;
         
         default: break;
     }
-    if ((int(inputChar) >= 65 && int(inputChar) <= 90) || 
-            (int(inputChar) >=97 && int(inputChar) <= 122) || 
-                (int(inputChar) >=48 && int(inputChar) <= 57)){
+    if (islower(inputChar) || isupper(inputChar) || isdigit(inputChar)){
         return VAR;
     }
     return INVALID;
@@ -97,26 +95,24 @@ void parser::varExpr(tokenList & list) const{
 // Tokenizes the given std::string, and adds them to the given token list
 void parser::stringTokenizer(const std::string input){
     tokenList list;
+
     int lparCounter = 0, rparCounter = 0;
-    int size = input.length();
-    int i = 0;
-    tokenId id = INVALID;
+    tokenId id = INVALID, tempId = INVALID;
     std::string tempVar = emptyStr, character = emptyStr;
 
-    while(input[i] != '\0'){
+    for (size_t i = 0; i < input.size(); i++){
         id = tokenSwitch(input[i]);
-        if ((id == SPACE && character == "\\") || (id == SPACE && character == "@")){
-            i++;
+        if ((id == APPLICATION && character == "\\") || (id == APPLICATION && character == "@")){
             continue;
         }
         character = input[i];
         // Checks if the input is a var, which can be of indefinite size
         if (id == VAR){ 
-            if (tempVar.empty() && (int(input[i]) >= 48 && int(input[i]) <= 57)){
+            if (tempVar.empty() && isdigit(input[i])){
                 throw tokenError("Variable name starts with a number.", row, col);
 
-            }if (i < size){
-                tokenId tempId = tokenSwitch(input[i+1]);
+            }if (i < input.size()){
+                tempId = tokenSwitch(input[i+1]);
                 if (tempId == VAR){
                     tempVar += input[i];
                 }else {
@@ -126,18 +122,14 @@ void parser::stringTokenizer(const std::string input){
                 }
             }
         }else {
-            if (id == LPAR){
-                lparCounter++;
-            }if (id == RPAR){
-                rparCounter++;
-            }
-            if (id == SPACE){
+            lparCounter += (id == LPAR) ? 1 : 0;
+            rparCounter += (id == RPAR) ? 1 : 0;
+           
+            if (id == APPLICATION){
                 character = "@";
             }
             list.addToken(id, character);
         }
-        
-        i++;
         col++;
     }
     list.addToken(EOL, "#");
@@ -146,34 +138,13 @@ void parser::stringTokenizer(const std::string input){
         throw parseError("Number of beginning and closing parantheses do not match.", row, col);
     }
     expr(list);
-    col = 0, row++;
+    col = 1, row++;
 
     parseTree.makeTree(list);
     parseTree.printTree();
-    
 }// stringTokenizer
 
 
 void parser::debugTree(const std::string filename) const {
     parseTree.saveDOT(filename);
 }// debugTree
-
-
-void parser::printExpression(const std::string input, tokenList & list){
-    int length = list.getLength();
-    int linkerhaakje = 0;
-    if (!(list.isEmpty())){
-        for (int i = 0; i < length; i++){
-            if (input[i] == LAMBDA || input[i] == VAR){
-                cout <<"(" << input[i];
-            }
-            if (input[i] == VAR && (linkerhaakje % 2 == 1)){
-                cout << input[i] << ')';
-            }
-            cout << input[i] << endl; //?? not done
-        }
-    }
-    else{
-        cout << " " << endl;
-    }
-}

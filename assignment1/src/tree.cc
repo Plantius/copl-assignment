@@ -14,7 +14,7 @@
 using std::cout, std::endl;
 
 tree::~tree(){
-    deleteNode(begin);
+    deleteNode(this->begin);
     begin = nullptr;
 }// Destructor
 
@@ -40,7 +40,7 @@ void tree::deleteNode(node* & walker) const{
 
 bool tree::isOperator(node* node) const {
     if (node != nullptr){
-        if (node->id == LAMBDA || node->id == SPACE || node->id == LPAR || node->id == RPAR){
+        if (node->id == LAMBDA || node->id == APPLICATION || node->id == LPAR || node->id == RPAR){
             return true;
         }
     }
@@ -67,9 +67,10 @@ void tree::makeTree(tokenList &list){
         if (temp->id == EOL){
             continue;
         }
-        makeNode(temp->id, temp->tokenChar, walker, i);
+        makeNode(temp->id, temp->tokenChar, walker, begin, i);
     }
     correctTree();
+
     delete prefix;
 } // makeTree 
 
@@ -93,7 +94,7 @@ tokenList* tree::infixToPrefix(tokenList &list){
             }
             tokenStack.pop();
         }else{
-            while(!tokenStack.empty() && temp->id == SPACE && tokenStack.top()->id == LAMBDA){
+            while(!tokenStack.empty() && temp->id == APPLICATION && tokenStack.top()->id == LAMBDA){
                 prefix->addToken(tokenStack.top()->id, tokenStack.top()->tokenChar);
                 tokenStack.pop();
             }
@@ -111,19 +112,19 @@ tokenList* tree::infixToPrefix(tokenList &list){
 }// infixToPrefix
 
 
-bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker, const int index){
+bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker, node* &start, const int index){
     bool var = false;
 
-    if (isEmpty(walker) && isEmpty(begin)){
+    if (isEmpty(walker) && isEmpty(start)){
        // If the tree is empty, the tree makes the first element
-        begin = new node(id, tokenChar);
-        begin->index = index;
-        walker = begin;
+        start = new node(id, tokenChar);
+        start->index = index;
+        walker = start;
         return true;
     }
     if (isOperator(walker)){
         if(walker->left != nullptr){
-            var = makeNode(id, tokenChar, walker->left, index);
+            var = makeNode(id, tokenChar, walker->left, start, index);
         }else{
             walker->left = new node(id, tokenChar);
             walker->left->index = index;
@@ -131,7 +132,7 @@ bool tree::makeNode(const tokenId id, const std::string tokenChar, node* &walker
             }
         if(!var){
             if (walker->right != nullptr){
-                var = makeNode(id, tokenChar, walker->right, index);
+                var = makeNode(id, tokenChar, walker->right, start, index);
             }else{
                 walker->right = new node(id, tokenChar);
                 walker->right->index = index;
@@ -157,7 +158,7 @@ void tree::printRecursion(node* & walker, std::string &output){
     if (walker == nullptr){
         return;
     }
-    if (walker->id == SPACE || walker->id == LAMBDA){
+    if (walker->id == APPLICATION || walker->id == LAMBDA){
         output += "(";
     }
 
@@ -167,14 +168,14 @@ void tree::printRecursion(node* & walker, std::string &output){
     }else {
         printRecursion(walker->left, output);
 
-        if (walker->id != SPACE){
+        if (walker->id != APPLICATION){
             output += walker->tokenChar;
         }else {
             output += " ";
         }
         printRecursion(walker->right, output);
     }
-    if (walker->id == SPACE || walker->id == LAMBDA){
+    if (walker->id == APPLICATION || walker->id == LAMBDA){
         output += ")";
     }
 }// printRecursion
@@ -183,6 +184,7 @@ void tree::printRecursion(node* & walker, std::string &output){
 void tree::printTree() {
     node* walker = begin;
     std::string output = emptyStr;
+
     printRecursion(walker, output);
     if (output.back() == ')'){
         output.pop_back();
@@ -191,6 +193,31 @@ void tree::printTree() {
     }
     cout << output << endl;
 }// printTree
+
+
+/* 
+===========================================================
+                        COPY TREE
+===========================================================
+*/
+
+void tree::recursionCopy(node* &walker, node* &copyWalker, node* &copyStart){
+    if (walker == nullptr){
+        return;
+    }
+    makeNode(walker->id, walker->tokenChar, 
+             copyWalker, copyStart, walker->index);
+    
+    recursionCopy(walker->left, copyWalker, copyStart);
+    recursionCopy(walker->right, copyWalker, copyStart);
+} // recursionCopy
+
+void tree::copyTree(node* &copyStart, node* start){
+    node* walker = start;
+    node* copyWalker = copyStart;
+    
+    recursionCopy(walker, copyWalker, copyStart);
+} // copyTree
 
 
 /* 
@@ -207,7 +234,7 @@ void tree::recursionCorrectTree(node* &walker){
     }
     recursionCorrectTree(walker->left);
     recursionCorrectTree(walker->right);
-    if ((walker->id == LAMBDA || walker->id == SPACE) && 
+    if ((walker->id == LAMBDA || walker->id == APPLICATION) && 
         (walker->left == nullptr || walker->right == nullptr)){
         
         if (walker->right != nullptr){
@@ -228,7 +255,7 @@ void tree::recursionCorrectTree(node* &walker){
 
 
 void tree::correctTree(){
-    node* walker = begin;
+    node* walker = this->begin;
     recursionCorrectTree(walker);
 }// correctTree
 
@@ -241,7 +268,7 @@ void tree::correctTree(){
 
 
 void tree::recursionDOT(node* &walker, std::ofstream &file) const{
-    if (walker->id == LAMBDA || walker->id == SPACE){
+    if (walker->id == LAMBDA || walker->id == APPLICATION){
         if(walker->left != nullptr){
             if(!walker->seen){
                 file << walker->index << " -> ";
@@ -278,7 +305,7 @@ void tree::labelTree(node* &walker, std::ofstream &file) const{
     
     labelTree(walker->left, file);
     labelTree(walker->right, file);
-}// labelBlad
+}// labelnode
 
 
 void tree::saveDOT(const std::string filenaam) const{
