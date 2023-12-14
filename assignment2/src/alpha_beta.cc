@@ -50,10 +50,10 @@ bool alphaBeta::betaReduction(node* & start, tree &T){
 
     if(start->id == APPLICATION){
         if(start->left->id == LAMBDA){
-            // LINKER BOOM VAN APP
             x = start->left->left->tokenChar;
             walker = start->left->right;
 
+            // REPLACE WITH N
             if(isInTree(walker, x, true, whereWalker)){
                 // Replacing 'x' with subtree
                 T.copyTree(copy, start->right);
@@ -63,24 +63,22 @@ bool alphaBeta::betaReduction(node* & start, tree &T){
                     whereWalker->left = copy->left;
                     whereWalker->right = copy->right;
                 }
-                // Zipping lambda->right to application
-                 
-                start->id = start->left->right->id; // renaming start
-                start->tokenChar = start->left->right->tokenChar;
-
-                node *copy_right = nullptr, *copy_left = nullptr;
-                T.copyTree(copy_left, start->left->right->left);
-                T.copyTree(copy_right, start->left->right->right);
-
-                T.deleteNode(start->left); // deleting left sub-tree
-                T.deleteNode(start->right); // deleting right sub-tree
-
-
-                start->left = copy_left;
-                start->right = copy_right;
-                delete copy;
-                copy = nullptr;
             }
+             // Deleting unnecessary nodes
+            start->id = start->left->right->id; // renaming start
+            start->tokenChar = start->left->right->tokenChar;
+
+            node *copy_right = nullptr, *copy_left = nullptr;
+            T.copyTree(copy_left, start->left->right->left);
+            T.copyTree(copy_right, start->left->right->right);
+
+            T.deleteNode(start->left); // deleting left sub-tree
+            T.deleteNode(start->right); // deleting right sub-tree
+
+            start->left = copy_left;
+            start->right = copy_right;
+            delete copy;
+            copy = nullptr;
         }
     }
     walker = nullptr;
