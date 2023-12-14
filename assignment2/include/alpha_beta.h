@@ -14,7 +14,7 @@
 
 class alphaBeta{
     public:
-        alphaBeta() : M(), N(), x(emptyStr) {};
+        alphaBeta() {};
 
         void alphaConversion(node* &start);
         bool betaReduction(node* &start, tree &T);
@@ -25,10 +25,8 @@ class alphaBeta{
         void replaceFreeVar(node* &start, std::set<std::string> &varList);
 
         bool isInTree(node* &walker, const std::string letter, bool where, node* & whereVar) const;
+
     private:
-        tokenList M;
-        tokenList N;
-        std::string x;
 };
 
 #endif
