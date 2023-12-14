@@ -15,13 +15,15 @@
 
 class parser{
     private:
-        int row = 1, col = 1;
         tree parseTree;
         node* begin;
+
+        int row = 1, col = 1;
         
     public:
-        parser(tree &parseTree) : row(1), col(1), 
-               parseTree(parseTree), begin(parseTree.getBegin()) {};
+        parser(tree &parseTree) : 
+                parseTree(parseTree), begin(parseTree.getBegin()), 
+                row(1), col(1) {};
 
         // Adds a token to the list according to inputChar
         tokenId tokenSwitch(const char inputChar) const;
@@ -42,9 +44,6 @@ class parser{
         void varExpr(tokenList & list) const;
 
         void debugTree(const std::string filename) const;
-
-        // Prints the expression
-        void printExpression(const std::string input, tokenList & list);
 };
 
 #endif

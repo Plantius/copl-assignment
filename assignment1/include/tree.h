@@ -44,16 +44,19 @@ class tree{
 
         bool isEmpty(const node* leaf) const {return (leaf == nullptr);};
         bool isOperator(node* node) const;
-        bool makeNode(const tokenId id, const std::string tokenChar, node* &walker, const int index);
+        bool makeNode(const tokenId id, const std::string tokenChar, node* &walker, node* &start, const int index);
         void makeTree(tokenList &list);
 
-        void printRecursion(node* & walker, std::string &output);
+        void printRecursion(node* &walker, std::string &output);
         void printTree();
 
         tokenList* infixToPrefix(tokenList &list);
 
         void recursionCorrectTree(node* &walker);
         void correctTree();
+        
+        void recursionCopy(node* &walker, node* &copyWalker, node* &copyStart);
+        void copyTree(node* &copyStart, node* beginLeaf);
 
         void saveDOT(const std::string file) const;
         void labelTree(node* &walker, std::ofstream &file) const;

@@ -1,6 +1,6 @@
 CC = g++
 
-PARAMETERS = -Wall -Wextra -Wpedantic -Weffc++ -g
+PARAMETERS = -Wall -Wextra -Wpedantic -g
 
 TARGET = lambda
 SRC_DIR = ./src
