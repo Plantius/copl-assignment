@@ -15,10 +15,19 @@ using std::cout, std::endl;
 
 void alphaBeta::makeAbstract(tokenList &L, tree &T){
     node* start = T.getBegin();
-    bool done = true;
+    node* startBeta = start;
+    bool done = false, betaPossible = true;
     int times = 0;
     alphaConversion(start);
-    betaReduction(start, T);
+    while (!betaReduction(startBeta, T) && betaPossible){
+        betaPossible = false;
+        findBeta(start, startBeta, betaPossible);
+        if (times >= MAX_IT){
+            throw conversionError("Beta reduction takes to long.");
+        }
+        times++;
+    }
+    
     // beta
     // Find var of left lambda
     // Copy right subtree of application
@@ -41,50 +50,46 @@ void alphaBeta::makeAbstract(tokenList &L, tree &T){
 
 } // makeAbstract
 
-bool alphaBeta::betaReduction(node* & start, tree &T){
+bool alphaBeta::betaReduction(node* &start, tree &T){
     std::string x = "$";
-    bool needsBeta = false;
-    node* walker = nullptr;
-    node* whereWalker = nullptr;
-    node* copy = nullptr;
+    node *walker = nullptr, *whereWalker = nullptr, *copy = nullptr;
+    
+    if(start->id == APPLICATION && start->left->id == LAMBDA){
+        // LINKER BOOM VAN APP
+        x = start->left->left->tokenChar;
+        walker = start->left->right;
 
-    if(start->id == APPLICATION){
-        if(start->left->id == LAMBDA){
-            // LINKER BOOM VAN APP
-            x = start->left->left->tokenChar;
-            walker = start->left->right;
-
-            if(isInTree(walker, x, true, whereWalker)){
-                // Replacing 'x' with subtree
-                T.copyTree(copy, start->right);
-                if (copy!=nullptr){
-                    whereWalker->id = copy->id;
-                    whereWalker->tokenChar = copy->tokenChar;
-                    whereWalker->left = copy->left;
-                    whereWalker->right = copy->right;
-                }
-                // Zipping lambda->right to application
-                 
-                start->id = start->left->right->id; // renaming start
-                start->tokenChar = start->left->right->tokenChar;
-
-                node *copy_right = nullptr, *copy_left = nullptr;
-                T.copyTree(copy_left, start->left->right->left);
-                T.copyTree(copy_right, start->left->right->right);
-
-                T.deleteNode(start->left); // deleting left sub-tree
-                T.deleteNode(start->right); // deleting right sub-tree
-
-
-                start->left = copy_left;
-                start->right = copy_right;
-                delete copy;
-                copy = nullptr;
+        if(isInTree(walker, x, true, whereWalker)){
+            // Replacing 'x' with subtree
+            T.copyTree(copy, start->right);
+            if (copy!=nullptr){
+                whereWalker->id = copy->id;
+                whereWalker->tokenChar = copy->tokenChar;
+                whereWalker->seen = copy->seen;
+                whereWalker->left = copy->left;
+                whereWalker->right = copy->right;
             }
         }
+                
+        // Zipping lambda->right to application
+        start->id = start->left->right->id; // renaming start
+        start->tokenChar = start->left->right->tokenChar;
+
+        node *copy_right = nullptr, *copy_left = nullptr;
+        T.copyTree(copy_left, start->left->right->left);
+        T.copyTree(copy_right, start->left->right->right);
+
+        T.deleteNode(start->left); // deleting left sub-tree
+        T.deleteNode(start->right); // deleting right sub-tree
+
+
+        start->left = copy_left;
+        start->right = copy_right;
+        delete copy;
+        copy = nullptr;
+
+        return true;
     }
-    walker = nullptr;
-    whereWalker = nullptr;
 
     return false;
 } // betaReduction
@@ -101,9 +106,9 @@ void alphaBeta::alphaConversion(node* &start){
     if (temp->id == APPLICATION){
         if(temp->left->id == LAMBDA){
             findVar(temp->right, varList);
-            for (auto i : varList){
-                cout << i;
-            }cout << endl;
+            // for (auto i : varList){
+            //     cout << i;
+            // }cout << endl;
             
             replaceFreeVar(temp->left, varList, temp->left->left->tokenChar);
             // // findfreevar
@@ -122,6 +127,20 @@ void alphaBeta::findAlpha(node* &walker) {
 
 }// findAlpha
 
+void alphaBeta::findBeta(node* &walker, node* &startApplication, bool &betaPossible) {
+    if (walker == nullptr){
+        return;
+    }
+
+    if (walker->id == APPLICATION && walker->left->id == LAMBDA && !walker->seen){
+        startApplication = walker;
+        walker->seen = true;
+        betaPossible = true;
+        return;
+    }
+    findBeta(walker->left, startApplication, betaPossible);
+    findBeta(walker->right, startApplication, betaPossible);
+}// findAlpha
 
 void alphaBeta::replaceFreeVar(node* &start, std::set<std::string> &varList, const std::string replaceVar){
     if (start == nullptr){
@@ -164,7 +183,10 @@ bool alphaBeta::isInTree(node* &walker, const std::string letter, bool where, no
     if (walker == nullptr){
         return false;
     }
-    if (walker->id == VAR && walker->tokenChar == letter){
+    if (walker->id == LAMBDA){
+        walker->left->seen = true;
+    }
+    if (walker->id == VAR && walker->tokenChar == letter && !walker->seen){
         if (where){
             whereVar = walker;
             where = false;
@@ -178,5 +200,4 @@ bool alphaBeta::isInTree(node* &walker, const std::string letter, bool where, no
         return true;
     }
     return false;
-    
 }

@@ -21,6 +21,7 @@ class alphaBeta{
         void makeAbstract(tokenList &L, tree &T);
 
         void findAlpha(node* &walker);
+        void findBeta(node* &walker, node* &startApplication, bool &betaPossible);
         void findVar(node* &start, std::set<std::string> &varList) const;
         void replaceFreeVar(node* &start, std::set<std::string> &varList, const std::string replaceVar);
 

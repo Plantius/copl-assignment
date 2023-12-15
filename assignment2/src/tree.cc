@@ -298,10 +298,11 @@ void tree::labelTree(node* &walker, std::ofstream &file) const{
         return;
     }
     if (walker->id == LAMBDA){
-        file << "\t" << walker->index << " [label = " << "\"\u03bb\"];\n"; 
+        file << "\t" << walker->index << " [label = " <<"\""<<walker->seen<< "\u03bb\"];\n"; 
     }else {
-        file << "\t" << walker->index << " [label = " << "\"" << walker->tokenChar << "\"];\n";
+        file << "\t" << walker->index << " [label = " << "\"" <<walker->seen<< walker->tokenChar << "\"];\n";
     }
+    walker->seen = false;
     
     labelTree(walker->left, file);
     labelTree(walker->right, file);

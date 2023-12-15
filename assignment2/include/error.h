@@ -45,6 +45,7 @@ class errorHandler{
         const std::string INPUT = "Input Error";
         const std::string PARSE = "Parse Error";
         const std::string TOKEN = "Token Error";
+        const std::string ALPHA_BETA = "Alpha_beta reduction Error";
 }; // errorHandler
 
 // Handles memory errors
@@ -91,6 +92,16 @@ class tokenError : public errorHandler{
         **/
         tokenError(const std::string err,
                    const int row, const int col);
+}; // inputError
+
+class conversionError : public errorHandler{
+    public:
+        /**
+        * @function: tokenError
+        * @abstract: Constructor
+        * @param err: set error to err 
+        **/
+        conversionError(const std::string err);
 }; // inputError
 
 #endif

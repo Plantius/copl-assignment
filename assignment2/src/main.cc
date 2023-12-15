@@ -55,6 +55,9 @@ int main(int argc, char* argv[]){
     }catch(const tokenError error){
         error.printError();
         return EXIT_FAILURE;
+    }catch(const conversionError error){
+        error.printError();
+        return 2;
     }
     return EXIT_SUCCESS;
 }// main
