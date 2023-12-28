@@ -27,15 +27,9 @@ Niels Versteeg (s3322637)
 Lana van Sprang (s3272192)
 
 ## TODO
-* <del> Constructing LL grammar
-* <del> Parser
-   * Adding tokenization
-   * Adding the four parse functions
-   * Adding syntax checker   
-* Generalizing coding style
-* Adding parser output
 
-## LL Grammar
+
+## LL Grammar Assignment 1
 ```
 <expr> ::= <fexpr> <expr1>
 <expr1> ::= <fexpr> <expr1> | emptystring
