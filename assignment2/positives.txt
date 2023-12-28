@@ -9,5 +9,11 @@ a b c
 \x(a b \a b)
 a b c d
 \x a b
-(\x x)(\y y)
-
+(\x \x x)(\y y)
+a (\x a (b c) \x d)
+(\x \y x)(\z y)
+\x(\w (w z)(\z y))
+(\x \y y) (\z y)
+(\x y)((\x (x x))(\x (x x)))
+(\x x x)(\x x x)
+(\x (x x))(\x (x x))    
