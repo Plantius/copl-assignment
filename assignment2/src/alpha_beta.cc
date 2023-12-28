@@ -64,7 +64,7 @@ bool alphaBeta::betaReduction(node* & start, tree &T){
                     whereWalker->right = copy->right;
                 }
             }
-             // Deleting unnecessary nodes
+            // Deleting unnecessary nodes
             start->id = start->left->right->id; // renaming start
             start->tokenChar = start->left->right->tokenChar;
 
