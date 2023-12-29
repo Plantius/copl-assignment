@@ -39,8 +39,24 @@ Compiler version: 11.4.0
 This assignment is not done. It currently works on the LL grammar of assignment 1. 
 
 
-## LL Grammar Assignment 1
+## LL Grammar Assignment 3
 ```
+<judge> ::= <expr> ':' <type>
+
+<expr> ::= <lvar> | <fexpr> <expr1>
+<lvar> ::= any variable name that starts with lowercase letter
+
+<expr1> ::= <fexpr> <expr1> | emptystring
+<fexpr> ::= <parexpr> | '\'<lvar> '^' <type> <fexpr>
+<uvar> ::= any variable name that starts with uppercase letter
+
+
+<type> ::= <ftype> <type1>
+<type1> ::= <ftype> '->' <type1> | emptystring
+<ftype> ::= <partype> | ...
+<partype> ::= <uvar> | '('<type>')'
+
+---
 <expr> ::= <fexpr> <expr1>
 <expr1> ::= <fexpr> <expr1> | emptystring
 <fexpr> ::= <parexpr> | '\'<var> <fexpr>
