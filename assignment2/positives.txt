@@ -13,7 +13,6 @@ a b c d
 a (\x a (b c) \x d)
 (\x \y x)(\z y)
 \x(\w (w z)(\z y))
-(\x \y y) (\z y)
+(\x \y x) (\z y)
 (\x y)((\x (x x))(\x (x x)))
 (\x x x)(\x x x)
-(\x (x x))(\x (x x))    

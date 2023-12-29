@@ -61,6 +61,7 @@ class tree{
         void saveDOT(const std::string file) const;
         void labelTree(node* &walker, std::ofstream &file) const;
         void recursionDOT(node* &walker, std::ofstream &file) const;
+
     private:
         node* begin;
 };

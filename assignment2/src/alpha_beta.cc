@@ -18,15 +18,19 @@ void alphaBeta::makeAbstract(tokenList &L, tree &T){
     node* startBeta = start;
     bool done = false, betaPossible = true;
     int times = 0;
+
     alphaConversion(start);
-    while (!betaReduction(startBeta, T) && betaPossible){
+    while (betaPossible){
         betaPossible = false;
+        betaReduction(startBeta, T);
         findBeta(start, startBeta, betaPossible);
+
         if (times >= MAX_IT){
             throw conversionError("Beta reduction takes to long.");
         }
         times++;
     }
+    // T.saveDOT(file);
     
     // beta
     // Find var of left lambda
@@ -50,7 +54,7 @@ void alphaBeta::makeAbstract(tokenList &L, tree &T){
 
 } // makeAbstract
 
-bool alphaBeta::betaReduction(node* &start, tree &T){
+void alphaBeta::betaReduction(node* &start, tree &T){
     std::string x = "$";
     node *walker = nullptr, *whereWalker = nullptr, *copy = nullptr;
     
@@ -62,32 +66,15 @@ bool alphaBeta::betaReduction(node* &start, tree &T){
         if(isInTree(walker, x, true, whereWalker)){
             // Replacing 'x' with subtree
             T.copyTree(copy, start->right);
-            if (copy!=nullptr){
+            if (copy != nullptr){
                 whereWalker->id = copy->id;
                 whereWalker->tokenChar = copy->tokenChar;
                 whereWalker->seen = copy->seen;
                 whereWalker->left = copy->left;
                 whereWalker->right = copy->right;
             }
-            // WAS IN DE COMMIT WEG================
-            // Deleting unnecessary nodes
-            start->id = start->left->right->id; // renaming start
-            start->tokenChar = start->left->right->tokenChar;
-
-            node *copy_right = nullptr, *copy_left = nullptr;
-            T.copyTree(copy_left, start->left->right->left);
-            T.copyTree(copy_right, start->left->right->right);
-
-            T.deleteNode(start->left); // deleting left sub-tree
-            T.deleteNode(start->right); // deleting right sub-tree
-
-            start->left = copy_left;
-            start->right = copy_right;
-            delete copy;
-            copy = nullptr;
-            // =======================================
         }
-                
+
         // Zipping lambda->right to application
         start->id = start->left->right->id; // renaming start
         start->tokenChar = start->left->right->tokenChar;
@@ -104,11 +91,7 @@ bool alphaBeta::betaReduction(node* &start, tree &T){
         start->right = copy_right;
         delete copy;
         copy = nullptr;
-
-        return true;
     }
-
-    return false;
 } // betaReduction
 
 void alphaBeta::alphaConversion(node* &start){
@@ -145,10 +128,10 @@ void alphaBeta::findAlpha(node* &walker) {
 }// findAlpha
 
 void alphaBeta::findBeta(node* &walker, node* &startApplication, bool &betaPossible) {
-    if (walker == nullptr){
+    if (walker == nullptr || betaPossible){
         return;
     }
-
+    
     if (walker->id == APPLICATION && walker->left->id == LAMBDA && !walker->seen){
         startApplication = walker;
         walker->seen = true;
@@ -200,6 +183,7 @@ bool alphaBeta::isInTree(node* &walker, const std::string letter, bool where, no
     if (walker == nullptr){
         return false;
     }
+
     if (walker->id == LAMBDA){
         walker->left->seen = true;
     }
