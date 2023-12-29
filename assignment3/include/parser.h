@@ -31,6 +31,8 @@ class parser{
         // Tokenizes the given string 
         void stringTokenizer(const std::string input);
 
+        int typechecking (tokenList & list);
+
         // Expression
         void expr(tokenList & list) const;
 

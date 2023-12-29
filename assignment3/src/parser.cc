@@ -84,6 +84,19 @@ void parser::varExpr(tokenList & list) const{
     }
 }// parexpr
 
+/* 
+===========================================================
+                      TYPE CHECKING STRING
+===========================================================
+*/
+
+int parser::typechecking(tokenList & list){
+    return 0;
+    throw parseError("Type does not match.", row, col);
+
+}
+
+
 
 /* 
 ===========================================================
