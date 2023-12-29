@@ -4,7 +4,7 @@ A parser written in C++ for the untyped $\lambda$-calculus.
 
 ## Description
 
-This project is a parser written for the untyped $\lambda$-calculus, in C++. It parses an input, checks it for syntax errors, and produces an output with left precedence, and inserted parantheses to elliminate ambiguity.
+This project is a parser written for the untyped $\lambda$-calculus, in C++. It parses an input, checks it for syntax errors, and produces an output with left precedence, and inserted parantheses to eliminate ambiguity.
 
 ## Installing
 Build the project using the MakeFile:
@@ -25,6 +25,9 @@ The binary file is located in the */bin* folder, and can be executed with the fo
 Niels Versteeg (s3322637)
 
 Lana van Sprang (s3272192)
+
+Class: Concepts of Programming Languages
+Group name: Lambda Males
 
 ## TODO
 

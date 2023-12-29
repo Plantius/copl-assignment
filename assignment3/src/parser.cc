@@ -3,7 +3,7 @@
 * Niels Versteeg (s3322637)
 * Lana van Sprang (s3272192)
 * parser.cc
-* 04-10-2023
+* 29-12-2023
 **/ 
 
 #include "../include/parser.h"
@@ -83,6 +83,19 @@ void parser::varExpr(tokenList & list) const{
         throw parseError("No variable or opening paranthesis.", row, col);
     }
 }// parexpr
+
+/* 
+===========================================================
+                      TYPE CHECKING STRING
+===========================================================
+*/
+
+int parser::typechecking(tokenList & list){
+    return 0;
+    throw parseError("Type does not match.", row, col);
+
+}
+
 
 
 /* 
