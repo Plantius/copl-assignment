@@ -1,8 +1,5 @@
 digraph tree{
-	0 [label = "0@0"];
-	1 [label = "1x1"];
-	7 [label = "1x7"];
-	0 -> 1;
-	0 -> 7;
+	0 [label = "0y0"];
+	0;
 	
 }

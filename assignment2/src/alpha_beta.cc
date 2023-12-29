@@ -30,6 +30,7 @@ void alphaBeta::makeAbstract(tokenList &L, tree &T){
         }
         times++;
     }
+    cout << times << endl;
     // T.saveDOT(file);
     
     // beta
@@ -38,19 +39,6 @@ void alphaBeta::makeAbstract(tokenList &L, tree &T){
     // Walk through right side of left lambda, replace all lambda
     // var with subtree
     // 
-
-    // while(done){
-    //     done = false;
-    //     // if(needsBeta(L)){
-    //         // done = performReduction(L);
-    //         // M.clear();
-    //         // N.clear();
-    //         times ++;
-    //     // }
-    //     if (times >= MAX_IT){
-    //         done = false;
-    //     }
-    // }
 
 } // makeAbstract
 
