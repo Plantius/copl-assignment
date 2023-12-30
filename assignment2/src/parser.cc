@@ -143,9 +143,10 @@ void parser::stringTokenizer(const std::string input){
     col = 1, row++;
 
     parseTree.makeTree(list);
+    cout << "ORIGINAL: ";
     parseTree.printTree();
-    
-    ab.makeAbstract(list, parseTree);
+    ab.makeAbstract(parseTree);
+
     parseTree.printTree();
 }// stringTokenizer
 

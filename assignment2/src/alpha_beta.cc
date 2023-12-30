@@ -13,10 +13,10 @@
 #include <fstream>
 using std::cout, std::endl;
 
-void alphaBeta::makeAbstract(tokenList &L, tree &T){
+void alphaBeta::makeAbstract(tree &T) const{
     node* start = T.getBegin();
     node* startBeta = start;
-    bool done = false, betaPossible = true;
+    bool betaPossible = true;
     int times = 0;
 
     alphaConversion(start);
@@ -30,7 +30,6 @@ void alphaBeta::makeAbstract(tokenList &L, tree &T){
         }
         times++;
     }
-    cout << times << endl;
     // T.saveDOT(file);
     
     // beta
@@ -42,7 +41,7 @@ void alphaBeta::makeAbstract(tokenList &L, tree &T){
 
 } // makeAbstract
 
-void alphaBeta::betaReduction(node* &start, tree &T){
+void alphaBeta::betaReduction(node* &start, tree &T) const{
     std::string x = "$";
     node *walker = nullptr, *whereWalker = nullptr, *copy = nullptr;
     
@@ -82,7 +81,7 @@ void alphaBeta::betaReduction(node* &start, tree &T){
     }
 } // betaReduction
 
-void alphaBeta::alphaConversion(node* &start){
+void alphaBeta::alphaConversion(node* &start) const{
     if (start == nullptr){
         return;
     }
@@ -111,11 +110,7 @@ void alphaBeta::alphaConversion(node* &start){
 } // alphaConversion
 
 
-void alphaBeta::findAlpha(node* &walker) {
-
-}// findAlpha
-
-void alphaBeta::findBeta(node* &walker, node* &startApplication, bool &betaPossible) {
+void alphaBeta::findBeta(node* &walker, node* &startApplication, bool &betaPossible) const{
     if (walker == nullptr || betaPossible){
         return;
     }
@@ -130,7 +125,7 @@ void alphaBeta::findBeta(node* &walker, node* &startApplication, bool &betaPossi
     findBeta(walker->right, startApplication, betaPossible);
 }// findAlpha
 
-void alphaBeta::replaceFreeVar(node* &start, std::set<std::string> &varList, const std::string replaceVar){
+void alphaBeta::replaceFreeVar(node* &start, std::set<std::string> &varList, const std::string replaceVar) const{
     if (start == nullptr){
         return;
     }

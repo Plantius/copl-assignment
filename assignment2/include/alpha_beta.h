@@ -16,14 +16,13 @@ class alphaBeta{
     public:
         alphaBeta() {};
 
-        void alphaConversion(node* &start);
-        void betaReduction(node* &start, tree &T);
-        void makeAbstract(tokenList &L, tree &T);
+        void alphaConversion(node* &start) const;
+        void betaReduction(node* &start, tree &T) const;
+        void makeAbstract(tree &T) const;
 
-        void findAlpha(node* &walker);
-        void findBeta(node* &walker, node* &startApplication, bool &betaPossible);
+        void findBeta(node* &walker, node* &startApplication, bool &betaPossible) const;
         void findVar(node* &start, std::set<std::string> &varList) const;
-        void replaceFreeVar(node* &start, std::set<std::string> &varList, const std::string replaceVar);
+        void replaceFreeVar(node* &start, std::set<std::string> &varList, const std::string replaceVar) const;
 
         bool isInTree(node* &walker, const std::string letter, bool where, node* & whereVar) const;
 
